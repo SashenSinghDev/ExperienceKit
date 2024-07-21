@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol ComponentProviderService {
-    func load()
+    func load(completion: @escaping ([Component]) -> Void)
 }
 
 public protocol HasComponentProviderService {

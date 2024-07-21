@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct ExampleApp: App {
+
+    private let dependancyContainer: DependancyContainer
+
+    init() {
+        let dependancyServiceManager = DependancyServiceManager()
+        dependancyContainer = DependancyContainer(dependencies: dependancyServiceManager)
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            dependancyContainer.makeMainView()
         }
     }
 }

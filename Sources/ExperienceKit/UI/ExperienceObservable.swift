@@ -28,7 +28,7 @@ extension ExperienceObservable: ExperiencePresenter {
 
 extension ExperienceObservable: ExperienceScene {
 
-    func performUpdate(_ update: Experience.Update) {
+    public func performUpdate(_ update: Experience.Update) {
 
         switch update {
         case .setAnyViewModel(let anyViewModel):

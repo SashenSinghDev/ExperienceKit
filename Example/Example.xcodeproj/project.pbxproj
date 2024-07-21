@@ -13,6 +13,8 @@
 		96FB9FEE2C36DE8E00803A47 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96FB9FED2C36DE8E00803A47 /* Preview Assets.xcassets */; };
 		96FB9FF62C36DE9E00803A47 /* ExperienceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96FB9FF52C36DE9E00803A47 /* ExperienceKit */; };
 		96FB9FF82C36DEB500803A47 /* DependancyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FF72C36DEB500803A47 /* DependancyContainer.swift */; };
+		96FB9FFC2C36FBF000803A47 /* DependancyServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FFB2C36FBF000803A47 /* DependancyServiceManager.swift */; };
+		96FB9FFE2C36FCCB00803A47 /* ExampleComponentProviderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FFD2C36FCCB00803A47 /* ExampleComponentProviderService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		96FB9FEA2C36DE8E00803A47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96FB9FED2C36DE8E00803A47 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		96FB9FF72C36DEB500803A47 /* DependancyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependancyContainer.swift; sourceTree = "<group>"; };
+		96FB9FFB2C36FBF000803A47 /* DependancyServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependancyServiceManager.swift; sourceTree = "<group>"; };
+		96FB9FFD2C36FCCB00803A47 /* ExampleComponentProviderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleComponentProviderService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +59,11 @@
 		96FB9FE52C36DE8D00803A47 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				96FB9FF92C36FBD400803A47 /* AppDependancyContainer */,
 				96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */,
 				96FB9FE82C36DE8D00803A47 /* ContentView.swift */,
 				96FB9FEA2C36DE8E00803A47 /* Assets.xcassets */,
 				96FB9FEC2C36DE8E00803A47 /* Preview Content */,
-				96FB9FF72C36DEB500803A47 /* DependancyContainer.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -70,6 +74,24 @@
 				96FB9FED2C36DE8E00803A47 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		96FB9FF92C36FBD400803A47 /* AppDependancyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				96FB9FFA2C36FBDC00803A47 /* Dependancies */,
+				96FB9FF72C36DEB500803A47 /* DependancyContainer.swift */,
+			);
+			path = AppDependancyContainer;
+			sourceTree = "<group>";
+		};
+		96FB9FFA2C36FBDC00803A47 /* Dependancies */ = {
+			isa = PBXGroup;
+			children = (
+				96FB9FFB2C36FBF000803A47 /* DependancyServiceManager.swift */,
+				96FB9FFD2C36FCCB00803A47 /* ExampleComponentProviderService.swift */,
+			);
+			path = Dependancies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,8 +170,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96FB9FFC2C36FBF000803A47 /* DependancyServiceManager.swift in Sources */,
 				96FB9FE92C36DE8D00803A47 /* ContentView.swift in Sources */,
 				96FB9FF82C36DEB500803A47 /* DependancyContainer.swift in Sources */,
+				96FB9FFE2C36FCCB00803A47 /* ExampleComponentProviderService.swift in Sources */,
 				96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

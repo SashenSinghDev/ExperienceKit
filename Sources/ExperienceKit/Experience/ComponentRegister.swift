@@ -16,5 +16,6 @@ public protocol ComponentRegister {
     func view(from viewModel: any ComponentViewModel) -> AnyView
 }
 
-let allRegisters: [ComponentRegister] = [
+public let allRegisters: [ComponentRegister] = [
+    ExampleComponentRegister()
 ]

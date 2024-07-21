@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ExperienceScene: AnyObject {
+public protocol ExperienceScene: AnyObject {
     func performUpdate(_ update: Experience.Update)
 }
