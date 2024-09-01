@@ -10,11 +10,11 @@ import ExperienceKit
 
 final class DependancyServiceManager {
 
-    let componentProviderService: ComponentProviderService
+    let experienceService: ExperienceService
 
     init() {
-        componentProviderService = ExampleComponentProviderService()
+        experienceService = ExampleComponentProviderService()
     }
 }
 
-extension DependancyServiceManager: HasComponentProviderService {}
+extension DependancyServiceManager: HasExperienceService {}

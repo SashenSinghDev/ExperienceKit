@@ -8,7 +8,7 @@
 import Foundation
 import ExperienceKit
 
-final class ExampleComponentProviderService: ComponentProviderService {
+final class ExampleComponentProviderService: ExperienceService {
     func load(completion: @escaping ([Component]) -> Void) {
         completion([ExampleProperties.mock])
     }

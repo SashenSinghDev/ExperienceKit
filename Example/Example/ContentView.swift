@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    private let dependancyContainer: DependancyContainer
+
+    init() {
+        let dependancyServiceManager = DependancyServiceManager()
+        dependancyContainer = DependancyContainer(dependencies: dependancyServiceManager)
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            dependancyContainer.makeMainView()
+            .navigationTitle("ExprienceKit")
         }
-        .padding()
     }
 }
 

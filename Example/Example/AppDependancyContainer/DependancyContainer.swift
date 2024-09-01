@@ -10,7 +10,7 @@ import ExperienceKit
 
 final class DependancyContainer {
 
-    typealias Dependencies = HasComponentProviderService
+    typealias Dependencies = HasExperienceService
 
     // MARK: - Properties
 
@@ -25,7 +25,10 @@ final class DependancyContainer {
     func makeMainView() -> ExperienceView {
         let registers: [ComponentRegister] = allRegisters
         let viewModelProvider = DefaultViewModelProvider(registers: registers)
-        let presenter = DefaultExperiencePresenter(dependancies: dependencies, viewModelProvider: viewModelProvider)
+        let experienceService = PrefilledExperienceService(components: [ExampleProperties.mock])
+        let presenter = DefaultExperiencePresenter(dependancies: dependencies,
+                                                   viewModelProvider: viewModelProvider,
+                                                   experienceService: experienceService)
         let observable = ExperienceObservable(presenter: presenter)
         let viewProvider = ViewProvider(registers: registers)
         presenter.scene = observable

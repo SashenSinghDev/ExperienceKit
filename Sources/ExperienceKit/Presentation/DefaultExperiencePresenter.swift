@@ -8,23 +8,26 @@
 import Foundation
 
 public final class DefaultExperiencePresenter: ExperiencePresenter {
-    public typealias Dependancies = HasComponentProviderService
+    public typealias Dependancies = HasExperienceService
 
     private let dependancies: Dependancies
     private let viewModelProvider: ViewModelProvider
+    private let experienceService: ExperienceService
 
     public weak var scene: ExperienceScene?
 
     public init(dependancies: Dependancies,
-         viewModelProvider: ViewModelProvider) {
+                viewModelProvider: ViewModelProvider,
+                experienceService: ExperienceService) {
         self.dependancies = dependancies
         self.viewModelProvider = viewModelProvider
+        self.experienceService = experienceService
     }
 
     public func performAction(_ action: Experience.Action) {
         switch action {
         case .load:
-            dependancies.componentProviderService.load { [weak self] components in
+            experienceService.load { [weak self] components in
 
                 guard let self else { return }
 
