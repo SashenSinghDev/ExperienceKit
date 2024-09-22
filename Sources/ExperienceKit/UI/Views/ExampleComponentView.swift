@@ -11,13 +11,15 @@ import SwiftUI
 struct ExampleComponentView: View, ComponentView {
 
     private let viewModel: ExampleViewModel
+    private let presenter: ExperiencePresenter
 
-    init(viewModel: ExampleViewModel) {
+    init(viewModel: ExampleViewModel, presenter: ExperiencePresenter) {
         self.viewModel = viewModel
+        self.presenter = presenter
     }
 
     var body: some View {
-        NavigationLink(destination: Text("Test")) {
+        NavigationLink(destination: presenter.navigate(viewModel.id)) {
             VStack(alignment: .leading) {
                 Text("Title")
                     .bold()
@@ -25,6 +27,11 @@ struct ExampleComponentView: View, ComponentView {
                 Link(destination: URL(string: "https://www.google.com/?client=safari")!) {
                     Text("UrlLink")
                 }
+                Button(action: {
+
+                }, label: {
+                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                })
             }
             .frame(maxWidth: .infinity,
                    alignment: .leading)

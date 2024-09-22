@@ -25,10 +25,12 @@ final class DependancyContainer {
     func makeMainView() -> ExperienceView {
         let registers: [ComponentRegister] = allRegisters
         let viewModelProvider = DefaultViewModelProvider(registers: registers)
-        let experienceService = PrefilledExperienceService(components: [ExampleProperties.mock])
+        let experienceService = ExampleComponentProviderService()
+        let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
         let presenter = DefaultExperiencePresenter(dependancies: dependencies,
                                                    viewModelProvider: viewModelProvider,
-                                                   experienceService: experienceService)
+                                                   experienceService: experienceService, 
+                                                   experienceInteractor: experienceInteractor)
         let observable = ExperienceObservable(presenter: presenter)
         let viewProvider = ViewProvider(registers: registers)
         presenter.scene = observable

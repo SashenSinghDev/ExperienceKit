@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 final public class ExperienceObservable: ObservableObject {
 
-    private let presenter: ExperiencePresenter
+    let presenter: ExperiencePresenter
     @Published var anyViewModel: Experience.AnyViewModel = .defaultState
 
     public init(presenter: ExperiencePresenter) {
@@ -19,6 +20,10 @@ final public class ExperienceObservable: ObservableObject {
 }
 
 extension ExperienceObservable: ExperiencePresenter {
+    public func navigate(_ id: UUID) -> AnyView {
+        return AnyView(EmptyView())
+    }
+    
 
     public func performAction(_ action: Experience.Action) {
         presenter.performAction(action)

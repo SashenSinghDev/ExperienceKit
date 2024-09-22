@@ -11,12 +11,12 @@ import SwiftUI
 protocol ComponentView: View {
     associatedtype ConcreteViewModel: ComponentViewModel
 
-    init(viewModel: ConcreteViewModel)
+    init(viewModel: ConcreteViewModel, presenter: ExperiencePresenter)
 }
 
 extension ComponentView {
-    init(any: Any) {
-        self.init(viewModel: any as! ConcreteViewModel)
+    init(any: Any, presenter: ExperiencePresenter) {
+        self.init(viewModel: any as! ConcreteViewModel, presenter: presenter)
     }
 }
 
@@ -27,7 +27,7 @@ struct AnyContentView: ComponentView {
         return viewImpl()
     }
 
-    init(viewModel: AnyComponentViewModel) {
+    init(viewModel: AnyComponentViewModel, presenter: ExperiencePresenter) {
         fatalError("Not to be used")
     }
 

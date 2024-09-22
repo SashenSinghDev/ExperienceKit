@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96154A352C865FFA00D924B0 /* ExampleExperienceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */; };
+		9640B88A2C8A51290014F383 /* ExperienceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640B8892C8A51290014F383 /* ExperienceInteractor.swift */; };
 		96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */; };
 		96FB9FE92C36DE8D00803A47 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FE82C36DE8D00803A47 /* ContentView.swift */; };
 		96FB9FEB2C36DE8E00803A47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96FB9FEA2C36DE8E00803A47 /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleExperienceRouter.swift; sourceTree = "<group>"; };
+		9640B8892C8A51290014F383 /* ExperienceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceInteractor.swift; sourceTree = "<group>"; };
 		96FB9FE32C36DE8D00803A47 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		96FB9FE82C36DE8D00803A47 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -40,6 +44,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		96154A362C8660F400D924B0 /* ExampleExperience */ = {
+			isa = PBXGroup;
+			children = (
+				96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */,
+				9640B8892C8A51290014F383 /* ExperienceInteractor.swift */,
+			);
+			path = ExampleExperience;
+			sourceTree = "<group>";
+		};
 		96FB9FDA2C36DE8D00803A47 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +92,7 @@
 		96FB9FF92C36FBD400803A47 /* AppDependancyContainer */ = {
 			isa = PBXGroup;
 			children = (
+				96154A362C8660F400D924B0 /* ExampleExperience */,
 				96FB9FFA2C36FBDC00803A47 /* Dependancies */,
 				96FB9FF72C36DEB500803A47 /* DependancyContainer.swift */,
 			);
@@ -170,9 +184,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96154A352C865FFA00D924B0 /* ExampleExperienceRouter.swift in Sources */,
 				96FB9FFC2C36FBF000803A47 /* DependancyServiceManager.swift in Sources */,
 				96FB9FE92C36DE8D00803A47 /* ContentView.swift in Sources */,
 				96FB9FF82C36DEB500803A47 /* DependancyContainer.swift in Sources */,
+				9640B88A2C8A51290014F383 /* ExperienceInteractor.swift in Sources */,
 				96FB9FFE2C36FCCB00803A47 /* ExampleComponentProviderService.swift in Sources */,
 				96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */,
 			);

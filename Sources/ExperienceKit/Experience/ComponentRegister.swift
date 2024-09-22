@@ -13,7 +13,7 @@ public protocol ComponentRegister {
     var propertiesType: Properties.Type { get }
 
     func viewModel(from component: Component) -> AnyComponentViewModel
-    func view(from viewModel: any ComponentViewModel) -> AnyView
+    func view(from viewModel: any ComponentViewModel, presenter: ExperiencePresenter) -> AnyView
 }
 
 public let allRegisters: [ComponentRegister] = [

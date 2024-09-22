@@ -16,12 +16,12 @@ public final class ViewProvider {
         self.registers = registers
     }
 
-    func view(for viewModel: AnyComponentViewModel) -> some View {
+    func view(for viewModel: AnyComponentViewModel, presenter: ExperiencePresenter) -> some View {
         for register in registers where viewModel.contentType == register.contentType {
             guard let viewModel = viewModel.value as? (any ComponentViewModel) else {
                 continue
             }
-            let view = register.view(from: viewModel)
+            let view = register.view(from: viewModel, presenter: presenter)
             return view
         }
         fatalError("Not implemented!")

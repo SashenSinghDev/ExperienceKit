@@ -8,7 +8,13 @@
 import Foundation
 
 public struct ExampleProperties {
-    let title: String
+    public let title: String
+    public let navigationType: NavigationType
+
+    public init(title: String, navigationType: NavigationType) {
+        self.title = title
+        self.navigationType = navigationType
+    }
 }
 
 extension ExampleProperties: Properties, Codable {
@@ -21,7 +27,8 @@ extension ExampleProperties: Properties, Codable {
 public extension ExampleProperties {
     static var mock: Component {
         Component(contentType: "exampleComponent",
-                  properties: ExampleProperties(title: "mockTitle"),
+                  properties: ExampleProperties(title: "mockTitle", 
+                                                navigationType: .deepdive),
                   id: UUID())
     }
 }

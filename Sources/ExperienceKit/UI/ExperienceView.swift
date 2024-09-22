@@ -24,17 +24,18 @@ public struct ExperienceView: View {
                 ForEach(observer.anyViewModel.components) { component in
                     makeView(from: component)
                 }
-                Spacer()
             }
-            .padding()
-            .onAppear {
-                observer.performAction(.load)
-            }
+            Spacer()
+        }
+        .padding()
+        .onAppear {
+            observer.performAction(.load)
         }
     }
 
+
     @ViewBuilder
     private func makeView(from component: AnyComponentViewModel) -> some View {
-        viewProvider.view(for: component)
+        viewProvider.view(for: component, presenter: observer.presenter)
     }
 }

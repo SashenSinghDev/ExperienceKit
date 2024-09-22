@@ -6,13 +6,22 @@
 //
 
 import Foundation
+import SwiftUI
 
-final class ExampleViewModel: ComponentViewModel {
-    let id: UUID
-    let title: String
+public final class ExampleViewModel: ComponentViewModel {
 
-    init(properties: ExampleProperties, id: UUID) {
+    public let id: UUID
+    public let title: String
+    let properties: ExampleProperties
+
+    public init(properties: ExampleProperties,
+         id: UUID) {
         self.id = id
         self.title = properties.title
+        self.properties = properties
+    }
+
+    var navigatedView: AnyView? {
+        return AnyView(Text("navigated"))
     }
 }

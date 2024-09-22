@@ -10,6 +10,11 @@ import ExperienceKit
 
 final class ExampleComponentProviderService: ExperienceService {
     func load(completion: @escaping ([Component]) -> Void) {
-        completion([ExampleProperties.mock])
+        completion([
+            Component(contentType: "exampleComponent",
+                      properties: ExampleProperties(title: "mockTitle",
+                                                    navigationType: .deepdive),
+                      id: UUID())
+        ])
     }
 }

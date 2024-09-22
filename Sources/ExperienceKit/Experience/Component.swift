@@ -8,14 +8,20 @@
 import Foundation
 
 public struct Component {
-    let contentType: String
-    let properties: Properties
-    let id: UUID
+    public let contentType: String
+    public let properties: Properties
+    public let id: UUID
+
+    public init(contentType: String, properties: Properties, id: UUID) {
+        self.contentType = contentType
+        self.properties = properties
+        self.id = id
+    }
 }
 
 extension Component: Codable {
     public enum CodingKeys: String, CodingKey {
-        case contentType, properties, id
+        case contentType, properties, id, dependancy
     }
 
     public init(from decoder: Decoder) throws {
@@ -27,6 +33,7 @@ extension Component: Codable {
             self.properties = try register.propertiesType.fromComponent(properties: container)
             return
         }
+
         fatalError("unregistered component sent to the apps")
     }
 
