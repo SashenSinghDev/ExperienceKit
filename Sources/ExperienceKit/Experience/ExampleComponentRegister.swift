@@ -24,6 +24,7 @@ struct ExampleComponentRegister: ComponentRegister {
     }
 
     func view(from viewModel: any ComponentViewModel, presenter: ExperiencePresenter) -> AnyView {
-        return AnyView(AnyContentView(ExampleComponentView(any: viewModel, presenter: presenter)))
+        return AnyView(ExampleComponentView(any: viewModel, presenter: presenter))
+//        return AnyView(AnyContentView(ExampleComponentView(any: viewModel, presenter: presenter)))
     }
 }

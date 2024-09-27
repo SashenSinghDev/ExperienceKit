@@ -9,6 +9,5 @@ import Foundation
 import SwiftUI
 
 public protocol ExperiencePresenter {
-    func performAction(_ action: Experience.Action)
-    func navigate(_ id: UUID) -> AnyView
+    func load()
 }

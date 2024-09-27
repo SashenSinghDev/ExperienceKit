@@ -31,9 +31,7 @@ final class DependancyContainer {
                                                    viewModelProvider: viewModelProvider,
                                                    experienceService: experienceService, 
                                                    experienceInteractor: experienceInteractor)
-        let observable = ExperienceObservable(presenter: presenter)
         let viewProvider = ViewProvider(registers: registers)
-        presenter.scene = observable
-        return ExperienceView(observer: observable, viewProvider: viewProvider)
+        return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }
 }

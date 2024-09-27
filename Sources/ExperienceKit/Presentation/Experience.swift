@@ -13,14 +13,18 @@ public enum Experience {
     }
 
     public enum Update {
-        case setAnyViewModel(AnyViewModel)
+        case setAnyViewModel(ViewModels)
     }
 
-    public struct AnyViewModel {
-        let components: [AnyComponentViewModel]
+    public struct ViewModels {
+        public let components: [AnyComponentViewModel]
+
+        public init(components: [AnyComponentViewModel]) {
+            self.components = components
+        }
     }
 }
 
-extension Experience.AnyViewModel {
-    static let defaultState = Experience.AnyViewModel(components: [])
+public extension Experience.ViewModels {
+    public static let defaultState = Experience.ViewModels(components: [])
 }

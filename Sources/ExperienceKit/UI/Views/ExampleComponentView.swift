@@ -8,18 +8,32 @@
 import Foundation
 import SwiftUI
 
-struct ExampleComponentView: View, ComponentView {
+struct ExampleComponentView: ComponentView {
 
-    private let viewModel: ExampleViewModel
     private let presenter: ExperiencePresenter
+    @ObservedObject var viewModel: ExampleViewModel
 
-    init(viewModel: ExampleViewModel, presenter: ExperiencePresenter) {
+    init(viewModel: ExampleViewModel, 
+         presenter: ExperiencePresenter) {
         self.viewModel = viewModel
         self.presenter = presenter
     }
 
     var body: some View {
-        NavigationLink(destination: presenter.navigate(viewModel.id)) {
+        TextEditor(text: $viewModel.profileText)
+            .foregroundStyle(.black)
+            .padding(.horizontal)
+            .frame(height: 30)
+
+        Picker(selection: $viewModel.publishedAmount, label: Text("Amount")) {
+            Text("€1").tag(1)
+            Text("€2").tag(2)
+            Text("€5").tag(5)
+            Text("€10").tag(10)
+        }
+        .pickerStyle(SegmentedPickerStyle())
+
+        NavigationLink(value: viewModel) {
             VStack(alignment: .leading) {
                 Text("Title")
                     .bold()
@@ -28,9 +42,9 @@ struct ExampleComponentView: View, ComponentView {
                     Text("UrlLink")
                 }
                 Button(action: {
-
+                    print(viewModel.publishedAmount)
                 }, label: {
-                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                    Text("get picker value")
                 })
             }
             .frame(maxWidth: .infinity,

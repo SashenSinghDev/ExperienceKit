@@ -9,10 +9,14 @@ import Foundation
 
 public struct ExampleProperties {
     public let title: String
+    public let profilePlaceholder: String
+    public let initialAmount: Int
     public let navigationType: NavigationType
 
-    public init(title: String, navigationType: NavigationType) {
+    public init(title: String, profilePlaceholder: String, initialAmount: Int, navigationType: NavigationType) {
         self.title = title
+        self.profilePlaceholder = profilePlaceholder
+        self.initialAmount = initialAmount
         self.navigationType = navigationType
     }
 }
@@ -28,6 +32,8 @@ public extension ExampleProperties {
     static var mock: Component {
         Component(contentType: "exampleComponent",
                   properties: ExampleProperties(title: "mockTitle", 
+                                                profilePlaceholder: "Enter your bio",
+                                                initialAmount: 1,
                                                 navigationType: .deepdive),
                   id: UUID())
     }

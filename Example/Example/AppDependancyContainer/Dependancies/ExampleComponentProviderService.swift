@@ -13,6 +13,8 @@ final class ExampleComponentProviderService: ExperienceService {
         completion([
             Component(contentType: "exampleComponent",
                       properties: ExampleProperties(title: "mockTitle",
+                                                    profilePlaceholder: "Enter your bio",
+                                                    initialAmount: 1,
                                                     navigationType: .deepdive),
                       id: UUID())
         ])

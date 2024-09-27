@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ExperienceKit
 
 struct ContentView: View {
     private let dependancyContainer: DependancyContainer
@@ -18,7 +19,10 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             dependancyContainer.makeMainView()
-            .navigationTitle("ExprienceKit")
+                .navigationDestination(for: ExampleViewModel.self) { viewModel in
+                    Text("\(viewModel.publishedAmount)")
+                }
+                .navigationTitle("ExprienceKit")
         }
     }
 }

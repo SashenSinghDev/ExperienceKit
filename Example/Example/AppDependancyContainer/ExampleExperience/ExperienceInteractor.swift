@@ -12,24 +12,25 @@ import SwiftUI
 final class ExampleExperienceInteractor: ExperienceInteractor {
 
     let experienceService: ExperienceService
-    var components = [Component]()
+    var components: [Component] =  [Component(contentType: "exampleComponent",
+                                              properties: ExampleProperties(title: "mockTitle",
+                                                                            profilePlaceholder: "Enter your bio",
+                                                                            initialAmount: 1,
+                                                                            navigationType: .deepdive),
+                                              id: UUID()),
+                                    Component(contentType: "exampleComponent",
+                                                                              properties: ExampleProperties(title: "mockTitle2",
+                                                                                                            profilePlaceholder: "Enter your bio",
+                                                                                                            initialAmount: 1,
+                                                                                                            navigationType: .deepdive),
+                                                                              id: UUID())]
 
     init(experienceService: ExperienceService) {
         self.experienceService = experienceService
     }
 
     func load(completion: @escaping ([Component]) -> Void) {
-        let componentsToReturn = [Component(contentType: "exampleComponent",
-                                            properties: ExampleProperties(title: "mockTitle",
-                                                                          navigationType: .deepdive),
-                                            id: UUID()),
-                                  Component(contentType: "exampleComponent",
-                                            properties: ExampleProperties(title: "mockTitle2",
-                                                                          navigationType: .deepdive),
-                                            id: UUID())]
-
-        components = componentsToReturn
-        completion(componentsToReturn)
+        completion(components)
     }
 
     func navigate(for id: UUID) -> AnyView {
@@ -41,7 +42,7 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
 
     func navigate(for viewModel: AnyComponentViewModel) -> AnyView {
         if let vm = viewModel.value as? ExampleViewModel {
-            return AnyView(Text(vm.title))
+            return AnyView(Text("profile text\(vm.profileText), amount "))
         }
         return AnyView(EmptyView())
     }
