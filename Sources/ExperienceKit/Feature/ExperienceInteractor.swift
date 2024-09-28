@@ -10,9 +10,6 @@ import SwiftUI
 
 public protocol ExperienceInteractor {
     func load(completion: @escaping ([Component]) -> Void)
-    func navigate(for id: UUID) -> AnyView
-    func navigate(for viewModel: AnyComponentViewModel) -> AnyView
-    func navigate(for properties: AnyProperties) -> AnyView
 }
 
 extension ExperienceInteractor {

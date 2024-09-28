@@ -32,8 +32,6 @@ public final class ExampleViewModel: ComponentViewModel, ObservableObject, Hasha
          id: UUID) {
         self.id = id
         self.title = properties.title
-//        self.amount = properties.initialAmount
-//        self.profileText = properties.profilePlaceholder
     }
 
     var navigatedView: AnyView? {

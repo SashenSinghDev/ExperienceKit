@@ -36,9 +36,11 @@ public struct ExperienceView: View {
                         makeView(from: viewModel)
                     }
                 }
-                Spacer()
             }
-            .padding()
+            .padding(.horizontal, 16)
+//            .onAppear {
+//                presenter.load()
+//            }
         }
     }
 

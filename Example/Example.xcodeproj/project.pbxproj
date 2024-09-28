@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		96154A352C865FFA00D924B0 /* ExampleExperienceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */; };
 		9640B88A2C8A51290014F383 /* ExperienceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640B8892C8A51290014F383 /* ExperienceInteractor.swift */; };
 		96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */; };
 		96FB9FE92C36DE8D00803A47 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FE82C36DE8D00803A47 /* ContentView.swift */; };
@@ -20,7 +19,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleExperienceRouter.swift; sourceTree = "<group>"; };
 		9640B8892C8A51290014F383 /* ExperienceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceInteractor.swift; sourceTree = "<group>"; };
 		96FB9FE32C36DE8D00803A47 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
@@ -47,7 +45,6 @@
 		96154A362C8660F400D924B0 /* ExampleExperience */ = {
 			isa = PBXGroup;
 			children = (
-				96154A342C865FFA00D924B0 /* ExampleExperienceRouter.swift */,
 				9640B8892C8A51290014F383 /* ExperienceInteractor.swift */,
 			);
 			path = ExampleExperience;
@@ -184,7 +181,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96154A352C865FFA00D924B0 /* ExampleExperienceRouter.swift in Sources */,
 				96FB9FFC2C36FBF000803A47 /* DependancyServiceManager.swift in Sources */,
 				96FB9FE92C36DE8D00803A47 /* ContentView.swift in Sources */,
 				96FB9FF82C36DEB500803A47 /* DependancyContainer.swift in Sources */,

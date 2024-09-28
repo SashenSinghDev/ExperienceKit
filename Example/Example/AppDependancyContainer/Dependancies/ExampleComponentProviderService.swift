@@ -16,6 +16,12 @@ final class ExampleComponentProviderService: ExperienceService {
                                                     profilePlaceholder: "Enter your bio",
                                                     initialAmount: 1,
                                                     navigationType: .deepdive),
+                      id: UUID()),
+            Component(contentType: "exampleComponent",
+                      properties: ExampleProperties(title: "mockTitle2",
+                                                    profilePlaceholder: "Enter your bio",
+                                                    initialAmount: 1,
+                                                    navigationType: .deepdive),
                       id: UUID())
         ])
     }
