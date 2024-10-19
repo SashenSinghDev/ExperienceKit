@@ -35,32 +35,16 @@ public final class DefaultExperiencePresenter: ExperiencePresenter, ObservableOb
         self.experienceInteractor = experienceInteractor
     }
 
-    var defaultComponent: [AnyComponentViewModel] {
-        let components = [Component(contentType: "exampleComponent",
-                                    properties: ExampleProperties(title: "mockTitle",
-                                                                  profilePlaceholder: "Enter your bio",
-                                                                  initialAmount: 1,
-                                                                  navigationType: .deepdive),
-                                    id: UUID())]
-
-        let viewModels: [AnyComponentViewModel] = components.compactMap {
-            return self.viewModelProvider.viewModel(for: $0)
-        }
-
-        return viewModels
-    }
-
-
     public func load() {
-        experienceInteractor.load { [weak self] components in
+            self.experienceInteractor.load { [weak self] components in
 
-            guard let self else { return }
+                guard let self else { return }
 
-            let viewModels: [AnyComponentViewModel] = components.compactMap {
-                return self.viewModelProvider.viewModel(for: $0)
+                let viewModels: [AnyComponentViewModel] = components.compactMap {
+                    return self.viewModelProvider.viewModel(for: $0)
+                }
+
+                self.state = .loaded(viewModels)
             }
-
-            self.state = .loaded(viewModels)
-        }
     }
 }

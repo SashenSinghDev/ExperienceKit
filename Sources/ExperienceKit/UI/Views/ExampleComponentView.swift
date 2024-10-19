@@ -28,8 +28,8 @@ struct ExampleComponentView: ComponentView {
         Picker(selection: $viewModel.publishedAmount, label: Text("Amount")) {
             Text("€1").tag(1)
             Text("€2").tag(2)
-            Text("€5").tag(5)
-            Text("€10").tag(10)
+            Text("€3").tag(3)
+            Text("€4").tag(4)
         }
         .pickerStyle(SegmentedPickerStyle())
 
@@ -54,5 +54,12 @@ struct ExampleComponentView: ComponentView {
             .cornerRadius(8)
         }
         .buttonStyle(StaticButtonStyle())
+    }
+}
+
+extension ExampleComponentView {
+    static func == (lhs: ExampleComponentView, rhs: ExampleComponentView) -> Bool {
+        lhs.viewModel.id == rhs.viewModel.id &&
+        lhs.viewModel.publishedAmount == rhs.viewModel.publishedAmount
     }
 }

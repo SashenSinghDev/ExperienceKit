@@ -12,18 +12,27 @@ import SwiftUI
 final class ExampleExperienceInteractor: ExperienceInteractor {
 
     let experienceService: ExperienceService
-    var components: [Component] = [Component(contentType: "exampleComponent",
-                                             properties: ExampleProperties(title: "mockTitle",
-                                                                           profilePlaceholder: "Enter your bio",
-                                                                           initialAmount: 1,
-                                                                           navigationType: .deepdive),
-                                             id: UUID()),
-                                   Component(contentType: "exampleComponent",
-                                             properties: ExampleProperties(title: "mockTitle2",
-                                                                           profilePlaceholder: "Enter your bio",
-                                                                           initialAmount: 1,
-                                                                           navigationType: .deepdive),
-                                             id: UUID())]
+
+    let firstComponent = Component(contentType: "exampleComponent",
+                                   properties: ExampleProperties(title: "mockTitle \(Int.random(in: 0...10))",
+                                                                 profilePlaceholder: "Enter your bio",
+                                                                 initialAmount: 3,
+                                                                 navigationType: .deepdive),
+                                   id: UUID())
+
+    var components1: [Component] {
+        [firstComponent,
+         Component(contentType: "exampleComponent",
+                   properties: ExampleProperties(title: "mockTitle2",
+                                                 profilePlaceholder: "Enter your bio",
+                                                 initialAmount: 2,
+                                                 navigationType: .deepdive),
+                   id: UUID())]
+    }
+
+    var components2: [Component] {
+        [firstComponent]
+    }
 
     init(experienceService: ExperienceService) {
         self.experienceService = experienceService
@@ -31,7 +40,9 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
 
     func load(completion: @escaping ([Component]) -> Void) {
 //        experienceService.load { components in
-            completion(components)
+
+        let comps = Int.random(in: 0...1) == 0 ? components1 : components2
+            completion(comps)
 //        }
     }
 }

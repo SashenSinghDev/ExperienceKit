@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-protocol ComponentView: View {
+protocol ComponentView: View, Equatable {
     associatedtype ConcreteViewModel: ComponentViewModel
 
     init(viewModel: ConcreteViewModel, presenter: ExperiencePresenter)

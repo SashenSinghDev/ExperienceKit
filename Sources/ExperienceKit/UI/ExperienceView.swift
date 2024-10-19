@@ -19,28 +19,32 @@ public struct ExperienceView: View {
     }
 
     public var body: some View {
-        switch presenter.state {
-        case .idle:
-            // Render a clear color and start the loading process
-            // when the view first appears, which should make the
-            // view model transition into its loading state:
-            Color.clear.onAppear(perform: presenter.load)
-        case .loading:
-            ProgressView()
-        case .failed(let error):
-            Color.clear.onAppear(perform: presenter.load)
-        case .loaded(let viewModel):
-            ScrollView {
-                VStack {
-                    ForEach(viewModel) { viewModel in
-                        makeView(from: viewModel)
+        VStack {
+            switch presenter.state {
+            case .idle:
+                // Render a clear color and start the loading process
+                // when the view first appears, which should make the
+                // view model transition into its loading state:
+                Color.clear.onAppear(perform: presenter.load)
+            case .loading:
+                ProgressView()
+            case .failed(let error):
+                Color.clear.onAppear(perform: presenter.load)
+            case .loaded(let viewModel):
+                ScrollView {
+                    VStack {
+                        ForEach(viewModel) { viewModel in
+                            makeView(from: viewModel)
+                        }
                     }
                 }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-//            .onAppear {
-//                presenter.load()
-//            }
+        }
+        .toolbar {
+            Button("Reload") {
+                presenter.load()
+            }
         }
     }
 
