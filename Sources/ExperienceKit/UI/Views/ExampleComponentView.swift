@@ -10,13 +10,10 @@ import SwiftUI
 
 struct ExampleComponentView: ComponentView {
 
-    private let presenter: ExperiencePresenter
     @ObservedObject var viewModel: ExampleViewModel
 
-    init(viewModel: ExampleViewModel, 
-         presenter: ExperiencePresenter) {
+    init(viewModel: ExampleViewModel) {
         self.viewModel = viewModel
-        self.presenter = presenter
     }
 
     var body: some View {

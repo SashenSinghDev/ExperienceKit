@@ -10,7 +10,7 @@ import ExperienceKit
 
 final class DependancyContainer {
 
-    typealias Dependencies = HasExperienceService
+    typealias Dependencies = HasEmptyDependancy
 
     // MARK: - Properties
 
@@ -22,16 +22,14 @@ final class DependancyContainer {
         self.dependencies = dependencies
     }
 
-    func makeMainView() -> ExperienceView {
+    func makeMainView() -> ExperienceView<DefaultExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
-        let viewModelProvider = DefaultViewModelProvider(registers: registers)
+        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
         let experienceService = ExampleComponentProviderService()
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
-        let presenter = DefaultExperiencePresenter(dependancies: dependencies,
-                                                   viewModelProvider: viewModelProvider,
-                                                   experienceService: experienceService, 
+        let presenter = DefaultExperiencePresenter(viewModelProvider: viewModelProvider,
                                                    experienceInteractor: experienceInteractor)
-        let viewProvider = ViewProvider(registers: registers)
+        let viewProvider = ViewProvider(supportedComponentRegisters: registers)
         return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }
 }

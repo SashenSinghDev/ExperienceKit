@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-public struct ExperienceView: View {
+public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresenter {
 
-    @ObservedObject var presenter: DefaultExperiencePresenter
+    @ObservedObject var presenter: Presenter
     private let viewProvider: ViewProvider
 
-    public init(presenter: DefaultExperiencePresenter,
+    public init(presenter: Presenter,
                 viewProvider: ViewProvider) {
         self.presenter = presenter
         self.viewProvider = viewProvider
@@ -51,6 +51,6 @@ public struct ExperienceView: View {
 
     @ViewBuilder
     private func makeView(from component: AnyComponentViewModel) -> some View {
-        viewProvider.view(for: component, presenter: presenter)
+        viewProvider.view(for: component)
     }
 }

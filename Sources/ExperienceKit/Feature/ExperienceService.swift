@@ -10,7 +10,3 @@ import Foundation
 public protocol ExperienceService {
     func load(completion: @escaping ([Component]) -> Void)
 }
-
-public protocol HasExperienceService {
-    var experienceService: ExperienceService { get }
-}

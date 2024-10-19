@@ -8,6 +8,14 @@
 import Foundation
 import SwiftUI
 
-public protocol ExperiencePresenter {
+public protocol ExperiencePresenter: ObservableObject {
+    var state: PresenterState { get }
     func load()
 }
+
+public enum PresenterState {
+     case idle
+     case loading
+     case failed(Error)
+     case loaded([AnyComponentViewModel])
+ }

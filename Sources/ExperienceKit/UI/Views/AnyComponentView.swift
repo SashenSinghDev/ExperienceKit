@@ -11,12 +11,12 @@ import SwiftUI
 protocol ComponentView: View, Equatable {
     associatedtype ConcreteViewModel: ComponentViewModel
 
-    init(viewModel: ConcreteViewModel, presenter: ExperiencePresenter)
+    init(viewModel: ConcreteViewModel)
 }
 
 extension ComponentView {
-    init(any: Any, presenter: ExperiencePresenter) {
-        self.init(viewModel: any as! ConcreteViewModel, presenter: presenter)
+    init(any: Any) {
+        self.init(viewModel: any as! ConcreteViewModel)
     }
 }
 

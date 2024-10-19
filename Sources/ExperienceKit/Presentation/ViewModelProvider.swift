@@ -14,8 +14,8 @@ public protocol ViewModelProvider {
 public final class DefaultViewModelProvider: ViewModelProvider {
     private let registers: [ComponentRegister]
 
-    public init(registers: [ComponentRegister]) {
-        self.registers = registers
+    public init(supportedComponentRegisters: [ComponentRegister]) {
+        self.registers = supportedComponentRegisters
     }
 
     public func viewModel(for content: Component) -> AnyComponentViewModel? {

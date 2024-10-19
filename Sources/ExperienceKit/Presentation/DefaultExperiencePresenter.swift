@@ -8,43 +8,28 @@
 import Foundation
 import SwiftUI
 
-public final class DefaultExperiencePresenter: ExperiencePresenter, ObservableObject {
-    public typealias Dependancies = HasExperienceService
+public final class DefaultExperiencePresenter: ExperiencePresenter {
+    @Published public var state: PresenterState = .idle
 
-    public enum State {
-         case idle
-         case loading
-         case failed(Error)
-         case loaded([AnyComponentViewModel])
-     }
-
-    @Published private(set) var state = State.idle
-
-    private let dependancies: Dependancies
     private let viewModelProvider: ViewModelProvider
-    private let experienceService: ExperienceService
     private let experienceInteractor: ExperienceInteractor
 
-    public init(dependancies: Dependancies,
-                viewModelProvider: ViewModelProvider,
-                experienceService: ExperienceService,
+    public init(viewModelProvider: ViewModelProvider,
                 experienceInteractor: ExperienceInteractor) {
-        self.dependancies = dependancies
         self.viewModelProvider = viewModelProvider
-        self.experienceService = experienceService
         self.experienceInteractor = experienceInteractor
     }
 
     public func load() {
-            self.experienceInteractor.load { [weak self] components in
+        self.experienceInteractor.load { [weak self] components in
 
-                guard let self else { return }
+            guard let self else { return }
 
-                let viewModels: [AnyComponentViewModel] = components.compactMap {
-                    return self.viewModelProvider.viewModel(for: $0)
-                }
-
-                self.state = .loaded(viewModels)
+            let viewModels: [AnyComponentViewModel] = components.compactMap {
+                return self.viewModelProvider.viewModel(for: $0)
             }
+
+            self.state = .loaded(viewModels)
+        }
     }
 }
