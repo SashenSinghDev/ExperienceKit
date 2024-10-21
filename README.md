@@ -5,12 +5,12 @@
 ```mermaid
 flowchart TD
 
-subgraph Components-Interface
-    Properties{{Properties}}
-    ComponentViewModel{{ComponentViewModel}}
-    ComponentView{{ComponentView}}
-    ComponentRegister{{ComponentRegister}}
-end
+%% subgraph Components-Interface
+%%     Properties{{Properties}}
+%%     ComponentViewModel{{ComponentViewModel}}
+%%     ComponentView{{ComponentView}}
+%%     ComponentRegister{{ComponentRegister}}
+%% end
 
 subgraph Components
     ExampleProperties
@@ -26,7 +26,6 @@ subgraph Components
     ExampleComponentRegister-.->ComponentRegister{{ComponentRegister}}
     ExampleComponentRegister-->ExampleComponentView
     ExampleComponentRegister-->ExampleViewModel
-    ExampleComponentRegister-->ExampleProperties
 end
 
 subgraph UI
