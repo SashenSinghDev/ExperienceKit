@@ -16,8 +16,7 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
     let firstComponent = Component(contentType: "exampleComponent",
                                    properties: ExampleProperties(title: "mockTitle \(Int.random(in: 0...10))",
                                                                  profilePlaceholder: "Enter your bio",
-                                                                 initialAmount: 3,
-                                                                 navigationType: .deepdive),
+                                                                 initialAmount: 3),
                                    id: UUID())
 
     var components1: [Component] {
@@ -25,8 +24,7 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
          Component(contentType: "exampleComponent",
                    properties: ExampleProperties(title: "mockTitle2",
                                                  profilePlaceholder: "Enter your bio",
-                                                 initialAmount: 2,
-                                                 navigationType: .deepdive),
+                                                 initialAmount: 2),
                    id: UUID())]
     }
 

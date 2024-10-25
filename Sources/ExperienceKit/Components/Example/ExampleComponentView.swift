@@ -50,7 +50,6 @@ struct ExampleComponentView: ComponentView {
             .background(.green)
             .cornerRadius(8)
         }
-        .buttonStyle(StaticButtonStyle())
     }
 }
 

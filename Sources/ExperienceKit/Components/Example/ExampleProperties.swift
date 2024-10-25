@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  ExampleProperties.swift
+//
 //
 //  Created by Sashen Singh on 04/07/2024.
 //
@@ -11,13 +11,11 @@ public struct ExampleProperties {
     public let title: String
     public let profilePlaceholder: String
     public let initialAmount: Int
-    public let navigationType: NavigationType
 
-    public init(title: String, profilePlaceholder: String, initialAmount: Int, navigationType: NavigationType) {
+    public init(title: String, profilePlaceholder: String, initialAmount: Int) {
         self.title = title
         self.profilePlaceholder = profilePlaceholder
         self.initialAmount = initialAmount
-        self.navigationType = navigationType
     }
 }
 
@@ -33,8 +31,7 @@ public extension ExampleProperties {
         Component(contentType: "exampleComponent",
                   properties: ExampleProperties(title: "mockTitle", 
                                                 profilePlaceholder: "Enter your bio",
-                                                initialAmount: 1,
-                                                navigationType: .deepdive),
+                                                initialAmount: 1),
                   id: UUID())
     }
 }

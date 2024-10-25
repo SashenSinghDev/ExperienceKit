@@ -8,20 +8,7 @@
 import Foundation
 import SwiftUI
 
-public final class ExampleViewModel: ComponentViewModel, ObservableObject, Hashable {
-
-    public static func == (lhs: ExampleViewModel, rhs: ExampleViewModel) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-
-    var identifier: String {
-        return UUID().uuidString
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        return hasher.combine(identifier)
-    }
-
+public final class ExampleViewModel: ComponentViewModel, ObservableObject {
     public let id: UUID
     let title: String
 
@@ -36,5 +23,19 @@ public final class ExampleViewModel: ComponentViewModel, ObservableObject, Hasha
 
     var navigatedView: AnyView? {
         return AnyView(Text("navigated"))
+    }
+}
+
+extension ExampleViewModel: Hashable {
+    public static func == (lhs: ExampleViewModel, rhs: ExampleViewModel) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+
+    var identifier: String {
+        return UUID().uuidString
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(identifier)
     }
 }

@@ -8,8 +8,16 @@
 import Foundation
 import SwiftUI
 
-public final class DefaultExperiencePresenter: ExperiencePresenter {
-    @Published public var state: PresenterState = .idle
+public final class ExperiencePresenter: ObservableObject {
+    
+    public enum State {
+         case idle
+         case loading
+         case failed(Error)
+         case loaded([AnyComponentViewModel])
+     }
+    
+    @Published public var state: State = .idle
 
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor

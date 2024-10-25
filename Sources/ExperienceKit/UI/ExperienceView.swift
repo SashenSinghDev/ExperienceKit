@@ -28,13 +28,14 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                 Color.clear.onAppear(perform: presenter.load)
             case .loading:
                 ProgressView()
-            case .failed(let error):
+            case .failed(_):
                 Color.clear.onAppear(perform: presenter.load)
             case .loaded(let viewModel):
                 ScrollView {
                     VStack {
                         ForEach(viewModel) { viewModel in
                             makeView(from: viewModel)
+                                .buttonStyle(StaticButtonStyle())
                         }
                     }
                 }

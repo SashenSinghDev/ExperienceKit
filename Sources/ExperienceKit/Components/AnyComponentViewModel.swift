@@ -1,19 +1,5 @@
 import Foundation
 
-public protocol ComponentViewModel {
-    associatedtype P: Properties
-
-    var id: UUID { get }
-
-    init(properties: P, id: UUID)
-}
-
-public extension ComponentViewModel {
-    init(any: Any, id: UUID) {
-        self.init(properties: any as! P, id: id)
-    }
-}
-
 public struct AnyProperties: Properties {
     public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> AnyProperties {
         fatalError("Not to be used")

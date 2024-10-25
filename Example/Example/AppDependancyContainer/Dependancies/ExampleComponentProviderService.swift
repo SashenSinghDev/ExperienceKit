@@ -14,14 +14,12 @@ final class ExampleComponentProviderService: ExperienceService {
             Component(contentType: "exampleComponent",
                       properties: ExampleProperties(title: "mockTitle",
                                                     profilePlaceholder: "Enter your bio",
-                                                    initialAmount: 1,
-                                                    navigationType: .deepdive),
+                                                    initialAmount: 1),
                       id: UUID()),
             Component(contentType: "exampleComponent",
                       properties: ExampleProperties(title: "mockTitle2",
                                                     profilePlaceholder: "Enter your bio",
-                                                    initialAmount: 1,
-                                                    navigationType: .deepdive),
+                                                    initialAmount: 1),
                       id: UUID())
         ])
     }
