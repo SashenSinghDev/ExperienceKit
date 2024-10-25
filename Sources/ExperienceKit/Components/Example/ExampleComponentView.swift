@@ -19,7 +19,7 @@ struct ExampleComponentView: ComponentView {
     var body: some View {
         TextEditor(text: $viewModel.profileText)
             .foregroundStyle(.black)
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
             .frame(height: 30)
 
         Picker(selection: $viewModel.publishedAmount, label: Text("Amount")) {
@@ -29,6 +29,7 @@ struct ExampleComponentView: ComponentView {
             Text("€4").tag(4)
         }
         .pickerStyle(SegmentedPickerStyle())
+        .padding(.horizontal, 16)
 
         NavigationLink(value: viewModel) {
             VStack(alignment: .leading) {
@@ -38,17 +39,20 @@ struct ExampleComponentView: ComponentView {
                 Link(destination: URL(string: "https://www.google.com/?client=safari")!) {
                     Text("UrlLink")
                 }
-                Button(action: {
-                    print(viewModel.publishedAmount)
-                }, label: {
-                    Text("get picker value")
-                })
             }
             .frame(maxWidth: .infinity,
                    alignment: .leading)
-            .padding()
-            .background(.green)
+            .padding(.horizontal, 16)
+            .background(.white)
             .cornerRadius(8)
+            Button(action: {
+                print(viewModel.publishedAmount)
+            }, label: {
+                Text("get picker value")
+                    .frame(maxWidth: .infinity)
+            })
+            .padding(.horizontal, 16)
+            .buttonStyle(SecondaryButtonStyle())
         }
     }
 }

@@ -39,7 +39,6 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                         }
                     }
                 }
-                .padding(.horizontal, 16)
             }
         }
         .toolbar {
