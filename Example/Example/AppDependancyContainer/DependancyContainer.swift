@@ -25,7 +25,7 @@ final class DependancyContainer {
     func makeMainView() -> ExperienceView<ExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
         let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
-        let experienceService = ExampleComponentProviderService()
+        let experienceService = DefaultExperienceService()
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
                                             experienceInteractor: experienceInteractor)

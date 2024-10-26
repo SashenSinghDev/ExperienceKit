@@ -34,5 +34,13 @@ public extension ExampleProperties {
                                                 initialAmount: 1),
                   id: UUID())
     }
+
+    static var radomisedMock: Component {
+        Component(contentType: "exampleComponent",
+                  properties: ExampleProperties(title: "mockTitle \(Int.random(in: 0...10))",
+                                                profilePlaceholder: "Enter your bio",
+                                                initialAmount: 3),
+                  id: UUID())
+    }
 }
 #endif
