@@ -16,8 +16,10 @@ subgraph Components
     ExampleViewModel-.->ComponentViewModel{{ComponentViewModel}}
     ExampleComponentView-.->ComponentView{{ComponentView}}
     ExampleComponentRegister-.->ComponentRegister{{ComponentRegister}}
-    ExampleComponentRegister-->ExampleComponentView
-    ExampleComponentRegister-->ExampleViewModel
+    ExampleComponentRegister----->ExampleComponentView
+    ExampleComponentRegister--->ExampleViewModel
+    ComponentRegister{{ComponentRegister}}-->ComponentView{{ComponentView}}
+    ComponentRegister{{ComponentRegister}}-->ComponentViewModel{{ComponentViewModel}}
 end
 
 subgraph UI
@@ -31,7 +33,8 @@ subgraph UI
     ViewProvider-->ComponentRegister{{ComponentRegister}}
     ExperienceView-->ViewProvider
     ExperiencePresenter-->ViewModelProvider
-    ExperienceView-->ExperiencePresenter
+    ExperienceView--->ExperiencePresenter
+    ExperiencePresenter--->ExperienceViewModel
 end
 
 subgraph Service
@@ -46,14 +49,5 @@ subgraph BusinessLogic
 end
 
 ExperiencePresenter-->ExperienceInteractor
-
-
-
- 
-
-
-
-
-
 
 ```
