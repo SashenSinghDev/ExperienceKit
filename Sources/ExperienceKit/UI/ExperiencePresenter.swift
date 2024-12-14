@@ -9,23 +9,27 @@ import Foundation
 import SwiftUI
 
 public final class ExperiencePresenter: ObservableObject {
-    
+
     public enum State {
-         case idle
-         case loading
-         case failed(Error)
-         case loaded([AnyComponentViewModel])
-     }
-    
+        case idle
+        case loading
+        case failed(Error)
+        case loadedScrollable([AnyComponentViewModel])
+        case loadedFullScreen([AnyComponentViewModel])
+    }
+
     @Published public var state: State = .idle
 
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor
+    private let viewModel: ExperienceViewModel
 
     public init(viewModelProvider: ViewModelProvider,
-                experienceInteractor: ExperienceInteractor) {
+                experienceInteractor: ExperienceInteractor,
+                viewModel: ExperienceViewModel) {
         self.viewModelProvider = viewModelProvider
         self.experienceInteractor = experienceInteractor
+        self.viewModel = viewModel
     }
 
     public func load() {
@@ -37,7 +41,12 @@ public final class ExperiencePresenter: ObservableObject {
                 return self.viewModelProvider.viewModel(for: $0)
             }
 
-            self.state = .loaded(viewModels)
+            switch viewModel.experienceCharacterType {
+            case .fullScreen:
+                self.state = .loadedFullScreen(viewModels)
+            case .scrollable:
+                self.state = .loadedScrollable(viewModels)
+            }
         }
     }
 }

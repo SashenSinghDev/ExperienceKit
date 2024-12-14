@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ScrollableContentView.swift
 //  Example
 //
 //  Created by Sashen Singh on 04/07/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ExperienceKit
 
-struct ContentView: View {
+struct ScrollableContentView: View {
     private let dependancyContainer: DependancyContainer
 
     init() {
@@ -17,16 +17,14 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            dependancyContainer.makeMainView()
-                .navigationDestination(for: ExampleViewModel.self) { viewModel in
-                    Text("\(viewModel.publishedAmount)")
-                }
-                .navigationTitle("ExprienceKit")
-        }
+        dependancyContainer.makeScrollableMainView()
+            .navigationDestination(for: ExampleViewModel.self) { viewModel in
+                Text("\(viewModel.publishedAmount)")
+            }
+            .navigationTitle("ExprienceKit")
     }
 }
 
 #Preview {
-    ContentView()
+    ScrollableContentView()
 }

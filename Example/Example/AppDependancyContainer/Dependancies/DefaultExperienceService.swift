@@ -14,7 +14,7 @@ final class DefaultExperienceService: ExperienceService {
 
     func load(completion: @escaping ([Component]) -> Void) {
         completion(
-            [WelcomeProperties.mock]
+            exampleMocks
         )
     }
 }

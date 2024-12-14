@@ -30,7 +30,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                 ProgressView()
             case .failed(_):
                 Color.clear.onAppear(perform: presenter.load)
-            case .loaded(let viewModel):
+            case .loadedScrollable(let viewModel):
                 ScrollView {
                     VStack {
                         ForEach(viewModel) { viewModel in
@@ -39,13 +39,21 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                         }
                     }
                 }
+            case .loadedFullScreen(let viewModel):
+                VStack {
+                    ForEach(viewModel) { viewModel in
+                        makeView(from: viewModel)
+                            .buttonStyle(StaticButtonStyle())
+                    }
+                }
+                .ignoresSafeArea()
             }
         }
-        .toolbar {
-            Button("Reload") {
-                presenter.load()
-            }
-        }
+//        .toolbar {
+//            Button("Reload") {
+//                presenter.load()
+//            }
+//        }
     }
 
 
