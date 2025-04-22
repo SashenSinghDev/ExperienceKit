@@ -23,13 +23,3 @@ struct SecondaryButtonStyle: ButtonStyle {
 //                             .blur(radius: 24, opaque: false))
     }
 }
-
-#Preview {
-    Button(action: {
-    }, label: {
-        Text("Log In")
-            .frame(maxWidth: .infinity)
-    })
-    .buttonStyle(SecondaryButtonStyle())
-    .padding(.horizontal, 16)
-}

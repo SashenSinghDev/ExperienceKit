@@ -10,6 +10,7 @@ import ExperienceKit
 
 struct ScrollableContentView: View {
     private let dependancyContainer: DependancyContainer
+    @StateObject private var router = NavigationRouter()
 
     init() {
         let dependancyServiceManager = DependancyServiceManager()
@@ -17,7 +18,7 @@ struct ScrollableContentView: View {
     }
 
     var body: some View {
-        dependancyContainer.makeScrollableMainView()
+        dependancyContainer.makeScrollableMainView(router: router)
             .navigationDestination(for: ExampleViewModel.self) { viewModel in
                 Text("\(viewModel.publishedAmount)")
             }

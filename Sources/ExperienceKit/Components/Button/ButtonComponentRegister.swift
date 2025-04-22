@@ -1,30 +1,31 @@
 //
-//  File.swift
-//  
+//  ButtonComponentRegister.swift
+//  ExperienceKit
 //
-//  Created by Sashen Singh on 04/07/2024.
+//  Created by Sashen Singh on 16/02/2025.
 //
 
 import Foundation
 import SwiftUI
 
-struct ExampleComponentRegister: ComponentRegister {
+final class ButtonComponentRegister: ComponentRegister {
+
     var contentType: String {
-        "exampleComponent"
+        "buttonComponent"
     }
 
     var propertiesType: Properties.Type {
-        ExampleProperties.self
+        ButtonProperties.self
     }
 
     func viewModel(from component: Component, dependency: ExperienceDependency) -> AnyComponentViewModel {
-        AnyComponentViewModel(ExampleViewModel(any: component.properties,
-                                               dependency: dependency,
+        AnyComponentViewModel(ButtonViewModel(any: component.properties,
+                                              dependency: dependency,
                                                id: component.id),
                               contentType: contentType)
     }
 
     func view(from viewModel: any ComponentViewModel) -> AnyView {
-        return AnyView(ExampleComponentView(any: viewModel))
+        return AnyView(ButtonView(any: viewModel))
     }
 }

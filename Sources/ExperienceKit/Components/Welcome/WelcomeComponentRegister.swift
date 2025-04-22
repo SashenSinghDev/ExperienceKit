@@ -18,8 +18,9 @@ final class WelcomeComponentRegister: ComponentRegister {
         WelcomeProperties.self
     }
 
-    func viewModel(from component: Component) -> AnyComponentViewModel {
+    func viewModel(from component: Component,  dependency: ExperienceDependency) -> AnyComponentViewModel {
         AnyComponentViewModel(WelcomeViewModel(any: component.properties,
+                                               dependency: dependency,
                                                id: component.id),
                               contentType: contentType)
     }

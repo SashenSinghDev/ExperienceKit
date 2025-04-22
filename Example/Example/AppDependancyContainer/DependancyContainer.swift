@@ -22,28 +22,24 @@ final class DependancyContainer {
         self.dependencies = dependencies
     }
 
-    func makeFullScreenMainView() -> ExperienceView<ExperiencePresenter> {
+    func makeFullScreenMainView(router: NavigationRouter) -> ExperienceView<ExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
-        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
-        let experienceService = FullScreenExperienceService()
+        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers, dependency: ExperienceDependency(router: router))
+        let experienceService = FullScreenExperienceService(router: router)
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
-        let viewModel = ExperienceViewModel(experienceCharacterType: .fullScreen)
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
-                                            experienceInteractor: experienceInteractor,
-                                            viewModel: viewModel)
+                                            experienceInteractor: experienceInteractor)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)
         return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }
 
-    func makeScrollableMainView() -> ExperienceView<ExperiencePresenter> {
+    func makeScrollableMainView(router: NavigationRouter) -> ExperienceView<ExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
-        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
+        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers, dependency: ExperienceDependency(router: router))
         let experienceService = DefaultExperienceService()
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
-        let viewModel = ExperienceViewModel(experienceCharacterType: .scrollable)
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
-                                            experienceInteractor: experienceInteractor,
-                                            viewModel: viewModel)
+                                            experienceInteractor: experienceInteractor)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)
         return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }

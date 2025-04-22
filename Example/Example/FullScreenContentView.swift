@@ -10,6 +10,7 @@ import ExperienceKit
 
 struct FullScreenContentView: View {
     private let dependancyContainer: DependancyContainer
+    @StateObject private var router = NavigationRouter()
 
     init() {
         let dependancyServiceManager = DependancyServiceManager()
@@ -17,10 +18,16 @@ struct FullScreenContentView: View {
     }
 
     var body: some View {
-        dependancyContainer.makeFullScreenMainView()
+        NavigationStack(path: $router.path) {
+            dependancyContainer.makeFullScreenMainView(router: router)
+                .navigationDestination(for: NavigationViewModel.self) { viewModel in
+                    Text(viewModel.destination)
+                }
+        }
+        .fullScreenCover(item: $router.navigationViewModel) { viewModel in
+            Text(viewModel.destination)
+        }
     }
 }
 
-#Preview {
-    FullScreenContentView()
-}
+

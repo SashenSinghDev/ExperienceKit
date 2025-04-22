@@ -41,19 +41,11 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                 }
             case .loadedFullScreen(let viewModel):
                 VStack {
-                    ForEach(viewModel) { viewModel in
                         makeView(from: viewModel)
-                            .buttonStyle(StaticButtonStyle())
-                    }
                 }
                 .ignoresSafeArea()
             }
         }
-//        .toolbar {
-//            Button("Reload") {
-//                presenter.load()
-//            }
-//        }
     }
 
 

@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol ExperienceInteractor {
-    func load(completion: @escaping ([Component]) -> Void)
+    func load(completion: @escaping (ExperienceType) -> Void)
 }
 
 public protocol HasExperienceInteractor {

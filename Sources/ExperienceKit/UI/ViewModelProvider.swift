@@ -13,14 +13,16 @@ public protocol ViewModelProvider {
 
 public final class DefaultViewModelProvider: ViewModelProvider {
     private let registers: [ComponentRegister]
+    private let dependency: ExperienceDependency
 
-    public init(supportedComponentRegisters: [ComponentRegister]) {
+    public init(supportedComponentRegisters: [ComponentRegister], dependency: ExperienceDependency) {
         self.registers = supportedComponentRegisters
+        self.dependency = dependency
     }
 
     public func viewModel(for content: Component) -> AnyComponentViewModel? {
         for register in registers where register.contentType == content.contentType {
-            return register.viewModel(from: content)
+            return register.viewModel(from: content, dependency: dependency)
         }
 
         return nil

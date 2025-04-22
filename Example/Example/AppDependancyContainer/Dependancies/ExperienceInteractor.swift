@@ -17,9 +17,9 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
         self.experienceService = experienceService
     }
 
-    func load(completion: @escaping ([Component]) -> Void) {
-        experienceService.load { components in
-            completion(components)
+    func load(completion: @escaping (ExperienceType) -> Void) {
+        experienceService.load { experienctType in
+            completion(experienctType)
         }
     }
 }

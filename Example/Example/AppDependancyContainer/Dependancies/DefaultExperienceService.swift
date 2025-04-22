@@ -12,9 +12,9 @@ final class DefaultExperienceService: ExperienceService {
     let exampleMockComponent = ExampleProperties.mock
     let exampleRandomMockComponent = ExampleProperties.radomisedMock
 
-    func load(completion: @escaping ([Component]) -> Void) {
+    func load(completion: @escaping (ExperienceType) -> Void) {
         completion(
-            exampleMocks
+            .scrollable(components: exampleMocks)
         )
     }
 }

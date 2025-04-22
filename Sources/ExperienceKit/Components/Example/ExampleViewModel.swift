@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 public final class ExampleViewModel: ComponentViewModel, ObservableObject {
+    public typealias Dependencies = EmptyDependency
+
     public let id: UUID
     let title: String
 
@@ -16,7 +18,8 @@ public final class ExampleViewModel: ComponentViewModel, ObservableObject {
     @Published public var publishedAmount: Int = 1
 
     public init(properties: ExampleProperties,
-         id: UUID) {
+                dependency: Dependencies,
+                id: UUID) {
         self.id = id
         self.title = properties.title
     }

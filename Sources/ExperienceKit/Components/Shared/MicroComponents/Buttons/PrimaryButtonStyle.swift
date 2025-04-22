@@ -23,13 +23,3 @@ struct PrimaryButtonStyle: ButtonStyle {
 //                             .blur(radius: 24, opaque: false))
     }
 }
-
-#Preview {
-    Button(action: {
-    }, label: {
-        Text("Get Started")
-            .frame(maxWidth: .infinity)
-    })
-    .buttonStyle(PrimaryButtonStyle())
-    .padding(.horizontal, 16)
-}

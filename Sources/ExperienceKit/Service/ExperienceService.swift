@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol ExperienceService {
-    func load(completion: @escaping ([Component]) -> Void)
+    func load(completion: @escaping (ExperienceType) -> Void)
 }
