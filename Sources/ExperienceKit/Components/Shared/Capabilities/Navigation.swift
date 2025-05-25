@@ -11,6 +11,7 @@ import SwiftUI
 public struct NavigationViewModel: Identifiable, Hashable {
     public let id = UUID()
     public let navigationType: NavigationType
+    public let deferredLoading: Bool
     public var destination: String {
         switch navigationType {
             case .push(let value):
@@ -23,18 +24,32 @@ public struct NavigationViewModel: Identifiable, Hashable {
 
 public struct NavigationProperties: Codable {
     let navigationType: NavigationType
+    let deferredLoading: Bool
 }
 
 public protocol ExperienceRouter: ObservableObject {
-    var path: NavigationPath { get set }
-    var navigationViewModel: NavigationViewModel? { get set }
+    var path: NavigationPath { get }
+    var navigationViewModel: NavigationViewModel? { get }
+    var isLoading: Bool { get set }
+
+    func navigate(to navigationViewModel: NavigationViewModel)
 }
 
 public class NavigationRouter: ExperienceRouter {
     @Published public var path = NavigationPath()
     @Published public var navigationViewModel: NavigationViewModel? = nil
+    @Published public var isLoading: Bool = false
 
     public init() {}
+
+    public func navigate(to navigationViewModel: NavigationViewModel) {
+        switch navigationViewModel.navigationType {
+        case .push:
+            path.append(navigationViewModel)
+        case .modal:
+            self.navigationViewModel = navigationViewModel
+        }
+    }
 }
 
 public enum NavigationType: Equatable, Identifiable, Codable, Hashable {

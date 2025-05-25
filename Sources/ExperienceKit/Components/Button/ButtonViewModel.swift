@@ -23,16 +23,20 @@ public final class ButtonViewModel: ComponentViewModel, ObservableObject {
         self.id = id
         self.title = properties.title
         self.style = properties.style
-        self.navigationViewModel = .init(navigationType: properties.navigation.navigationType)
+        self.navigationViewModel = .init(navigationType: properties.navigation.navigationType, deferredLoading: properties.navigation.deferredLoading)
         self.router = dependency.router
     }
 
-    func navigate(to navigationViewModel: NavigationViewModel) {
-        switch navigationViewModel.navigationType {
-        case .push:
-            router.path.append(navigationViewModel)
-        case .modal:
-            router.navigationViewModel = navigationViewModel
+    func navigate() {
+        if navigationViewModel.deferredLoading {
+            router.isLoading = true
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
+                router.isLoading = false
+                self.router.navigate(to: navigationViewModel)
+            }
+        } else {
+            router.navigate(to: navigationViewModel)
         }
     }
 }

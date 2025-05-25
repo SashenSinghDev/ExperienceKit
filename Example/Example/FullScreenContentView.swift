@@ -19,10 +19,23 @@ struct FullScreenContentView: View {
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            dependancyContainer.makeFullScreenMainView(router: router)
-                .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                    Text(viewModel.destination)
+            ZStack {
+                dependancyContainer.makeFullScreenMainView(router: router)
+                    .navigationDestination(for: NavigationViewModel.self) { viewModel in
+                        Text(viewModel.destination)
+                    }
+
+                if router.isLoading {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                    ProgressView("Loading...")
+                        .padding()
+                        .background(.white)
+                        .cornerRadius(12)
                 }
+            }
+            .animation(.easeInOut, value: router.isLoading)
+
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
             Text(viewModel.destination)

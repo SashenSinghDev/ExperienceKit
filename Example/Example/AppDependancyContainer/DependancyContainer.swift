@@ -27,6 +27,8 @@ final class DependancyContainer {
         let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers, dependency: ExperienceDependency(router: router))
         let experienceService = FullScreenExperienceService(router: router)
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
+
+        // todo: can the router dependancy be injected here instead of directly in VM provider to try and get the link from buttonVM to experiencePresente
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
                                             experienceInteractor: experienceInteractor)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)

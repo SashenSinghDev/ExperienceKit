@@ -18,7 +18,7 @@ struct ButtonView: ComponentView {
 
     var body: some View {
         Button {
-            viewModel.navigate(to: viewModel.navigationViewModel)
+            viewModel.navigate()
         } label: {
             Text(viewModel.title)
                 .font(.bodyLargeBold)
