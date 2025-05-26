@@ -46,10 +46,10 @@ public extension WelcomeProperties {
                                                     style: .large(.inverted)),
                                  primaryButton: .init(title: "Log In",
                                                       style: .secondary,
-                                                      navigation: .init(navigationType: .push("secondaryDestination"), deferredLoading: true)),
+                                                      navigation: .init(navigationType: .push("secondaryDestination"), deferredLoadingWorkId: "nil")),
                                  secondaryButton: .init(title: "Get Started",
                                                         style: .primary,
-                                                        navigation: .init(navigationType: .modal("primaryDestination"), deferredLoading: true)))
+                                                        navigation: .init(navigationType: .modal("primaryDestination"), deferredLoadingWorkId: "test")))
     }
 }
 #endif

@@ -23,20 +23,12 @@ public final class ButtonViewModel: ComponentViewModel, ObservableObject {
         self.id = id
         self.title = properties.title
         self.style = properties.style
-        self.navigationViewModel = .init(navigationType: properties.navigation.navigationType, deferredLoading: properties.navigation.deferredLoading)
+        self.navigationViewModel = .init(navigationType: properties.navigation.navigationType,
+                                         deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId)
         self.router = dependency.router
     }
 
     func navigate() {
-        if navigationViewModel.deferredLoading {
-            router.isLoading = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
-                router.isLoading = false
-                self.router.navigate(to: navigationViewModel)
-            }
-        } else {
-            router.navigate(to: navigationViewModel)
-        }
+        router.delegate?.navigate(to: navigationViewModel)
     }
 }

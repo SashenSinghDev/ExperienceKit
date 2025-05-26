@@ -9,6 +9,7 @@ import Foundation
 
 public protocol ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void)
+    func performDeferredWork(workId: String, completion: @escaping () -> Void)
 }
 
 public protocol HasExperienceInteractor {

@@ -10,10 +10,8 @@ import ExperienceKit
 final class FullScreenExperienceService: ExperienceService {
     let exampleMockComponent = ExampleProperties.mock
     let exampleRandomMockComponent = ExampleProperties.radomisedMock
-    var router: NavigationRouter
 
-    init(router: NavigationRouter) {
-        self.router = router
+    init() {
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {

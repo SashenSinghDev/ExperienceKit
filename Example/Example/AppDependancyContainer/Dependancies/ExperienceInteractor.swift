@@ -22,4 +22,10 @@ final class ExampleExperienceInteractor: ExperienceInteractor {
             completion(experienctType)
         }
     }
+
+    func performDeferredWork(workId: String, completion: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            completion()
+        }
+    }
 }

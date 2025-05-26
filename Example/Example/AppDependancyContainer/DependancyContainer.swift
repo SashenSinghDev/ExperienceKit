@@ -24,24 +24,27 @@ final class DependancyContainer {
 
     func makeFullScreenMainView(router: NavigationRouter) -> ExperienceView<ExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
-        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers, dependency: ExperienceDependency(router: router))
-        let experienceService = FullScreenExperienceService(router: router)
+        let experienceDependency = ExperienceDependency(router: router)
+        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
+        let experienceService = FullScreenExperienceService()
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
 
-        // todo: can the router dependancy be injected here instead of directly in VM provider to try and get the link from buttonVM to experiencePresente
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
-                                            experienceInteractor: experienceInteractor)
+                                            experienceInteractor: experienceInteractor,
+                                            dependency: experienceDependency)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)
         return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }
 
     func makeScrollableMainView(router: NavigationRouter) -> ExperienceView<ExperiencePresenter> {
         let registers: [ComponentRegister] = allRegisters
-        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers, dependency: ExperienceDependency(router: router))
+        let experienceDependency = ExperienceDependency(router: router)
+        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
         let experienceService = DefaultExperienceService()
         let experienceInteractor = ExampleExperienceInteractor(experienceService: experienceService)
         let presenter = ExperiencePresenter(viewModelProvider: viewModelProvider,
-                                            experienceInteractor: experienceInteractor)
+                                            experienceInteractor: experienceInteractor,
+                                            dependency: experienceDependency)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)
         return ExperienceView(presenter: presenter, viewProvider: viewProvider)
     }

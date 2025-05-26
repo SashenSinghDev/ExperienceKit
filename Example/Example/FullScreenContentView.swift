@@ -10,17 +10,27 @@ import ExperienceKit
 
 struct FullScreenContentView: View {
     private let dependancyContainer: DependancyContainer
-    @StateObject private var router = NavigationRouter()
+
+    private let initialRouter: NavigationRouter
+    @StateObject private var router: NavigationRouter
+
+    private let fullScreenMainView: AnyView
 
     init() {
         let dependancyServiceManager = DependancyServiceManager()
-        dependancyContainer = DependancyContainer(dependencies: dependancyServiceManager)
+        self.dependancyContainer = DependancyContainer(dependencies: dependancyServiceManager)
+
+        let router = NavigationRouter()
+        self.initialRouter = router
+        self._router = StateObject(wrappedValue: router) // underscore version for init
+
+        self.fullScreenMainView = AnyView(dependancyContainer.makeFullScreenMainView(router: router))
     }
 
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack {
-                dependancyContainer.makeFullScreenMainView(router: router)
+                fullScreenMainView
                     .navigationDestination(for: NavigationViewModel.self) { viewModel in
                         Text(viewModel.destination)
                     }
