@@ -10,45 +10,38 @@ import ExperienceKit
 
 struct FullScreenContentView: View {
     private let dependancyContainer: DependancyContainer
+    @StateObject private var router: NavigationRouter = NavigationRouter()
+    @State private var previousPath: [NavigationViewModel] = []
 
-    private let initialRouter: NavigationRouter
-    @StateObject private var router: NavigationRouter
-
-    private let fullScreenMainView: AnyView
+    private let initialViewID = UUID()
 
     init() {
         let dependancyServiceManager = DependancyServiceManager()
         self.dependancyContainer = DependancyContainer(dependencies: dependancyServiceManager)
-
-        let router = NavigationRouter()
-        self.initialRouter = router
-        self._router = StateObject(wrappedValue: router) // underscore version for init
-
-        self.fullScreenMainView = AnyView(dependancyContainer.makeFullScreenMainView(router: router))
     }
 
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack {
-                fullScreenMainView
+                dependancyContainer.makeFullScreenMainView(router: router,
+                                                           existingPresenter: router.presenter(for: initialViewID),
+                                                           viewModelID: initialViewID)
                     .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                        Text(viewModel.destination)
+                        dependancyContainer.navigationView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
                     }
-
-                if router.isLoading {
-                    Color.black.opacity(0.4)
-                        .edgesIgnoringSafeArea(.all)
-                    ProgressView("Loading...")
-                        .padding()
-                        .background(.white)
-                        .cornerRadius(12)
-                }
             }
-            .animation(.easeInOut, value: router.isLoading)
-
+        }
+        .onChange(of: router.path) { newPath in
+//            print(newPath)
+//            router.removePresenter(for: newPath.id)
+            let removed = previousPath.filter { old in !newPath.contains(old) }
+            for removedItem in removed {
+                router.removePresenter(for: removedItem.id)
+            }
+            previousPath.append(contentsOf: newPath)
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            Text(viewModel.destination)
+            dependancyContainer.navigationView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ButtonView: ComponentView {
 
-    @ObservedObject var viewModel: ButtonViewModel
+    var viewModel: ButtonViewModel
 
     init(viewModel: ButtonViewModel) {
         self.viewModel = viewModel

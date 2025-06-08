@@ -32,20 +32,21 @@ public protocol ExperienceRouterDelegate: AnyObject {
 }
 
 public protocol ExperienceRouter: ObservableObject {
-    var path: NavigationPath { get }
+    var path: [NavigationViewModel] { get }
     var navigationViewModel: NavigationViewModel? { get }
     var isLoading: Bool { get set }
-    var delegate: ExperienceRouterDelegate? { get set }
 
     func navigate(to navigationViewModel: NavigationViewModel)
 }
 
+public protocol NavigationViewProvider {
+    func navigationView(for id: String) -> ExperienceView<ExperiencePresenter>
+}
+
 public class NavigationRouter: ExperienceRouter {
-    @Published public var path = NavigationPath()
+    @Published public var path: [NavigationViewModel] = []
     @Published public var navigationViewModel: NavigationViewModel? = nil
     @Published public var isLoading: Bool = false
-
-    public weak var delegate: ExperienceRouterDelegate?
 
     public init() {}
 
@@ -55,6 +56,24 @@ public class NavigationRouter: ExperienceRouter {
             path.append(navigationViewModel)
         case .modal:
             self.navigationViewModel = navigationViewModel
+        }
+    }
+
+    // Cache presenters
+    private var presenterCache: [UUID: Any] = [:]
+
+    public func storePresenter<T>(_ presenter: T, for id: UUID) {
+        presenterCache[id] = presenter
+    }
+
+    public func presenter<T>(for id: UUID) -> T? {
+        return presenterCache[id] as? T
+    }
+
+    public func removePresenter(for id: UUID) {
+        if presenterCache[id] != nil {
+            print("remove presenter \(id)")
+            presenterCache.removeValue(forKey: id)
         }
     }
 }

@@ -8,14 +8,15 @@
 import Foundation
 import SwiftUI
 
-public final class ButtonViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = HasRouter
+public struct ButtonViewModel: ComponentViewModel {
+    public typealias Dependencies = HasRouter & HasExperiencePresenterNotifier
 
     public let id: UUID
     public let title: String
-    public let navigationViewModel: NavigationViewModel
     let style: ButtonProperties.Style
-    let router: any ExperienceRouter
+    private let router: any ExperienceRouter
+    private let navigationViewModel: NavigationViewModel
+    private let experiencePresenterNotifier: ExperiencePresenterNotifier
 
     public init(properties: ButtonProperties,
                 dependency: Dependencies,
@@ -26,9 +27,16 @@ public final class ButtonViewModel: ComponentViewModel, ObservableObject {
         self.navigationViewModel = .init(navigationType: properties.navigation.navigationType,
                                          deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId)
         self.router = dependency.router
+        self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
     }
 
     func navigate() {
-        router.delegate?.navigate(to: navigationViewModel)
+        if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
+            experiencePresenterNotifier.delegate?.performDeferredWork(workId: deferredLoadingWorkId, completion: {
+                self.router.navigate(to: self.navigationViewModel)
+            })
+        } else {
+            router.navigate(to: navigationViewModel)
+        }
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 public final class ExperiencePresenter: ObservableObject {
+    public var delegate: (any ExperiencePresenterNotifier)?
 
     public enum State {
         case idle
@@ -23,6 +24,7 @@ public final class ExperiencePresenter: ObservableObject {
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor
     private let dependency: ExperienceDependency
+    public var vm: AnyComponentViewModel?
 
     public init(viewModelProvider: ViewModelProvider,
                 experienceInteractor: ExperienceInteractor,
@@ -30,10 +32,24 @@ public final class ExperiencePresenter: ObservableObject {
         self.viewModelProvider = viewModelProvider
         self.experienceInteractor = experienceInteractor
         self.dependency = dependency
-        dependency.router.delegate = self
+
+        dependency.experiencePresenterNotifier.delegate = self
+
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("===========")
+        print("make new presenter \(address)")
+    }
+
+    deinit {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("deinit ExperiencePresenter at address \(address)")
     }
 
     public func load() {
+
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("load ExperiencePresenter at address \(address)")
+
         self.experienceInteractor.load { [weak self] experienceType in
 
             guard let self else { return }
@@ -45,6 +61,7 @@ public final class ExperiencePresenter: ObservableObject {
                     fatalError("full screen component not supported")
                 }
                 self.state = .loadedFullScreen(viewModel)
+                self.vm = viewModel
             case .scrollable(let components):
                 let viewModels: [AnyComponentViewModel] = components.compactMap {
                     return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
@@ -56,29 +73,13 @@ public final class ExperiencePresenter: ObservableObject {
     }
 }
 
-extension ExperiencePresenter: ExperienceRouterDelegate {
-    public func navigate(to navigationViewModel: NavigationViewModel) {
-        if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
-            dependency.router.isLoading = true
+extension ExperiencePresenter: ExperiencePresenterNotifierDelegate {
+    public func performDeferredWork(workId: String, completion: @escaping () -> Void) {
+        dependency.router.isLoading = true
 
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//                self.dependency.router.isLoading = false
-//                self.dependency.router.navigate(to: navigationViewModel)
-            //            }
-
-            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] in
-                self?.dependency.router.isLoading = false
-                self?.dependency.router.navigate(to: navigationViewModel)
-            }
-
-//            let strongSelf = self
-//            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) {
-////                guard let self = strongSelf  else { return }
-//                strongSelf.dependency.router.isLoading = false
-//                strongSelf.dependency.router.navigate(to: navigationViewModel)
-//            }
-        } else {
-            dependency.router.navigate(to: navigationViewModel)
+        experienceInteractor.performDeferredWork(workId: workId) { [weak self] in
+            self?.dependency.router.isLoading = false
+            completion()
         }
     }
 }

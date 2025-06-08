@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public final class WelcomeViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = EmptyDependency & HasRouter
+    public typealias Dependencies = EmptyDependency & HasRouter & HasExperiencePresenterNotifier
 
     public let id: UUID
     let image: ExperienceImage
