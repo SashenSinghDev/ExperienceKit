@@ -9,7 +9,7 @@ import Foundation
 import ExperienceKit
 import SwiftUI
 
-final class DependancyContainer {
+final class DependancyContainer: ExperienceDependancyContainer {
     
     typealias Dependencies = HasEmptyDependancy
 
@@ -30,6 +30,7 @@ final class DependancyContainer {
         if let existingPresenter = existingPresenter {
             presenter = existingPresenter
         } else {
+            print("===========")
             print("make new presenter \(viewModelID)")
             let experienceDependency = ExperienceDependency(router: router, experiencePresenterNotifier: DefaultExperiencePresenterNotifier())
             let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
@@ -64,7 +65,7 @@ final class DependancyContainer {
         return ExperienceView(presenter: presenter, viewProvider: viewProvider, router: router)
     }
 
-    func navigationView(for id: String, router: NavigationRouter, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
+    func experienceView(for id: String, router: NavigationRouter, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
         let cachedExperiencePresenter: ExperiencePresenter? = {
             guard let presenter: ExperiencePresenter = router.presenter(for: viewModelID) else {
                 return nil

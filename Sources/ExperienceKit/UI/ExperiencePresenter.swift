@@ -36,7 +36,6 @@ public final class ExperiencePresenter: ObservableObject {
         dependency.experiencePresenterNotifier.delegate = self
 
         let address = Unmanaged.passUnretained(self).toOpaque()
-        print("===========")
         print("make new presenter \(address)")
     }
 
