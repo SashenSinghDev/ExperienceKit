@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 public final class ExampleViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = EmptyDependency
+    public typealias Dependencies = HasExperiencePresenterNotifier & HasRouter
 
     public let id: UUID
     let title: String
+    let primaryButton: ButtonViewModel
 
     @Published public var profileText: String = "Enter your bio"
     @Published public var publishedAmount: Int = 1
@@ -22,6 +23,9 @@ public final class ExampleViewModel: ComponentViewModel, ObservableObject {
                 id: UUID) {
         self.id = id
         self.title = properties.title
+        self.primaryButton = .init(properties: .init(title: "Go to details", style: .primary, navigation: .init(navigationType: .push("fullScreen"), deferredLoadingWorkId: nil)),
+                                   dependency: dependency,
+                                   id: UUID())
     }
 
     var navigatedView: AnyView? {

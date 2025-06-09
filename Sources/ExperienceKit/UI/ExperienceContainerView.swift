@@ -37,7 +37,8 @@ public struct ExperienceContainerView: View {
             previousPath.append(contentsOf: newPath)
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            dependancyContainer.experienceView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
+            ExperienceContainerView(experienceViewID: viewModel.destination, dependancyContainer: dependancyContainer)
+//            dependancyContainer.experienceView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
         }
     }
 }
