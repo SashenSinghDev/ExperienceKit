@@ -66,6 +66,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                 }
             }
             .animation(.easeInOut, value: router.isLoading)
+//            .navigationTitle("ExprienceKit")
 //        }
 //        .fullScreenCover(item: $router.navigationViewModel) { viewModel in
 //            presenter.navigateToView(for: viewModel.destination)

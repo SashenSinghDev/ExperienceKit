@@ -49,7 +49,7 @@ public extension WelcomeProperties {
                                                       navigation: .init(navigationType: .push("fullScreen"), deferredLoadingWorkId: "nil")),
                                  secondaryButton: .init(title: "Get Started",
                                                         style: .primary,
-                                                        navigation: .init(navigationType: .modal("scrollableScreeen"), deferredLoadingWorkId: "test")))
+                                                        navigation: .init(navigationType: .modal("scrollableScreen"), deferredLoadingWorkId: "test")))
     }
 }
 #endif
