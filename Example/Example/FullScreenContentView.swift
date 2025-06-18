@@ -9,13 +9,13 @@ import SwiftUI
 import ExperienceKit
 
 struct FullScreenContentView: View {
-    private let dependancyContainer: DependancyContainer
     private let experienceContainerView: ExperienceContainerView
 
     init() {
-        self.dependancyContainer = DependancyContainer(dependencies: DependancyServiceManager())
+        let presenter = ExperienceContainerPresenter(registers: allRegisters,
+                                                     experienceProvider: AppExperienceProvider())
         experienceContainerView = ExperienceContainerView(experienceViewID: "fullScreen",
-                                                          dependancyContainer: dependancyContainer)
+                                                          presenter: presenter)
     }
 
     var body: some View {

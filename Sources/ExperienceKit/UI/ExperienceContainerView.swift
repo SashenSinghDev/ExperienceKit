@@ -10,23 +10,23 @@ import SwiftUI
 public struct ExperienceContainerView: View {
 
     private let experienceViewID: String
-    private let dependancyContainer: ExperienceDependancyContainer
+    private let presenter: ExperienceContainerPresenter
     @StateObject private var router: NavigationRouter = NavigationRouter()
     @State private var previousPath: [NavigationViewModel] = []
 
     private let experienceContainerID = UUID()
 
     public init(experienceViewID: String,
-         dependancyContainer: ExperienceDependancyContainer) {
-        self.dependancyContainer = dependancyContainer
+                presenter: ExperienceContainerPresenter) {
         self.experienceViewID = experienceViewID
+        self.presenter = presenter
     }
 
     public var body: some View {
         NavigationStack(path: $router.path) {
-            dependancyContainer.experienceView(for: experienceViewID, router: router, viewModelID: experienceContainerID)
+            presenter.experienceView(for: experienceViewID, router: router, viewModelID: experienceContainerID)
                 .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                    dependancyContainer.experienceView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
+                    presenter.experienceView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
                 }
         }
         .onChange(of: router.path) { _, newPath in
@@ -37,8 +37,7 @@ public struct ExperienceContainerView: View {
             previousPath.append(contentsOf: newPath)
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            ExperienceContainerView(experienceViewID: viewModel.destination, dependancyContainer: dependancyContainer)
-//            dependancyContainer.experienceView(for: viewModel.destination, router: router, viewModelID: viewModel.id)
+            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter)
         }
     }
 }
