@@ -22,11 +22,9 @@ public protocol HasNavigationViewProvider {
 public class ExperienceDependency: EmptyDependency, HasRouter, HasExperiencePresenterNotifier {
     public let router: any ExperienceRouter
     public var experiencePresenterNotifier: ExperiencePresenterNotifier
-//    public let navigationViewProvider: any NavigationViewProvider
 
     public init(router: any ExperienceRouter, experiencePresenterNotifier: ExperiencePresenterNotifier) {
         self.router = router
         self.experiencePresenterNotifier = experiencePresenterNotifier
-//        self.navigationViewProvider = navigationViewProvider
     }
 }
