@@ -16,6 +16,5 @@ public protocol ExperiencePresenterNotifier {
 public final class DefaultExperiencePresenterNotifier: ExperiencePresenterNotifier {
     public weak var delegate: ExperiencePresenterNotifierDelegate?
 
-    public init() {
-    }
+    public init() {}
 }

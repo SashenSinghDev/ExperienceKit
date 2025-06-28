@@ -10,13 +10,13 @@ import SwiftUI
 public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresenter {
 
     @StateObject private var presenter: Presenter
-    @StateObject private var router: NavigationRouter
+    @StateObject private var router: DefaultExperienceRouter
 
     private let viewProvider: ViewProvider
 
     public init(presenter: Presenter,
                 viewProvider: ViewProvider,
-                router: NavigationRouter) {
+                router: DefaultExperienceRouter) {
         _presenter = StateObject(wrappedValue: presenter)
         self.viewProvider = viewProvider
         self._router = StateObject(wrappedValue: router) // underscore version for init

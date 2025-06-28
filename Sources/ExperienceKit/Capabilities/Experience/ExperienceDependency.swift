@@ -15,6 +15,10 @@ public protocol HasExperiencePresenterNotifier {
     var experiencePresenterNotifier: ExperiencePresenterNotifier { get }
 }
 
+public protocol NavigationViewProvider {
+    func navigationView(for id: String) -> ExperienceView<ExperiencePresenter>
+}
+
 public protocol HasNavigationViewProvider {
     var navigationViewProvider: any NavigationViewProvider { get }
 }

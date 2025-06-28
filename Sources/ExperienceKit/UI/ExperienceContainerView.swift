@@ -11,7 +11,7 @@ public struct ExperienceContainerView: View {
 
     private let experienceViewID: String
     private let presenter: ExperienceContainerPresenter
-    @StateObject private var router: NavigationRouter = NavigationRouter()
+    @StateObject private var router: DefaultExperienceRouter = DefaultExperienceRouter()
     @State private var previousPath: [NavigationViewModel] = []
 
     private let experienceContainerID = UUID()
