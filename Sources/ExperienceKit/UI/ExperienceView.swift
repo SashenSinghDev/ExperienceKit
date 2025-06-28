@@ -44,7 +44,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                             }
                         }
                     }
-                case .loadedScrollableWithNavigationBar(let viewModel, let navigationTitle):
+                case .loadedScrollableWithNavigationBar(let viewModel, let navigationBarModel):
                     ScrollView {
                         VStack {
                             ForEach(viewModel) { viewModel in
@@ -52,7 +52,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                                     .buttonStyle(StaticButtonStyle())
                             }
                         }
-                        .navigationTitle(navigationTitle)
+                        .navigationTitle(navigationBarModel.title)
                         .navigationBarTitleDisplayMode(.inline) // Use inline to reduce top spacing
                     }
                 case .loadedFullScreen(let viewModel):

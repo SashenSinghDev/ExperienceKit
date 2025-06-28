@@ -16,7 +16,7 @@ public final class ExperiencePresenter: ObservableObject {
         case loading
         case failed(Error)
         case loadedScrollable([AnyComponentViewModel])
-        case loadedScrollableWithNavigationBar([AnyComponentViewModel], title: String)
+        case loadedScrollableWithNavigationBar([AnyComponentViewModel], navigationBarModel: NavigationBarModel)
         case loadedFullScreen(AnyComponentViewModel)
     }
 
@@ -68,12 +68,12 @@ public final class ExperiencePresenter: ObservableObject {
                 }
 
                 self.state = .loadedScrollable(viewModels)
-            case .scrollableWithNavigationProperties(let components, let navigationTitle):
+            case .scrollableWithNavigationProperties(let components, let navigationBarModel):
                 let viewModels: [AnyComponentViewModel] = components.compactMap {
                     return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
                 }
 
-                self.state = .loadedScrollableWithNavigationBar(viewModels, title: navigationTitle)
+                self.state = .loadedScrollableWithNavigationBar(viewModels, navigationBarModel: navigationBarModel)
             }
         }
     }

@@ -14,7 +14,7 @@ final class ScrollableInteractor: ExperienceInteractor {
 
     func load(completion: @escaping (ExperienceType) -> Void) {
         completion(
-            .scrollableWithNavigationProperties(components: exampleMocks, navigationTitle: "randomTitle")
+            .scrollableWithNavigationProperties(components: exampleMocks, navigationBarModel: .init(title: "qwerty"))
         )
     }
 

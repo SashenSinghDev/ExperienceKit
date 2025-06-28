@@ -9,6 +9,10 @@ public protocol ExperiencePresenterNotifierDelegate: AnyObject {
     func performDeferredWork(workId: String, completion: @escaping () -> Void)
 }
 
+public protocol HasExperiencePresenterNotifier {
+    var experiencePresenterNotifier: ExperiencePresenterNotifier { get }
+}
+
 public protocol ExperiencePresenterNotifier {
     var delegate: ExperiencePresenterNotifierDelegate? { get set }
 }

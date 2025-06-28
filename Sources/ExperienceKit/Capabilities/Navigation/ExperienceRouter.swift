@@ -15,6 +15,10 @@ public protocol ExperienceRouter: ObservableObject {
     func navigate(to navigationViewModel: NavigationViewModel)
 }
 
+public protocol HasRouter {
+    var router: any ExperienceRouter { get }
+}
+
 public class DefaultExperienceRouter: ExperienceRouter {
     @Published public var path: [NavigationViewModel] = []
     @Published public var navigationViewModel: NavigationViewModel? = nil
