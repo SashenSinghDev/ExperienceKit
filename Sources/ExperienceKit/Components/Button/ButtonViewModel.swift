@@ -31,12 +31,13 @@ public struct ButtonViewModel: ComponentViewModel {
     }
 
     func navigate() {
-        if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
-            experiencePresenterNotifier.delegate?.performDeferredWork(workId: deferredLoadingWorkId, completion: {
-                self.router.navigate(to: self.navigationViewModel)
-            })
-        } else {
-            router.navigate(to: navigationViewModel)
-        }
+//        if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
+//            experiencePresenterNotifier.delegate?.performDeferredWork(workId: deferredLoadingWorkId, completion: {
+//                self.router.navigate(to: self.navigationViewModel)
+//            })
+//        } else {
+//            router.navigate(to: navigationViewModel)
+//        }
+        experiencePresenterNotifier.delegate?.navigate(navigationViewModel: navigationViewModel)
     }
 }

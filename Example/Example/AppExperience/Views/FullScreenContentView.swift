@@ -1,0 +1,27 @@
+//
+//  FullScreenContentView.swift
+//  Example
+//
+//  Created by Sashen Singh on 14/12/2024.
+//
+
+import SwiftUI
+import ExperienceKit
+
+struct FullScreenContentView: ExperienceContentView {
+    internal let experienceContainerView: ExperienceContainerView
+    internal let experienceContainerPresenter: ExperienceContainerPresenter
+
+    init() {
+        experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
+                                                                    experienceProvider: AppExperienceProvider())
+        experienceContainerView = ExperienceContainerView(experienceViewID: "fullScreen",
+                                                          presenter: experienceContainerPresenter)
+    }
+
+    var body: some View {
+        experienceContainerView
+    }
+}
+
+

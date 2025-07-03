@@ -53,7 +53,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                             }
                         }
                         .navigationTitle(navigationBarModel.title)
-                        .navigationBarTitleDisplayMode(.inline) // Use inline to reduce top spacing
+                        .navigationBarTitleDisplayMode(navigationBarModel.style)
                     }
                 case .loadedFullScreen(let viewModel):
                     VStack {
@@ -78,5 +78,18 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
     @ViewBuilder
     private func makeView(from component: AnyComponentViewModel) -> some View {
         viewProvider.view(for: component)
+    }
+}
+
+private extension NavigationBarModel {
+    var style: NavigationBarItem.TitleDisplayMode {
+        switch displayMode {
+        case .automatic:
+            return .automatic
+        case .inline:
+            return .inline
+        case .large:
+            return .large
+        }
     }
 }

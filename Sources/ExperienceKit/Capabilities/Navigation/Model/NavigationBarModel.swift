@@ -8,9 +8,17 @@
 import Foundation
 
 public struct NavigationBarModel {
-    public let title: String
+    public enum DisplayMode {
+        case automatic
+        case inline
+        case large
+    }
 
-    public init(title: String) {
+    public let title: String
+    public let displayMode: DisplayMode
+
+    public init(title: String, displayMode: DisplayMode) {
         self.title = title
+        self.displayMode = displayMode
     }
 }

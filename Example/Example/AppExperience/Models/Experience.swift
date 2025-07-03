@@ -8,4 +8,5 @@
 enum Experience: String {
     case fullScreen
     case scrollableScreen
+    case homeContainer
 }

@@ -20,6 +20,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return FullScreenInteractor()
         case .scrollableScreen:
             return ScrollableInteractor()
+        case .homeContainer:
+            return HomeContainerInteractor()
         }
     }
 }

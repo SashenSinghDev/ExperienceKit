@@ -77,15 +77,23 @@ public final class ExperiencePresenter: ObservableObject {
             }
         }
     }
+
+    private func navigate(with navigationViewModel: NavigationViewModel) {
+        if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
+            dependency.router.isLoading = true
+
+            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] in
+                self?.dependency.router.isLoading = false
+                self?.dependency.router.navigate(to: navigationViewModel)
+            }
+        } else {
+            dependency.router.navigate(to: navigationViewModel)
+        }
+    }
 }
 
 extension ExperiencePresenter: ExperiencePresenterNotifierDelegate {
-    public func performDeferredWork(workId: String, completion: @escaping () -> Void) {
-        dependency.router.isLoading = true
-
-        experienceInteractor.performDeferredWork(workId: workId) { [weak self] in
-            self?.dependency.router.isLoading = false
-            completion()
-        }
+    public func navigate(navigationViewModel: NavigationViewModel) {
+        navigate(with: navigationViewModel)
     }
 }
