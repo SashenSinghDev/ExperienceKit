@@ -36,8 +36,8 @@ public final class ExperiencePresenter: ObservableObject {
 
         dependency.experiencePresenterNotifier.delegate = self
 
-        let address = Unmanaged.passUnretained(self).toOpaque()
-        print("make new presenter \(address)")
+//        let address = Unmanaged.passUnretained(self).toOpaque()
+//        print("make new presenter \(address)")
     }
 
     deinit {
@@ -47,8 +47,8 @@ public final class ExperiencePresenter: ObservableObject {
 
     public func load() {
 
-        let address = Unmanaged.passUnretained(self).toOpaque()
-        print("load ExperiencePresenter at address \(address)")
+//        let address = Unmanaged.passUnretained(self).toOpaque()
+//        print("load ExperiencePresenter at address \(address)")
 
         self.experienceInteractor.load { [weak self] experienceType in
 
@@ -74,6 +74,8 @@ public final class ExperiencePresenter: ObservableObject {
                 }
 
                 self.state = .loadedScrollableWithNavigationBar(viewModels, navigationBarModel: navigationBarModel)
+            case .navigateImmediately(navigationViewModel: let navigationViewModel):
+                navigate(with: navigationViewModel)
             }
         }
     }

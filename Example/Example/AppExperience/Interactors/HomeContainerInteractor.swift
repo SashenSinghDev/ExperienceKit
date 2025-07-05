@@ -14,12 +14,8 @@ final class HomeContainerInteractor: ExperienceInteractor {
 
     func load(completion: @escaping (ExperienceType) -> Void) {
 
-        let descriptionComponent = Component(contentType: "descriptionComponent",
-                                             properties: DescriptionProperties(title: "randomTitle", subtitle: "randomSubtitle", style: .regular(.regular)),
-                                             id: UUID())
-
         completion(
-            .scrollableWithNavigationProperties(components: [descriptionComponent], navigationBarModel: .init(title: "homeScreen", displayMode: .large))
+            .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal("fullScreen"), deferredLoadingWorkId: nil))
         )
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {

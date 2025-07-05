@@ -18,7 +18,7 @@ public final class ExperienceContainerPresenter {
         self.experienceProvider = experienceProvider
     }
 
-    func experienceView(for id: String, router: DefaultExperienceRouter, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
+    func experienceView(for id: String, router: DefaultExperienceRouter, viewModelID: UUID, experienceID: String) -> ExperienceView<ExperiencePresenter> {
         let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id)
         let experienceDependency = ExperienceDependency(router: router, experiencePresenterNotifier: DefaultExperiencePresenterNotifier())
         let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
@@ -26,10 +26,13 @@ public final class ExperienceContainerPresenter {
 
         let experiencePresenter: ExperiencePresenter = {
             guard let presenter: ExperiencePresenter = router.presenter(for: viewModelID) else {
-                print("===========")
                 let presenterToReturn = ExperiencePresenter(viewModelProvider: viewModelProvider,
                                                             experienceInteractor: experienceInteractor,
                                                             dependency: experienceDependency)
+
+                let address = Unmanaged.passUnretained(presenterToReturn).toOpaque()
+                print("Create new presenter  \(experienceID) \(address)===========")
+
                 router.storePresenter(presenterToReturn, for: viewModelID)
                 return presenterToReturn
             }

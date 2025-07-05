@@ -16,7 +16,8 @@ struct FullScreenContentView: ExperienceContentView {
         experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
                                                                     experienceProvider: AppExperienceProvider())
         experienceContainerView = ExperienceContainerView(experienceViewID: "fullScreen",
-                                                          presenter: experienceContainerPresenter)
+                                                          presenter: experienceContainerPresenter,
+                                                          experienceRouterDelegate: nil)
     }
 
     var body: some View {

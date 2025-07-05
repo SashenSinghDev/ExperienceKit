@@ -5,7 +5,7 @@
 //  Created by Sashen Singh on 28/06/2025.
 //
 
-public struct NavigationProperties: Codable {
-    let navigationType: NavigationType
-    let deferredLoadingWorkId: String?
+public struct NavigationProperties: Codable {    
+    public let navigationType: NavigationType
+    public let deferredLoadingWorkId: String?
 }

@@ -16,7 +16,8 @@ struct HomeContainerContentView: ExperienceContentView {
         experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
                                                                     experienceProvider: AppExperienceProvider())
         experienceContainerView = ExperienceContainerView(experienceViewID: Experience.homeContainer.rawValue,
-                                                          presenter: experienceContainerPresenter)
+                                                          presenter: experienceContainerPresenter,
+                                                          experienceRouterDelegate: nil)
     }
 
     var body: some View {

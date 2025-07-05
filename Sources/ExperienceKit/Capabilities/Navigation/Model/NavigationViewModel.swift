@@ -17,18 +17,31 @@ public struct NavigationViewModel: Identifiable, Hashable {
             return value
         case .modal(let value):
             return value
+        case .dismiss:
+            fatalError("dismiss navigation type not supported with destination")
         }
     }
+
+    public init(navigationType: NavigationType, deferredLoadingWorkId: String?) {
+        self.navigationType = navigationType
+        self.deferredLoadingWorkId = deferredLoadingWorkId
+    }
+    
 }
 
 public enum NavigationType: Equatable, Identifiable, Codable, Hashable {
     case push(String)
     case modal(String)
+    case dismiss
+
+    // TODO: add dismiss case here
 
     public var id: String {
         switch self {
         case .push(let value), .modal(let value):
             return value
+        case .dismiss:
+            fatalError("dismiss navigation type not supported with id")
         }
     }
 }

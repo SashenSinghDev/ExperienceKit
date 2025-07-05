@@ -15,6 +15,10 @@ public protocol ExperienceRouter: ObservableObject {
     func navigate(to navigationViewModel: NavigationViewModel)
 }
 
+public protocol ExperienceRouterDelegate: AnyObject {
+    func dismissModal()
+}
+
 public protocol HasRouter {
     var router: any ExperienceRouter { get }
 }
@@ -24,7 +28,21 @@ public class DefaultExperienceRouter: ExperienceRouter {
     @Published public var navigationViewModel: NavigationViewModel? = nil
     @Published public var isLoading: Bool = false
 
-    public init() {}
+    public weak var delegate: ExperienceRouterDelegate?
+
+    private let expId: String
+    private var markedToDismiss: Bool = false
+
+    public init(expId: String) {
+        self.expId = expId
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("load Router at address \(address) \(expId)")
+    }
+
+    deinit {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("deint Router at address \(address)")
+    }
 
     public func navigate(to navigationViewModel: NavigationViewModel) {
         switch navigationViewModel.navigationType {
@@ -32,6 +50,17 @@ public class DefaultExperienceRouter: ExperienceRouter {
             path.append(navigationViewModel)
         case .modal:
             self.navigationViewModel = navigationViewModel
+        case .dismiss:
+            if !path.isEmpty {
+                // Pop last pushed view
+                _ = path.popLast()
+            } else {
+                let address = Unmanaged.passUnretained(self).toOpaque()
+                print("dismiss nav func \(address) \(expId)")
+                markedToDismiss = true
+                presenterCache.removeAll()
+                delegate?.dismissModal()
+            }
         }
     }
 
@@ -39,6 +68,8 @@ public class DefaultExperienceRouter: ExperienceRouter {
     private var presenterCache: [UUID: Any] = [:]
 
     public func storePresenter<T>(_ presenter: T, for id: UUID) {
+        guard !markedToDismiss else { return }
+
         presenterCache[id] = presenter
     }
 
@@ -51,5 +82,13 @@ public class DefaultExperienceRouter: ExperienceRouter {
             print("remove presenter \(id)")
             presenterCache.removeValue(forKey: id)
         }
+    }
+}
+
+extension DefaultExperienceRouter: ExperienceRouterDelegate {
+    public func dismissModal() {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("set nav to nil \(address) \(expId)")
+        self.navigationViewModel = nil
     }
 }
