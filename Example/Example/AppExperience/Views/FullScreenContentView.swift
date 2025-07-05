@@ -15,7 +15,7 @@ struct FullScreenContentView: ExperienceContentView {
     init() {
         experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
                                                                     experienceProvider: AppExperienceProvider())
-        experienceContainerView = ExperienceContainerView(experienceViewID: "fullScreen",
+        experienceContainerView = ExperienceContainerView(experienceViewID: Experience.welcome.rawValue,
                                                           presenter: experienceContainerPresenter,
                                                           experienceRouterDelegate: nil)
     }

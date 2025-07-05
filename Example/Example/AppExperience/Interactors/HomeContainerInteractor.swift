@@ -15,7 +15,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
 
         completion(
-            .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal("fullScreen"), deferredLoadingWorkId: nil))
+            .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal(Experience.welcome.rawValue), deferredLoadingWorkId: nil))
         )
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {

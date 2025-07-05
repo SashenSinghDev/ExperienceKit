@@ -6,7 +6,7 @@
 //
 
 enum Experience: String {
-    case fullScreen
+    case welcome
     case scrollableScreen
     case homeContainer
 }

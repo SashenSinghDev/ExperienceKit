@@ -29,27 +29,3 @@ extension WelcomeProperties: Properties, Codable {
         return try properties.decode(WelcomeProperties.self, forKey: .properties)
     }
 }
-
-#if DEBUG
-public extension WelcomeProperties {
-    static var mock: Component {
-        Component(contentType: "welcomeComponent",
-                  properties: mockProperties,
-                  id: UUID())
-    }
-
-    static var mockProperties: WelcomeProperties {
-        return WelcomeProperties(image: .init(uri: "welcome-image",
-                                              bundle: Bundle.main.bundleIdentifier ?? ""),
-                                 description: .init(title: "Welcome to 👋 GymBru",
-                                                    subtitle: "A personal trainer in your pocket",
-                                                    style: .large(.inverted)),
-                                 primaryButton: .init(title: "Log In",
-                                                      style: .secondary,
-                                                      navigation: .init(navigationType: .push("fullScreen"), deferredLoadingWorkId: nil)),
-                                 secondaryButton: .init(title: "Get Started",
-                                                        style: .primary,
-                                                        navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test")))
-    }
-}
-#endif

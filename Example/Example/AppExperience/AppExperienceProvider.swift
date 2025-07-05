@@ -16,8 +16,8 @@ final class AppExperienceProvider: ExperienceProvider {
         }
 
         switch experience {
-        case .fullScreen:
-            return FullScreenInteractor()
+        case .welcome:
+            return WelcomeInteractor()
         case .scrollableScreen:
             return ScrollableInteractor()
         case .homeContainer:
