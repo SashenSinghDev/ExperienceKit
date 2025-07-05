@@ -25,7 +25,7 @@ final class WelcomeInteractor: ExperienceInteractor {
                                                                                          deferredLoadingWorkId: nil)),
                                                   secondaryButton: .init(title: "Get Started",
                                                                          style: .primary,
-                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test")))
+                                                                         navigation: .init(navigationType: .popToRoot, deferredLoadingWorkId: "test")))
 
         completion(
             .fullScreen(component: .init(contentType: "welcomeComponent", properties: welcomeProperties, id: UUID()))

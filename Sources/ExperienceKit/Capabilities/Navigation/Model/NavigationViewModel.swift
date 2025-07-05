@@ -17,7 +17,7 @@ public struct NavigationViewModel: Identifiable, Hashable {
             return value
         case .modal(let value):
             return value
-        case .dismiss:
+        case .dismiss, .pop, .popToRoot:
             fatalError("dismiss navigation type not supported with destination")
         }
     }
@@ -33,6 +33,8 @@ public enum NavigationType: Equatable, Identifiable, Codable, Hashable {
     case push(String)
     case modal(String)
     case dismiss
+    case pop
+    case popToRoot
 
     // TODO: add dismiss case here
 
@@ -40,7 +42,7 @@ public enum NavigationType: Equatable, Identifiable, Codable, Hashable {
         switch self {
         case .push(let value), .modal(let value):
             return value
-        case .dismiss:
+        case .dismiss, .pop, .popToRoot:
             fatalError("dismiss navigation type not supported with id")
         }
     }

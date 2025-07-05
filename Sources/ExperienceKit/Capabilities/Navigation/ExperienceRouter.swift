@@ -50,17 +50,19 @@ public class DefaultExperienceRouter: ExperienceRouter {
             path.append(navigationViewModel)
         case .modal:
             self.navigationViewModel = navigationViewModel
-        case .dismiss:
+        case .pop:
             if !path.isEmpty {
                 // Pop last pushed view
                 _ = path.popLast()
-            } else {
-                let address = Unmanaged.passUnretained(self).toOpaque()
-                print("dismiss nav func \(address) \(expId)")
-                markedToDismiss = true
-                presenterCache.removeAll()
-                delegate?.dismissModal()
             }
+        case .dismiss:
+            let address = Unmanaged.passUnretained(self).toOpaque()
+            print("dismiss nav func \(address) \(expId)")
+            markedToDismiss = true
+            presenterCache.removeAll()
+            delegate?.dismissModal()
+        case .popToRoot:
+            path.removeAll()
         }
     }
 
