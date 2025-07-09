@@ -22,6 +22,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return ScrollableInteractor()
         case .homeContainer:
             return HomeContainerInteractor()
+        case .experienceList:
+            return ExperienceListInteractor()
         }
     }
 }

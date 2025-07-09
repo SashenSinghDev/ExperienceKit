@@ -52,9 +52,25 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                                     .buttonStyle(StaticButtonStyle())
                             }
                         }
-                        .navigationTitle(navigationBarModel.title)
-                        .navigationBarTitleDisplayMode(navigationBarModel.style)
                     }
+                    .navigationTitle(navigationBarModel.title)
+                    .navigationBarTitleDisplayMode(navigationBarModel.style)
+                    .modifier(
+                        AnyViewModifier { view in
+                            if let searchBarModel = navigationBarModel.searchBar {
+                                return AnyView(
+                                    view.searchable(
+                                        text: $presenter.searchText,
+                                        placement: .navigationBarDrawer(displayMode: .always),
+                                        prompt: searchBarModel.placeholder
+                                    )
+                                )
+                            } else {
+                                return view
+                            }
+                        }
+                    )
+
                 case .loadedFullScreen(let viewModel):
                     VStack {
                         makeView(from: viewModel)
@@ -91,5 +107,13 @@ private extension NavigationBarModel {
         case .large:
             return .large
         }
+    }
+}
+
+private struct AnyViewModifier: ViewModifier {
+    let transform: (AnyView) -> AnyView
+
+    func body(content: Content) -> some View {
+        transform(AnyView(content))
     }
 }

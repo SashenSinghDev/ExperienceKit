@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 public final class ExperiencePresenter: ObservableObject {
     public var delegate: (any ExperiencePresenterNotifier)?
@@ -22,6 +23,9 @@ public final class ExperiencePresenter: ObservableObject {
 
     @Published public var state: State = .idle
 
+    private var cancellables = Set<AnyCancellable>()
+    @Published var searchText: String = ""
+
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor
     private let dependency: ExperienceDependency
@@ -36,13 +40,23 @@ public final class ExperiencePresenter: ObservableObject {
 
         dependency.experiencePresenterNotifier.delegate = self
 
-//        let address = Unmanaged.passUnretained(self).toOpaque()
-//        print("make new presenter \(address)")
+        $searchText
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)  // Wait 300ms after user stops typing
+            .removeDuplicates()
+            .sink { [weak self] newValue in
+                self?.filterResults(for: newValue)
+            }
+            .store(in: &cancellables)
     }
 
     deinit {
         let address = Unmanaged.passUnretained(self).toOpaque()
         print("deinit ExperiencePresenter at address \(address)")
+    }
+
+    private func filterResults(for query: String) {
+        print("Filtering for: \(query)")
+        // Add your logic here
     }
 
     public func load() {

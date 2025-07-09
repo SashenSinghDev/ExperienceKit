@@ -13,7 +13,8 @@
 		9640DEA82E1008680076C4B9 /* HomeContainerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640DEA72E1008520076C4B9 /* HomeContainerContentView.swift */; };
 		9640DEAA2E1008940076C4B9 /* HomeContainerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640DEA92E10088E0076C4B9 /* HomeContainerInteractor.swift */; };
 		9653EFE52E0314A00077C0F7 /* WelcomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9653EFE42E0314930077C0F7 /* WelcomeInteractor.swift */; };
-		965912DF2E1923A40064DD3A /* OnboardingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965912DE2E19239E0064DD3A /* OnboardingInteractor.swift */; };
+		965912E12E1A67A40064DD3A /* ExperienceListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965912E02E1A679D0064DD3A /* ExperienceListInteractor.swift */; };
+		965912E32E1A69400064DD3A /* ExperienceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965912E22E1A693A0064DD3A /* ExperienceListView.swift */; };
 		96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */; };
 		96FB9FEB2C36DE8E00803A47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96FB9FEA2C36DE8E00803A47 /* Assets.xcassets */; };
 		96FB9FEE2C36DE8E00803A47 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96FB9FED2C36DE8E00803A47 /* Preview Assets.xcassets */; };
@@ -28,7 +29,8 @@
 		9640DEA72E1008520076C4B9 /* HomeContainerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerContentView.swift; sourceTree = "<group>"; };
 		9640DEA92E10088E0076C4B9 /* HomeContainerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerInteractor.swift; sourceTree = "<group>"; };
 		9653EFE42E0314930077C0F7 /* WelcomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeInteractor.swift; sourceTree = "<group>"; };
-		965912DE2E19239E0064DD3A /* OnboardingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInteractor.swift; sourceTree = "<group>"; };
+		965912E02E1A679D0064DD3A /* ExperienceListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceListInteractor.swift; sourceTree = "<group>"; };
+		965912E22E1A693A0064DD3A /* ExperienceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceListView.swift; sourceTree = "<group>"; };
 		96FB9FE32C36DE8D00803A47 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96FB9FE62C36DE8D00803A47 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		96FB9FEA2C36DE8E00803A47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		9640DEA62E10083E0076C4B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				965912E22E1A693A0064DD3A /* ExperienceListView.swift */,
 				9640DEA72E1008520076C4B9 /* HomeContainerContentView.swift */,
 				9613D6BC2D0D8EC90043F0B7 /* FullScreenContentView.swift */,
 			);
@@ -114,7 +117,7 @@
 		96FB9FFA2C36FBDC00803A47 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
-				965912DE2E19239E0064DD3A /* OnboardingInteractor.swift */,
+				965912E02E1A679D0064DD3A /* ExperienceListInteractor.swift */,
 				9640DEA92E10088E0076C4B9 /* HomeContainerInteractor.swift */,
 				9640DE9E2E0362200076C4B9 /* ScrollableInteractor.swift */,
 				9653EFE42E0314930077C0F7 /* WelcomeInteractor.swift */,
@@ -200,10 +203,11 @@
 			files = (
 				96FB9FF82C36DEB500803A47 /* AppExperienceProvider.swift in Sources */,
 				9613D6BD2D0D8ED10043F0B7 /* FullScreenContentView.swift in Sources */,
+				965912E12E1A67A40064DD3A /* ExperienceListInteractor.swift in Sources */,
 				9640DEAA2E1008940076C4B9 /* HomeContainerInteractor.swift in Sources */,
+				965912E32E1A69400064DD3A /* ExperienceListView.swift in Sources */,
 				9640DE9F2E0362260076C4B9 /* ScrollableInteractor.swift in Sources */,
 				9653EFE52E0314A00077C0F7 /* WelcomeInteractor.swift in Sources */,
-				965912DF2E1923A40064DD3A /* OnboardingInteractor.swift in Sources */,
 				9640DEA82E1008680076C4B9 /* HomeContainerContentView.swift in Sources */,
 				96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */,
 				9640DEA12E0363320076C4B9 /* Experience.swift in Sources */,

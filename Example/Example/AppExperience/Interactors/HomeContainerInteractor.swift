@@ -14,6 +14,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
 
     func load(completion: @escaping (ExperienceType) -> Void) {
 
+        // check stored values
         completion(
             .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal(Experience.welcome.rawValue), deferredLoadingWorkId: nil))
         )
@@ -24,7 +25,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
                                                  id: UUID())
 
             completion(
-                .scrollableWithNavigationProperties(components: [descriptionComponent], navigationBarModel: .init(title: "homeScreenLoaded", displayMode: .large))
+                .scrollableWithNavigationProperties(components: [descriptionComponent], navigationBarModel: .init(title: "homeScreenLoaded", displayMode: .large, searchBar: nil))
             )
         }
     }

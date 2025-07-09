@@ -9,4 +9,5 @@ enum Experience: String {
     case welcome
     case scrollableScreen
     case homeContainer
+    case experienceList
 }
