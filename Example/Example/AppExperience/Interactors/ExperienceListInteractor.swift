@@ -14,10 +14,22 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                                     displayMode: .large,
                                                     searchBar: .init(placeholder: "components and capabilities"))
 
-
-        completion(.scrollableWithNavigationProperties(components: [], navigationBarModel: navigationBarModel))
+        completion(.scrollableWithNavigationProperties(components: [
+            .sectionTitleComponent(title: "Components", showBottomBorder: false),
+            .genericListItemComponent(title: "Welcome",
+                                      navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
+                                                        deferredLoadingWorkId: nil,
+                                                        additionalProperties: ["componentTitle": "welcome"])),
+            .genericListItemComponent(title: "Button",
+                                      navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
+                                                        deferredLoadingWorkId: nil,
+                                                        additionalProperties: ["componentTitle": "button"]))
+        ], navigationBarModel: navigationBarModel))
     }
 
     func performDeferredWork(workId: String, completion: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            completion()
+        }
     }
 }

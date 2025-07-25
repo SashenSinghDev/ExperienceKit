@@ -18,8 +18,8 @@ public final class ExperienceContainerPresenter {
         self.experienceProvider = experienceProvider
     }
 
-    func experienceView(for id: String, router: DefaultExperienceRouter, viewModelID: UUID, experienceID: String) -> ExperienceView<ExperiencePresenter> {
-        let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id)
+    func experienceView(for id: String, router: DefaultExperienceRouter, properties: [String: String]?, viewModelID: UUID, experienceID: String) -> ExperienceView<ExperiencePresenter> {
+        let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id, properties: properties)
         let experienceDependency = ExperienceDependency(router: router, experiencePresenterNotifier: DefaultExperiencePresenterNotifier())
         let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
         let viewProvider = ViewProvider(supportedComponentRegisters: registers)

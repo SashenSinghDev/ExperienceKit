@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol ExperienceProvider {
-    func returnExperienceInteractor(for id: String) -> ExperienceInteractor
+    func returnExperienceInteractor(for id: String, properties: [String: String]?) -> ExperienceInteractor
 }

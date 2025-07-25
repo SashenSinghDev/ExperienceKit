@@ -10,20 +10,22 @@ import ExperienceKit
 import SwiftUI
 
 final class AppExperienceProvider: ExperienceProvider {
-    func returnExperienceInteractor(for id: String) -> ExperienceInteractor {
+    func returnExperienceInteractor(for id: String, properties: [String: String]?) -> ExperienceInteractor {
         guard let experience = Experience(rawValue: id) else {
             fatalError("Experience id \(id) not found")
         }
 
         switch experience {
-        case .welcome:
-            return WelcomeInteractor()
+        case .welcomeComponent:
+            return WelcomeComponentInteractor()
         case .scrollableScreen:
             return ScrollableInteractor()
         case .homeContainer:
             return HomeContainerInteractor()
-        case .experienceList:
+        case .experienceList: 
             return ExperienceListInteractor()
+        case .componentDetail:
+            return ComponentDetailInteractor(properties: properties ?? [:])
         }
     }
 }

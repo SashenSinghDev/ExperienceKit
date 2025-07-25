@@ -11,6 +11,7 @@ public struct NavigationViewModel: Identifiable, Hashable {
     public let id = UUID()
     public let navigationType: NavigationType
     public let deferredLoadingWorkId: String?
+    public let properties: [String: String]?
     public var destination: String {
         switch navigationType {
             case .push(let value):
@@ -22,9 +23,10 @@ public struct NavigationViewModel: Identifiable, Hashable {
         }
     }
 
-    public init(navigationType: NavigationType, deferredLoadingWorkId: String?) {
+    public init(navigationType: NavigationType, deferredLoadingWorkId: String?, properties: [String: String]?) {
         self.navigationType = navigationType
         self.deferredLoadingWorkId = deferredLoadingWorkId
+        self.properties = properties
     }
     
 }

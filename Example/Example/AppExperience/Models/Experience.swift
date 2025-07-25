@@ -6,7 +6,8 @@
 //
 
 enum Experience: String {
-    case welcome
+    case welcomeComponent
+    case componentDetail
     case scrollableScreen
     case homeContainer
     case experienceList

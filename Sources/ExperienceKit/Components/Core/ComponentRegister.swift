@@ -19,5 +19,7 @@ public protocol ComponentRegister {
 public let allRegisters: [ComponentRegister] = [
     ExampleComponentRegister(),
     WelcomeComponentRegister(),
-    DescriptionComponentRegister()
+    DescriptionComponentRegister(),
+    SectionTitleComponentRegister(),
+    GenericListItemComponentRegister()
 ]

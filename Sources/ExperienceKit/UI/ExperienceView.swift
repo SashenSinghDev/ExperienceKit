@@ -46,7 +46,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     }
                 case .loadedScrollableWithNavigationBar(let viewModel, let navigationBarModel):
                     ScrollView {
-                        VStack {
+                        VStack(spacing: 0) {
                             ForEach(viewModel) { viewModel in
                                 makeView(from: viewModel)
                                     .buttonStyle(StaticButtonStyle())

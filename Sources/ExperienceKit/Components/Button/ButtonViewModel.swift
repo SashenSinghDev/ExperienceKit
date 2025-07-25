@@ -25,7 +25,8 @@ public struct ButtonViewModel: ComponentViewModel {
         self.title = properties.title
         self.style = properties.style
         self.navigationViewModel = .init(navigationType: properties.navigation.navigationType,
-                                         deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId)
+                                         deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId,
+                                         properties: properties.navigation.additionalProperties)
         self.router = dependency.router
         self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
     }

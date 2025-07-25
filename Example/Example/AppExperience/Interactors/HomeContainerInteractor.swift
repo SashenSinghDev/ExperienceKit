@@ -16,7 +16,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
 
         // check stored values
         completion(
-            .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal(Experience.welcome.rawValue), deferredLoadingWorkId: nil))
+            .navigateImmediately(navigationViewModel: NavigationViewModel(navigationType: .modal(Experience.welcomeComponent.rawValue), deferredLoadingWorkId: nil, properties: nil))
         )
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {

@@ -8,7 +8,7 @@
 import ExperienceKit
 import SwiftUI
 
-final class WelcomeInteractor: ExperienceInteractor {
+final class WelcomeComponentInteractor: ExperienceInteractor {
 
     init() {}
 
@@ -21,11 +21,11 @@ final class WelcomeInteractor: ExperienceInteractor {
                                                                      style: .large(.inverted)),
                                                   primaryButton: .init(title: "Log In",
                                                                        style: .secondary,
-                                                                       navigation: .init(navigationType: .push(Experience.welcome.rawValue),
-                                                                                         deferredLoadingWorkId: nil)),
+                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
+                                                                                         deferredLoadingWorkId: nil, additionalProperties: nil)),
                                                   secondaryButton: .init(title: "Get Started",
                                                                          style: .primary,
-                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test")))
+                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test", additionalProperties: nil)))
 
         completion(
             .fullScreen(component: .init(contentType: "welcomeComponent", properties: welcomeProperties, id: UUID()))
