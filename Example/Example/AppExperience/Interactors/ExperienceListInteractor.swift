@@ -17,6 +17,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                       navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
                                                         deferredLoadingWorkId: nil,
                                                         additionalProperties: ["componentTitle": "welcome"])),
+            .separatorComponent(properties: .init(isFullWidth: false)),
             .genericListItemComponent(title: "Button",
                                       navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
                                                         deferredLoadingWorkId: nil,
@@ -35,7 +36,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
     func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
 
         let searchText = workId
-        let filteredComponentList: [Component] = {
+        var filteredComponentList: [Component] = {
             guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 return componetList
             }

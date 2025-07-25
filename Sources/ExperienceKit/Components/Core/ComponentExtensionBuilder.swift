@@ -26,4 +26,10 @@ public extension Component {
                          properties: properties,
                          id: UUID())
     }
+
+    static func separatorComponent(properties: SeparatorProperties) -> Component {
+        return Component(contentType: "separator",
+                         properties: properties,
+                         id: UUID())
+    }
 }
