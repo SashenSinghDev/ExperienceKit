@@ -41,7 +41,7 @@ public final class ExperiencePresenter: ObservableObject {
         dependency.experiencePresenterNotifier.delegate = self
 
         $searchText
-            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)  // Wait 300ms after user stops typing
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)  // Wait 300ms after user stops typing
             .removeDuplicates()
             .sink { [weak self] newValue in
                 self?.filterResults(for: newValue)
@@ -55,8 +55,11 @@ public final class ExperiencePresenter: ObservableObject {
     }
 
     private func filterResults(for query: String) {
-        print("Filtering for: \(query)")
-        // Add your logic here
+        guard case .loadedScrollableWithNavigationBar(_, let navigationBarModel) = state else { return }
+        experienceInteractor.performDeferredWork(workId: query) {  [weak self] experienceType in
+            guard let self, let experienceType else { return }
+            self.resolveState(for: experienceType)
+        }
     }
 
     public func load() {
@@ -67,30 +70,33 @@ public final class ExperiencePresenter: ObservableObject {
         self.experienceInteractor.load { [weak self] experienceType in
 
             guard let self else { return }
+            self.resolveState(for: experienceType)
+        }
+    }
 
-            switch experienceType {
-            case .fullScreen(let component):
-                guard let viewModel = self.viewModelProvider.viewModel(for: component, dependency: dependency) else {
-                    // TODO: Log this instead
-                    fatalError("full screen component not supported")
-                }
-                self.state = .loadedFullScreen(viewModel)
-                self.vm = viewModel
-            case .scrollable(let components):
-                let viewModels: [AnyComponentViewModel] = components.compactMap {
-                    return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
-                }
-
-                self.state = .loadedScrollable(viewModels)
-            case .scrollableWithNavigationProperties(let components, let navigationBarModel):
-                let viewModels: [AnyComponentViewModel] = components.compactMap {
-                    return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
-                }
-
-                self.state = .loadedScrollableWithNavigationBar(viewModels, navigationBarModel: navigationBarModel)
-            case .navigateImmediately(navigationViewModel: let navigationViewModel):
-                navigate(with: navigationViewModel)
+    private func resolveState(for experienceType: ExperienceType) {
+        switch experienceType {
+        case .fullScreen(let component):
+            guard let viewModel = self.viewModelProvider.viewModel(for: component, dependency: dependency) else {
+                // TODO: Log this instead
+                fatalError("full screen component not supported")
             }
+            self.state = .loadedFullScreen(viewModel)
+            self.vm = viewModel
+        case .scrollable(let components):
+            let viewModels: [AnyComponentViewModel] = components.compactMap {
+                return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
+            }
+
+            self.state = .loadedScrollable(viewModels)
+        case .scrollableWithNavigationProperties(let components, let navigationBarModel):
+            let viewModels: [AnyComponentViewModel] = components.compactMap {
+                return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
+            }
+
+            self.state = .loadedScrollableWithNavigationBar(viewModels, navigationBarModel: navigationBarModel)
+        case .navigateImmediately(navigationViewModel: let navigationViewModel):
+            navigate(with: navigationViewModel)
         }
     }
 
@@ -98,7 +104,7 @@ public final class ExperiencePresenter: ObservableObject {
         if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
             dependency.router.isLoading = true
 
-            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] in
+            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] _ in
                 self?.dependency.router.isLoading = false
                 self?.dependency.router.navigate(to: navigationViewModel)
             }

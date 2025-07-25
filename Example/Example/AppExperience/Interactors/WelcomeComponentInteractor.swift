@@ -32,9 +32,9 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
         )
     }
 
-    func performDeferredWork(workId: String, completion: @escaping () -> Void) {
+    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            completion()
+            completion(nil)
         }
     }
 }

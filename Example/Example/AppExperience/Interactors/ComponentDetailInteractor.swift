@@ -32,7 +32,7 @@ final class ComponentDetailInteractor: ExperienceInteractor {
         )
     }
 
-    func performDeferredWork(workId: String, completion: @escaping () -> Void) {
+    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
     }
 }
 
