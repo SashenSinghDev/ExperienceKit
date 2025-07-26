@@ -21,7 +21,7 @@ struct SeparatorView: ComponentView {
             .fill(Color.gray)
             .opacity(0.25)
             .frame(height: 1)
-            .padding(.horizontal, viewModel.isFullWidth ? 0 : 16)
+            .padding(.leading, viewModel.isFullWidth ? 0 : 16)
     }
 }
 

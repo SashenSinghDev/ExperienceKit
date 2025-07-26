@@ -32,4 +32,13 @@ public extension Component {
                          properties: properties,
                          id: UUID())
     }
+
+    static func buttonComponent(title: String, style: ButtonProperties.Style, isFullWidth: Bool, navigation: NavigationProperties) -> Component {
+        return Component(contentType: "button",
+                         properties: ButtonProperties(title: title,
+                                                      style: style,
+                                                      isFullWidth: isFullWidth,
+                                                      navigation: navigation),
+                         id: UUID())
+    }
 }

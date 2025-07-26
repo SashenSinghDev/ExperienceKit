@@ -16,12 +16,15 @@ public struct ButtonProperties {
     public let title: String
     public let style: Style
     public let navigation: NavigationProperties
+    public let isFullWidth: Bool
 
     public init(title: String,
                 style: Style,
+                isFullWidth: Bool,
                 navigation: NavigationProperties) {
         self.title = title
         self.style = style
+        self.isFullWidth = isFullWidth
         self.navigation = navigation
     }
 }

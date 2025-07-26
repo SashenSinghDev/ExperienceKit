@@ -22,5 +22,6 @@ public let allRegisters: [ComponentRegister] = [
     DescriptionComponentRegister(),
     SectionTitleComponentRegister(),
     GenericListItemComponentRegister(),
-    SeparatorComponentRegister()
+    SeparatorComponentRegister(),
+    ButtonComponentRegister()
 ]

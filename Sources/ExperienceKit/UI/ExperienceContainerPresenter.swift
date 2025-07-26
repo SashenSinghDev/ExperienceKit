@@ -39,6 +39,8 @@ public final class ExperienceContainerPresenter {
             return presenter
         }()
 
-        return ExperienceView(presenter: experiencePresenter, viewProvider: viewProvider, router: router)
+        let experienceView = ExperienceView(presenter: experiencePresenter, viewProvider: viewProvider, router: router)
+
+        return experienceView
     }
 }

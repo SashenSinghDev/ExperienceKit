@@ -11,7 +11,7 @@ import SwiftUI
 final class ButtonComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "buttonComponent"
+        "button"
     }
 
     var propertiesType: Properties.Type {

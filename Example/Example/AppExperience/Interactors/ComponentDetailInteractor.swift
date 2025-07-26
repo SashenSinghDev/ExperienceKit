@@ -20,8 +20,10 @@ final class ComponentDetailInteractor: ExperienceInteractor {
         let experienceType: ExperienceType = {
 
             switch properties["componentTitle"] {
-                case "welcome":
-                    .fullScreen(component: .welcomeComponent(properties: welcomeProperties))
+            case "welcome":
+                welcomeExperience
+            case "button":
+                buttonExperience
             default:
                 fatalError(" \(String(describing: properties["componentTitle"])) component not defined")
             }
@@ -37,21 +39,41 @@ final class ComponentDetailInteractor: ExperienceInteractor {
 }
 
 extension ComponentDetailInteractor {
-    private var welcomeProperties: WelcomeProperties {
-        return WelcomeProperties(image: .init(uri: "welcome-image",
-                                              bundle: Bundle.main.bundleIdentifier ?? ""),
-                                 description: .init(title: "mock description title",
-                                                    subtitle: "mock description subtitle",
-                                                    style: .large(.inverted)),
-                                 primaryButton: .init(title: "mock primary button",
-                                                      style: .secondary,
-                                                      navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
-                                                                        deferredLoadingWorkId: nil,
-                                                                        additionalProperties: nil)),
-                                 secondaryButton: .init(title: "mock secondary button",
-                                                        style: .primary,
-                                                        navigation: .init(navigationType: .dismiss,
-                                                                          deferredLoadingWorkId: "test",
-                                                                          additionalProperties: nil)))
+
+    private var welcomeExperience: ExperienceType {
+        let properties = WelcomeProperties(image: .init(uri: "welcome-image",
+                                                               bundle: Bundle.main.bundleIdentifier ?? ""),
+                                                  description: .init(title: "mock description title",
+                                                                     subtitle: "mock description subtitle",
+                                                                     style: .large(.inverted)),
+                                                  primaryButton: .init(title: "mock primary button",
+                                                                       style: .secondary,
+                                                                       isFullWidth: true,
+                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
+                                                                                         deferredLoadingWorkId: nil,
+                                                                                         additionalProperties: nil)),
+                                                  secondaryButton: .init(title: "mock secondary button",
+                                                                         style: .primary,
+                                                                         isFullWidth: true,
+                                                                         navigation: .init(navigationType: .dismiss,
+                                                                                           deferredLoadingWorkId: "test",
+                                                                                           additionalProperties: nil)))
+
+        return .fullScreen(component: .welcomeComponent(properties: properties))
+    }
+
+    private var buttonExperience: ExperienceType {
+        return .scrollableWithNavigationProperties(components: [
+            .sectionTitleComponent(title: "PrimaryButton", showBottomBorder: false),
+            .buttonComponent(title: "PrimaryButton",
+                             style: .primary,
+                             isFullWidth: false,
+                             navigation: .init(navigationType: .pop, deferredLoadingWorkId: nil, additionalProperties: nil)),
+            .sectionTitleComponent(title: "SecondaryButton", showBottomBorder: false),
+            .buttonComponent(title: "Secondary",
+                             style: .secondary,
+                             isFullWidth: false,
+                             navigation: .init(navigationType: .pop, deferredLoadingWorkId: nil, additionalProperties: nil))
+        ], navigationBarModel: .init(title: "Buttons", displayMode: .large, searchBar: nil))
     }
 }

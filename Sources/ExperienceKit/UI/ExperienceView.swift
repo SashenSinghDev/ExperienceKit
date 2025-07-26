@@ -52,9 +52,10 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                                     .buttonStyle(StaticButtonStyle())
                             }
                         }
+                        .frame(maxWidth: .infinity)
                     }
-                    .navigationTitle(navigationBarModel.title)
-                    .navigationBarTitleDisplayMode(navigationBarModel.style)
+//                    .navigationTitle(navigationBarModel.title)
+//                    .navigationBarTitleDisplayMode(navigationBarModel.style)
                     .modifier(
                         AnyViewModifier { view in
                             if let searchBarModel = navigationBarModel.searchBar {
@@ -88,6 +89,8 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     .cornerRadius(12)
             }
         }
+        // TODO move navigation properties to the experience presenter level
+        .navigationTitle("ationBarModel.title")
         .animation(.easeInOut, value: router.isLoading)
     }
 

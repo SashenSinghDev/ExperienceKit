@@ -21,10 +21,12 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                                                      style: .large(.inverted)),
                                                   primaryButton: .init(title: "Log In",
                                                                        style: .secondary,
+                                                                       isFullWidth: true,
                                                                        navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
                                                                                          deferredLoadingWorkId: nil, additionalProperties: nil)),
                                                   secondaryButton: .init(title: "Get Started",
                                                                          style: .primary,
+                                                                         isFullWidth: true,
                                                                          navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test", additionalProperties: nil)))
 
         completion(
