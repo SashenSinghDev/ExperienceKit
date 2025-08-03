@@ -37,15 +37,6 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     Color.clear.onAppear(perform: presenter.load)
                 case .loadedScrollable(let viewModel):
                     ScrollView {
-                        VStack {
-                            ForEach(viewModel) { viewModel in
-                                makeView(from: viewModel)
-                                    .buttonStyle(StaticButtonStyle())
-                            }
-                        }
-                    }
-                case .loadedScrollableWithNavigationBar(let viewModel, let navigationBarModel):
-                    ScrollView {
                         VStack(spacing: 0) {
                             ForEach(viewModel) { viewModel in
                                 makeView(from: viewModel)
@@ -54,24 +45,6 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                         }
                         .frame(maxWidth: .infinity)
                     }
-//                    .navigationTitle(navigationBarModel.title)
-//                    .navigationBarTitleDisplayMode(navigationBarModel.style)
-                    .modifier(
-                        AnyViewModifier { view in
-                            if let searchBarModel = navigationBarModel.searchBar {
-                                return AnyView(
-                                    view.searchable(
-                                        text: $presenter.searchText,
-                                        placement: .navigationBarDrawer(displayMode: .always),
-                                        prompt: searchBarModel.placeholder
-                                    )
-                                )
-                            } else {
-                                return view
-                            }
-                        }
-                    )
-
                 case .loadedFullScreen(let viewModel):
                     VStack {
                         makeView(from: viewModel)
@@ -89,8 +62,23 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     .cornerRadius(12)
             }
         }
-        // TODO move navigation properties to the experience presenter level
-        .navigationTitle("ationBarModel.title")
+        .modifier(
+            AnyViewModifier { view in
+                if let searchBarModel = presenter.navigationBarModel?.searchBar {
+                    return AnyView(
+                        view.searchable(
+                            text: $presenter.searchText,
+                            placement: .navigationBarDrawer(displayMode: .always),
+                            prompt: searchBarModel.placeholder
+                        )
+                    )
+                } else {
+                    return view
+                }
+            }
+        )
+        .navigationTitle(presenter.navigationBarModel?.title ?? "")
+        .navigationBarTitleDisplayMode(presenter.navigationBarModel?.style ?? .automatic)
         .animation(.easeInOut, value: router.isLoading)
     }
 

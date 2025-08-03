@@ -9,8 +9,18 @@ import ExperienceKit
 import SwiftUI
 
 final class ComponentDetailInteractor: ExperienceInteractor {
-
     private let properties: [String: String]
+
+    var navigationBarModel: NavigationBarModel? {
+        switch properties["componentTitle"] {
+        case "welcome":
+            return nil
+        case "button":
+            return .init(title: "Buttons", displayMode: .inline, searchBar: nil)
+        default:
+            fatalError(" \(String(describing: properties["componentTitle"])) component not defined")
+        }
+    }
 
     init(properties: [String: String]) {
         self.properties = properties
@@ -63,7 +73,7 @@ extension ComponentDetailInteractor {
     }
 
     private var buttonExperience: ExperienceType {
-        return .scrollableWithNavigationProperties(components: [
+        return .scrollable(components: [
             .sectionTitleComponent(title: "PrimaryButton", showBottomBorder: false),
             .buttonComponent(title: "PrimaryButton",
                              style: .primary,
@@ -74,6 +84,6 @@ extension ComponentDetailInteractor {
                              style: .secondary,
                              isFullWidth: false,
                              navigation: .init(navigationType: .pop, deferredLoadingWorkId: nil, additionalProperties: nil))
-        ], navigationBarModel: .init(title: "Buttons", displayMode: .large, searchBar: nil))
+        ])
     }
 }

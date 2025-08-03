@@ -17,7 +17,6 @@ public final class ExperiencePresenter: ObservableObject {
         case loading
         case failed(Error)
         case loadedScrollable([AnyComponentViewModel])
-        case loadedScrollableWithNavigationBar([AnyComponentViewModel], navigationBarModel: NavigationBarModel)
         case loadedFullScreen(AnyComponentViewModel)
     }
 
@@ -25,6 +24,8 @@ public final class ExperiencePresenter: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     @Published var searchText: String = ""
+
+    let navigationBarModel: NavigationBarModel?
 
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor
@@ -36,6 +37,7 @@ public final class ExperiencePresenter: ObservableObject {
                 dependency: ExperienceDependency) {
         self.viewModelProvider = viewModelProvider
         self.experienceInteractor = experienceInteractor
+        self.navigationBarModel = experienceInteractor.navigationBarModel
         self.dependency = dependency
 
         dependency.experiencePresenterNotifier.delegate = self
@@ -55,7 +57,8 @@ public final class ExperiencePresenter: ObservableObject {
     }
 
     private func filterResults(for query: String) {
-        guard case .loadedScrollableWithNavigationBar(_, let navigationBarModel) = state else { return }
+        guard case .loadedScrollable(_) = state, navigationBarModel?.searchBar != nil else { return }
+
         experienceInteractor.performDeferredWork(workId: query) {  [weak self] experienceType in
             guard let self, let experienceType else { return }
             self.resolveState(for: experienceType)
@@ -63,10 +66,6 @@ public final class ExperiencePresenter: ObservableObject {
     }
 
     public func load() {
-
-//        let address = Unmanaged.passUnretained(self).toOpaque()
-//        print("load ExperiencePresenter at address \(address)")
-
         self.experienceInteractor.load { [weak self] experienceType in
 
             guard let self else { return }
@@ -89,12 +88,6 @@ public final class ExperiencePresenter: ObservableObject {
             }
 
             self.state = .loadedScrollable(viewModels)
-        case .scrollableWithNavigationProperties(let components, let navigationBarModel):
-            let viewModels: [AnyComponentViewModel] = components.compactMap {
-                return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)
-            }
-
-            self.state = .loadedScrollableWithNavigationBar(viewModels, navigationBarModel: navigationBarModel)
         case .navigateImmediately(navigationViewModel: let navigationViewModel):
             navigate(with: navigationViewModel)
         }

@@ -9,7 +9,8 @@ import ExperienceKit
 import SwiftUI
 
 final class WelcomeComponentInteractor: ExperienceInteractor {
-
+    var navigationBarModel: ExperienceKit.NavigationBarModel?
+    
     init() {}
 
     func load(completion: @escaping (ExperienceType) -> Void) {

@@ -9,7 +9,8 @@ import ExperienceKit
 import SwiftUI
 
 final class HomeContainerInteractor: ExperienceInteractor {
-
+    var navigationBarModel: ExperienceKit.NavigationBarModel?
+    
     init() {}
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -25,7 +26,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
                                                  id: UUID())
 
             completion(
-                .scrollableWithNavigationProperties(components: [descriptionComponent], navigationBarModel: .init(title: "homeScreenLoaded", displayMode: .large, searchBar: nil))
+                .scrollable(components: [descriptionComponent])
             )
         }
     }

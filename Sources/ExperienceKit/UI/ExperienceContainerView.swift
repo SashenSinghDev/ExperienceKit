@@ -38,11 +38,13 @@ public struct ExperienceContainerView: View {
                 }
         }
         .onChange(of: router.path) { _, newPath in
-            let removed = previousPath.filter { old in !newPath.contains(old) }
-            for removedItem in removed {
-                router.removePresenter(for: removedItem.id)
+            DispatchQueue.main.async {
+                let removed = previousPath.filter { old in !newPath.contains(old) }
+                for removedItem in removed {
+                    router.removePresenter(for: removedItem.id)
+                }
+                previousPath.append(contentsOf: newPath)
             }
-            previousPath.append(contentsOf: newPath)
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
             ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, properties: viewModel.properties)

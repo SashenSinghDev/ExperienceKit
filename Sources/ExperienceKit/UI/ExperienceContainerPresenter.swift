@@ -31,7 +31,7 @@ public final class ExperienceContainerPresenter {
                                                             dependency: experienceDependency)
 
                 let address = Unmanaged.passUnretained(presenterToReturn).toOpaque()
-                print("Create new presenter  \(experienceID) \(address)===========")
+                print("Create new presenter  \(experienceID) \(address) \(viewModelID)===========")
 
                 router.storePresenter(presenterToReturn, for: viewModelID)
                 return presenterToReturn

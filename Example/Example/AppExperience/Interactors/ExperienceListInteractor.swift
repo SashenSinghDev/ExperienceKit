@@ -9,6 +9,11 @@ import ExperienceKit
 import SwiftUI
 
 final class ExperienceListInteractor: ExperienceInteractor {
+    var navigationBarModel: ExperienceKit.NavigationBarModel? {
+        return NavigationBarModel(title: "Experience Kit",
+                                  displayMode: .large,
+                                  searchBar: .init(placeholder: "components and capabilities"))
+    }
 
     private var componetList: [Component] {
         return [
@@ -25,15 +30,12 @@ final class ExperienceListInteractor: ExperienceInteractor {
         ]
     }
 
-    private let navigationBarModel = NavigationBarModel(title: "Experience Kit",
-                                                        displayMode: .large,
-                                                        searchBar: .init(placeholder: "components and capabilities"))
-
     func load(completion: @escaping (ExperienceType) -> Void) {
-        completion(.scrollableWithNavigationProperties(components: componetList, navigationBarModel: navigationBarModel))
+        completion(.scrollable(components: componetList))
     }
 
     func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+        guard let navigationBarModel = navigationBarModel else { return }
 
         let searchText = workId
         var filteredComponentList: [Component] = {
@@ -47,6 +49,6 @@ final class ExperienceListInteractor: ExperienceInteractor {
             }
         }()
 
-        completion(.scrollableWithNavigationProperties(components: filteredComponentList, navigationBarModel: navigationBarModel))
+        completion(.scrollable(components: filteredComponentList))
     }
 }

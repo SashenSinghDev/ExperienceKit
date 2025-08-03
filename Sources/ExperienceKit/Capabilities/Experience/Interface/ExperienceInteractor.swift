@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol ExperienceInteractor {
+    var navigationBarModel: NavigationBarModel? { get }
     func load(completion: @escaping (ExperienceType) -> Void)
     func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void)
 }

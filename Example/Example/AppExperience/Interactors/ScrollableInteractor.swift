@@ -9,12 +9,13 @@ import ExperienceKit
 import SwiftUI
 
 final class ScrollableInteractor: ExperienceInteractor {
-
+    var navigationBarModel: ExperienceKit.NavigationBarModel?
+    
     init() {}
 
     func load(completion: @escaping (ExperienceType) -> Void) {
         completion(
-            .scrollableWithNavigationProperties(components: exampleMocks, navigationBarModel: .init(title: "qwerty", displayMode: .automatic, searchBar: nil))
+            .scrollable(components: exampleMocks)
         )
     }
 
