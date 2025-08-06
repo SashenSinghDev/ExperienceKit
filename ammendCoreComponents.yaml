@@ -2,6 +2,6 @@ sources:
   - Sources/ExperienceKit/Components
 
 templates:
-  - Templates/AllRegisters.stencil
+  - Templates/Core
 
 output: .build/generated-temp/

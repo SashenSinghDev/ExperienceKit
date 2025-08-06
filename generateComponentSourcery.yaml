@@ -1,7 +1,7 @@
 sources:
   - ./Sources/ExperienceKit/Components/
 templates:
-  - ./Templates
+  - ./Templates/Component
 output:
   .build/generated-temp/
 args:

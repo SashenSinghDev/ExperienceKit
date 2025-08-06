@@ -1,4 +1,5 @@
 #!/bin/bash
+# run ./generate_component.sh <<ComponentName>>
 
 RAW_NAME=$1
 
