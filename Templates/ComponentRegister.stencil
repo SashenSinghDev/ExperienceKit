@@ -1,7 +1,8 @@
-// Generated using Sourcery
 import Foundation
+import SwiftUI
 
-final class {{ argument.component }}ComponentRegister {
+// sourcery: register
+final class {{ argument.component }}ComponentRegister: ComponentRegister {
     func register() {
         // Register {{ argument.component }} component here
     }

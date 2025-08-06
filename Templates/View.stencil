@@ -1,4 +1,3 @@
-// Generated using Sourcery
 import SwiftUI
 
 struct {{ argument.component }}View: View {

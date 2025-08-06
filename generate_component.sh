@@ -12,6 +12,7 @@ COMPONENT_NAME="$(tr '[:lower:]' '[:upper:]' <<< ${RAW_NAME:0:1})${RAW_NAME:1}"
 
 # Paths
 CONFIG_FILE="generateComponentSourcery.yaml"
+CONFIGCORE_FILE="ammendCoreComponents.yaml"
 TEMPLATE_OUTPUT=".build/generated-temp"
 TARGET_FOLDER="./Sources/ExperienceKit/Components/$COMPONENT_NAME"
 
@@ -39,3 +40,19 @@ echo "✅ Generated $COMPONENT_NAME component in: $TARGET_FOLDER"
 # 🔄 Revert changes to sourcery.yaml
 git checkout -- generateComponentSourcery.yaml
 echo "🔁 Reverted changes to sourcery.yaml"
+
+echo "🔍 Clean files:"
+tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}ComponentRegister.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}ComponentRegister.swift"
+
+tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}Properties.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}Properties.swift"
+
+tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}View.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}View.swift"
+
+tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift"
+
+# 🛠 Run Sourcery for ammending current files
+sourcery --config "$CONFIGCORE_FILE"
+
+mv "$TEMPLATE_OUTPUT/AllRegisters.generated.swift" "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"
+
+tail -n +3 "./Sources/ExperienceKit/Components/Core/AllRegisters.swift" > tmp.swift && mv tmp.swift "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"

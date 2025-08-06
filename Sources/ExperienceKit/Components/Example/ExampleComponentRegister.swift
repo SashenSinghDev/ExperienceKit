@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct ExampleComponentRegister: ComponentRegister {
+// sourcery: register
+final class ExampleComponentRegister: ComponentRegister {
     var contentType: String {
         "exampleComponent"
     }

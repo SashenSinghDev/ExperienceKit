@@ -1,0 +1,7 @@
+sources:
+  - Sources/ExperienceKit/Components
+
+templates:
+  - Templates/AllRegisters.stencil
+
+output: .build/generated-temp/

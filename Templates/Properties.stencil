@@ -1,4 +1,3 @@
-// Generated using Sourcery
 import Foundation
 
 struct {{ argument.component }}Properties {

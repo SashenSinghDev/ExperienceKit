@@ -1,4 +1,3 @@
-// Generated using Sourcery
 import Foundation
 
 final class {{ argument.component }}ViewModel: ObservableObject {

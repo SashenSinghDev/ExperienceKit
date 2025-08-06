@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// sourcery: register
 final class WelcomeComponentRegister: ComponentRegister {
 
     var contentType: String {

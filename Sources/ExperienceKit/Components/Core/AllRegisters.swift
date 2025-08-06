@@ -1,16 +1,11 @@
-//
-//  AllRegisters.swift
-//  ExperienceKit
-//
-//  Created by Sashen Singh on 05/08/2025.
-//
-
+// Generated using Sourcery 1.9.0 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
 public let allRegisters: [ComponentRegister] = [
-    ExampleComponentRegister(),
-    WelcomeComponentRegister(),
-    DescriptionComponentRegister(),
-    SectionTitleComponentRegister(),
-    GenericListItemComponentRegister(),
-    SeparatorComponentRegister(),
-    ButtonComponentRegister()
+  ButtonComponentRegister(),
+  DescriptionComponentRegister(),
+  ExampleComponentRegister(),
+  GenericListItemComponentRegister(),
+  SectionTitleComponentRegister(),
+  SeparatorComponentRegister(),
+  WelcomeComponentRegister(),
 ]

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// sourcery: register
 final class ButtonComponentRegister: ComponentRegister {
 
     var contentType: String {

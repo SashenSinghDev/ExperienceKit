@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// sourcery: register
 final class GenericListItemComponentRegister: ComponentRegister {
 
     var contentType: String {
