@@ -3,9 +3,10 @@ import Foundation
 public extension Component {
 {% for type in types.structs where type.annotations.component %}
     static func {{ type.annotations.component }}Component(properties: {{ type.name }}) -> Component {
-        return Component(contentType: "{{ type.annotations.component }}",
+        return Component(contentType: "{{ type.annotations.component | lowercase }}",
                          properties: properties,
                          id: UUID())
     }
+
 {% endfor %}
 }

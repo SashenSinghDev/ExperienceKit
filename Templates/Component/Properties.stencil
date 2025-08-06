@@ -2,5 +2,15 @@ import Foundation
 
 // sourcery: component = "{{ argument.component }}"
 public struct {{ argument.component }}Properties {
-    // Define properties for {{ argument.component }}
+    public let title: String
+
+    public init(title: String) {
+        self.title = title
+    }
+}
+
+extension {{ argument.component }}Properties: Properties, Codable {
+    public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> {{ argument.component }}Properties {
+        return try properties.decode({{ argument.component }}Properties.self, forKey: .properties)
+    }
 }
