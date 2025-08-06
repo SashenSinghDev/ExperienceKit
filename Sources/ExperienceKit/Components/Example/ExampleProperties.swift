@@ -19,6 +19,7 @@ public struct ExampleProperties {
     }
 }
 
+// sourcery: component = "example"
 extension ExampleProperties: Properties, Codable {
     public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> ExampleProperties {
         return try properties.decode(ExampleProperties.self, forKey: .properties)

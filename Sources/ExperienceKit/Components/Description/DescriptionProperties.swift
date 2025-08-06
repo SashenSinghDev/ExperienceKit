@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "description"
 public struct DescriptionProperties {
     public enum Theme: Codable {
         case regular

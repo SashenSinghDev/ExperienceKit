@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "button"
 public struct ButtonProperties {
     public enum Style: Codable {
         case primary

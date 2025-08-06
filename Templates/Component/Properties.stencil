@@ -1,5 +1,6 @@
 import Foundation
 
-struct {{ argument.component }}Properties {
+// sourcery: component = "{{ argument.component }}"
+public struct {{ argument.component }}Properties {
     // Define properties for {{ argument.component }}
 }

@@ -55,5 +55,8 @@ tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift" > tmp.swift && mv t
 sourcery --config "$CONFIGCORE_FILE"
 
 mv "$TEMPLATE_OUTPUT/AllRegisters.generated.swift" "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"
+mv "$TEMPLATE_OUTPUT/ComponentExtensionBuilder.generated.swift" "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift"
 
 tail -n +3 "./Sources/ExperienceKit/Components/Core/AllRegisters.swift" > tmp.swift && mv tmp.swift "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"
+
+tail -n +3 "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift" > tmp.swift && mv tmp.swift "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift"

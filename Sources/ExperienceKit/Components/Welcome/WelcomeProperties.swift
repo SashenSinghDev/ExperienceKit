@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "welcome"
 public struct WelcomeProperties {
     public let image: ExperienceImage
     public let description: DescriptionProperties

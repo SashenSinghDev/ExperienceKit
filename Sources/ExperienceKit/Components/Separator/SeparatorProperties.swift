@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "separator"
 public struct SeparatorProperties {
     public let isFullWidth: Bool
 

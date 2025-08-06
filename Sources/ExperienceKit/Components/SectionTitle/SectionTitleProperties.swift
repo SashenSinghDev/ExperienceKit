@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "sectionTitle"
 public struct SectionTitleProperties {
     public let title: String
     public let showBottomBorder: Bool
