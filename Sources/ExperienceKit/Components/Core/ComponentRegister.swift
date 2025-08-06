@@ -15,13 +15,3 @@ public protocol ComponentRegister {
     func viewModel(from component: Component, dependency: ExperienceDependency) -> AnyComponentViewModel
     func view(from viewModel: any ComponentViewModel) -> AnyView
 }
-
-public let allRegisters: [ComponentRegister] = [
-    ExampleComponentRegister(),
-    WelcomeComponentRegister(),
-    DescriptionComponentRegister(),
-    SectionTitleComponentRegister(),
-    GenericListItemComponentRegister(),
-    SeparatorComponentRegister(),
-    ButtonComponentRegister()
-]

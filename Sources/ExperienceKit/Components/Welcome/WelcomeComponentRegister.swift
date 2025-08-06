@@ -11,7 +11,7 @@ import SwiftUI
 final class WelcomeComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "welcomeComponent"
+        "welcome"
     }
 
     var propertiesType: Properties.Type {

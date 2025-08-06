@@ -1,0 +1,6 @@
+// Generated using Sourcery
+import Foundation
+
+struct {{ argument.component }}Properties {
+    // Define properties for {{ argument.component }}
+}

@@ -1,0 +1,6 @@
+// Generated using Sourcery
+import Foundation
+
+final class {{ argument.component }}ViewModel: ObservableObject {
+    // Logic for {{ argument.component }} ViewModel
+}

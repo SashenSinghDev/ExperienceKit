@@ -1,0 +1,8 @@
+// Generated using Sourcery
+import Foundation
+
+final class {{ argument.component }}ComponentRegister {
+    func register() {
+        // Register {{ argument.component }} component here
+    }
+}

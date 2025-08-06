@@ -31,7 +31,7 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                                                          navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test", additionalProperties: nil)))
 
         completion(
-            .fullScreen(component: .init(contentType: "welcomeComponent", properties: welcomeProperties, id: UUID()))
+            .fullScreen(component: .init(contentType: "welcome", properties: welcomeProperties, id: UUID()))
         )
     }
 

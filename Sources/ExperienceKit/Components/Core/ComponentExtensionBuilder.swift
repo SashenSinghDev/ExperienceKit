@@ -8,21 +8,20 @@
 import Foundation
 
 public extension Component {
-    static func sectionTitleComponent(title: String, showBottomBorder: Bool) -> Component {
+    static func sectionTitleComponent(properties: SectionTitleProperties) -> Component {
         return Component(contentType: "sectionTitle",
-                         properties: SectionTitleProperties(title: title, showBottomBorder: showBottomBorder),
+                         properties: properties,
                          id: UUID())
     }
 
-    static func genericListItemComponent(title: String, navigation: NavigationProperties?) -> Component {
+    static func genericListItemComponent(properties: GenericListItemProperties) -> Component {
         return Component(contentType: "genericListItem",
-                         properties: GenericListItemProperties(title: title,
-                                                               navigation: navigation),
+                         properties: properties,
                          id: UUID())
     }
 
     static func welcomeComponent(properties: WelcomeProperties) -> Component {
-        return Component(contentType: "welcomeComponent",
+        return Component(contentType: "welcome",
                          properties: properties,
                          id: UUID())
     }
@@ -33,12 +32,9 @@ public extension Component {
                          id: UUID())
     }
 
-    static func buttonComponent(title: String, style: ButtonProperties.Style, isFullWidth: Bool, navigation: NavigationProperties) -> Component {
+    static func buttonComponent(properties: ButtonProperties) -> Component {
         return Component(contentType: "button",
-                         properties: ButtonProperties(title: title,
-                                                      style: style,
-                                                      isFullWidth: isFullWidth,
-                                                      navigation: navigation),
+                         properties: properties,
                          id: UUID())
     }
 }
