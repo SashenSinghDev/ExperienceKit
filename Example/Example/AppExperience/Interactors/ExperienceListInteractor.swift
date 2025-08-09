@@ -17,16 +17,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
 
     private var componetList: [Component] {
         return [
-            .sectionTitleComponent(title: "Components", showBottomBorder: false),
-            .genericListItemComponent(title: "Welcome",
-                                      navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
-                                                        deferredLoadingWorkId: nil,
-                                                        additionalProperties: ["componentTitle": "welcome"])),
+            .sectionTitleComponent(properties: .init(title: "Components", showBottomBorder: false)),
+            .genericListItemComponent(properties: .init(title: "Welcome",
+                                                        navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
+                                                                          deferredLoadingWorkId: nil,
+                                                                          additionalProperties: ["componentTitle": "welcome"]))),
             .separatorComponent(properties: .init(isFullWidth: false)),
-            .genericListItemComponent(title: "Button",
-                                      navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
-                                                        deferredLoadingWorkId: nil,
-                                                        additionalProperties: ["componentTitle": "button"]))
+            .genericListItemComponent(properties: .init(title: "Button",
+                                                        navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
+                                                                          deferredLoadingWorkId: nil,
+                                                                          additionalProperties:  ["componentTitle": "button"])))
         ]
     }
 

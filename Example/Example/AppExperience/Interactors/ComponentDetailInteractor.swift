@@ -74,16 +74,20 @@ extension ComponentDetailInteractor {
 
     private var buttonExperience: ExperienceType {
         return .scrollable(components: [
-            .sectionTitleComponent(title: "PrimaryButton", showBottomBorder: false),
-            .buttonComponent(title: "PrimaryButton",
-                             style: .primary,
-                             isFullWidth: false,
-                             navigation: .init(navigationType: .pop, deferredLoadingWorkId: nil, additionalProperties: nil)),
-            .sectionTitleComponent(title: "SecondaryButton", showBottomBorder: false),
-            .buttonComponent(title: "Secondary",
-                             style: .secondary,
-                             isFullWidth: false,
-                             navigation: .init(navigationType: .pop, deferredLoadingWorkId: nil, additionalProperties: nil))
+            .sectionTitleComponent(properties: .init(title: "PrimaryButton", showBottomBorder: false)),
+            .buttonComponent(properties: .init(title: "PrimaryButton",
+                                               style: .primary,
+                                               isFullWidth: false,
+                                               navigation: .init(navigationType: .pop,
+                                                                 deferredLoadingWorkId: nil,
+                                                                 additionalProperties: nil))),
+            .sectionTitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
+            .buttonComponent(properties: .init(title: "Secondary",
+                                               style: .secondary,
+                                               isFullWidth: false,
+                                               navigation: .init(navigationType: .pop,
+                                                                 deferredLoadingWorkId: nil,
+                                                                 additionalProperties: nil)))
         ])
     }
 }
