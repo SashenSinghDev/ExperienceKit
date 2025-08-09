@@ -12,7 +12,7 @@ import SwiftUI
 final class SectionTitleComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "sectionTitle"
+        "sectiontitle"
     }
 
     var propertiesType: Properties.Type {

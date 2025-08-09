@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: component = "genericlistitem"
 public struct GenericListItemProperties {
     public let title: String
     public let navigation: NavigationProperties?

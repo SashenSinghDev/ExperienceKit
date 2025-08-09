@@ -1,27 +1,38 @@
-//
-//  ComponentExtensionBuilder.swift
-//  ExperienceKit
-//
-//  Created by Sashen Singh on 09/07/2025.
-//
-
 import Foundation
 
 public extension Component {
-    static func sectionTitleComponent(properties: SectionTitleProperties) -> Component {
-        return Component(contentType: "sectionTitle",
+    static func buttonComponent(properties: ButtonProperties) -> Component {
+        return Component(contentType: "button",
+                         properties: properties,
+                         id: UUID())
+    }
+
+    static func containerComponent(properties: ContainerProperties) -> Component {
+        return Component(contentType: "container",
+                         properties: properties,
+                         id: UUID())
+    }
+
+    static func descriptionComponent(properties: DescriptionProperties) -> Component {
+        return Component(contentType: "description",
+                         properties: properties,
+                         id: UUID())
+    }
+
+    static func exampleComponent(properties: ExampleProperties) -> Component {
+        return Component(contentType: "example",
                          properties: properties,
                          id: UUID())
     }
 
     static func genericListItemComponent(properties: GenericListItemProperties) -> Component {
-        return Component(contentType: "genericListItem",
+        return Component(contentType: "genericlistitem",
                          properties: properties,
                          id: UUID())
     }
 
-    static func welcomeComponent(properties: WelcomeProperties) -> Component {
-        return Component(contentType: "welcome",
+    static func sectionTitleComponent(properties: SectionTitleProperties) -> Component {
+        return Component(contentType: "sectiontitle",
                          properties: properties,
                          id: UUID())
     }
@@ -32,9 +43,10 @@ public extension Component {
                          id: UUID())
     }
 
-    static func buttonComponent(properties: ButtonProperties) -> Component {
-        return Component(contentType: "button",
+    static func welcomeComponent(properties: WelcomeProperties) -> Component {
+        return Component(contentType: "welcome",
                          properties: properties,
                          id: UUID())
     }
+
 }

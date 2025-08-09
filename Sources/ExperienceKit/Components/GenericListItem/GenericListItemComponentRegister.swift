@@ -12,7 +12,7 @@ import SwiftUI
 final class GenericListItemComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "genericListItem"
+        "genericlistitem"
     }
 
     var propertiesType: Properties.Type {

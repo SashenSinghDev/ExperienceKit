@@ -1,10 +1,11 @@
 #!/bin/bash
-# run ./generate_component.sh <<ComponentName>>
+# Usage: ./generate_component.sh
 
-RAW_NAME=$1
+# Ask user for component name
+read -p "Enter component name: " RAW_NAME
 
 if [ -z "$RAW_NAME" ]; then
-  echo "❌ Usage: ./generate_component.sh <component-name>"
+  echo "❌ Component name cannot be empty."
   exit 1
 fi
 
@@ -42,21 +43,21 @@ echo "✅ Generated $COMPONENT_NAME component in: $TARGET_FOLDER"
 git checkout -- generateComponentSourcery.yaml
 echo "🔁 Reverted changes to sourcery.yaml"
 
-echo "🔍 Clean files:"
-tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}ComponentRegister.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}ComponentRegister.swift"
+# 🔍 Clean files
+for FILE in \
+  "$TARGET_FOLDER/${COMPONENT_NAME}ComponentRegister.swift" \
+  "$TARGET_FOLDER/${COMPONENT_NAME}Properties.swift" \
+  "$TARGET_FOLDER/${COMPONENT_NAME}View.swift" \
+  "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift"
+do
+  tail -n +3 "$FILE" > tmp.swift && mv tmp.swift "$FILE"
+done
 
-tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}Properties.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}Properties.swift"
-
-tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}View.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}View.swift"
-
-tail -n +3 "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift" > tmp.swift && mv tmp.swift "$TARGET_FOLDER/${COMPONENT_NAME}ViewModel.swift"
-
-# 🛠 Run Sourcery for ammending current files
+# 🛠 Run Sourcery for amending current files
 sourcery --config "$CONFIGCORE_FILE"
 
 mv "$TEMPLATE_OUTPUT/AllRegisters.generated.swift" "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"
 mv "$TEMPLATE_OUTPUT/ComponentExtensionBuilder.generated.swift" "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift"
 
 tail -n +3 "./Sources/ExperienceKit/Components/Core/AllRegisters.swift" > tmp.swift && mv tmp.swift "./Sources/ExperienceKit/Components/Core/AllRegisters.swift"
-
 tail -n +3 "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift" > tmp.swift && mv tmp.swift "./Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift"
