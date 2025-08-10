@@ -58,7 +58,7 @@ struct ExampleComponentView: ComponentView {
                     .frame(maxWidth: .infinity)
             })
             .padding(.horizontal, 16)
-            .buttonStyle(SecondaryButtonStyle())
+//            .buttonStyle(SecondaryButtonStyle())
         }
     }
 }

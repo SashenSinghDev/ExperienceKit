@@ -40,7 +40,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                         VStack(spacing: 0) {
                             ForEach(viewModel) { viewModel in
                                 makeView(from: viewModel)
-                                    .buttonStyle(StaticButtonStyle())
+//                                    .buttonStyle(StaticButtonStyle())
                             }
                         }
                         .frame(maxWidth: .infinity)
