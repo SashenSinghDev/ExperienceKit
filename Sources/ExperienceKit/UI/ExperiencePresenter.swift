@@ -76,10 +76,7 @@ public final class ExperiencePresenter: ObservableObject {
     private func resolveState(for experienceType: ExperienceType) {
         switch experienceType {
         case .fullScreen(let component):
-            guard let viewModel = self.viewModelProvider.viewModel(for: component, dependency: dependency) else {
-                // TODO: Log this instead
-                fatalError("full screen component not supported")
-            }
+            let viewModel = self.viewModelProvider.viewModel(for: component, dependency: dependency)
             self.state = .loadedFullScreen(viewModel)
             self.vm = viewModel
         case .scrollable(let components):

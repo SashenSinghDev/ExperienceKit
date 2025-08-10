@@ -82,12 +82,13 @@ extension ComponentDetailInteractor {
                                                                  deferredLoadingWorkId: nil,
                                                                  additionalProperties: nil))),
             .sectionTitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
-            .buttonComponent(properties: .init(title: "Secondary",
-                                               style: .secondary,
-                                               isFullWidth: false,
-                                               navigation: .init(navigationType: .pop,
-                                                                 deferredLoadingWorkId: nil,
-                                                                 additionalProperties: nil)))
+            .containerComponent(properties: .init(
+                component: .buttonComponent(properties: .init(title: "Secondary",
+                                                              style: .secondary,
+                                                              isFullWidth: false,
+                                                              navigation: .init(navigationType: .pop,
+                                                                                deferredLoadingWorkId: nil,
+                                                                                additionalProperties: nil)))))
         ])
     }
 }

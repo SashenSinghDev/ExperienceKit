@@ -7,8 +7,12 @@
 
 import Foundation
 
+public protocol HasViewModelProvider {
+    var viewModelProvider: ViewModelProvider { get }
+}
+
 public protocol ViewModelProvider {
-    func viewModel(for content: Component, dependency: ExperienceDependency) -> AnyComponentViewModel?
+    func viewModel(for content: Component, dependency: ExperienceDependency) -> AnyComponentViewModel
 }
 
 public final class DefaultViewModelProvider: ViewModelProvider {
@@ -18,11 +22,11 @@ public final class DefaultViewModelProvider: ViewModelProvider {
         self.registers = supportedComponentRegisters
     }
 
-    public func viewModel(for content: Component, dependency: ExperienceDependency) -> AnyComponentViewModel? {
+    public func viewModel(for content: Component, dependency: ExperienceDependency) -> AnyComponentViewModel {
         for register in registers where register.contentType == content.contentType {
             return register.viewModel(from: content, dependency: dependency)
         }
 
-        return nil
+        fatalError("Not implemented")
     }
 }

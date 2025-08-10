@@ -2,10 +2,10 @@ import Foundation
 
 // sourcery: component = "container"
 public struct ContainerProperties {
-    public let title: String
+    public let component: Component
 
-    public init(title: String) {
-        self.title = title
+    public init(component: Component) {
+        self.component = component
     }
 }
 

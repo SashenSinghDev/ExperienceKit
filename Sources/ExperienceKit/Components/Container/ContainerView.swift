@@ -8,7 +8,14 @@ struct ContainerView: ComponentView {
     }
 
     var body: some View {
-        Text("\(viewModel.title)")
+        makeView(from: viewModel.anyComponentViewModel)
+            .padding(.vertical, 8)
+            .background(.gray)
+    }
+
+    @ViewBuilder
+    private func makeView(from component: AnyComponentViewModel) -> some View {
+        viewModel.viewProvider.view(for: component)
     }
 }
 

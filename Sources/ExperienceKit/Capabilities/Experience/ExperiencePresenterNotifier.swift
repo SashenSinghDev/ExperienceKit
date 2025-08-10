@@ -6,7 +6,6 @@
 //
 
 public protocol ExperiencePresenterNotifierDelegate: AnyObject {
-//    func performDeferredWork(workId: String, completion: @escaping () -> Void)
     func navigate(navigationViewModel: NavigationViewModel)
 }
 

@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+public protocol HasViewProvider {
+    var viewProvider: ViewProvider { get }
+}
+
 public final class ViewProvider {
 
     private let registers: [ComponentRegister]

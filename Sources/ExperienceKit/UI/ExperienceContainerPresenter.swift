@@ -12,6 +12,9 @@ public final class ExperienceContainerPresenter {
     private let registers: [ComponentRegister]
     private let experienceProvider: ExperienceProvider
 
+    lazy var viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
+    lazy var viewProvider = ViewProvider(supportedComponentRegisters: registers)
+
     public init(registers: [ComponentRegister],
                 experienceProvider: ExperienceProvider) {
         self.registers = registers
@@ -20,9 +23,10 @@ public final class ExperienceContainerPresenter {
 
     func experienceView(for id: String, router: DefaultExperienceRouter, properties: [String: String]?, viewModelID: UUID, experienceID: String) -> ExperienceView<ExperiencePresenter> {
         let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id, properties: properties)
-        let experienceDependency = ExperienceDependency(router: router, experiencePresenterNotifier: DefaultExperiencePresenterNotifier())
-        let viewModelProvider = DefaultViewModelProvider(supportedComponentRegisters: registers)
-        let viewProvider = ViewProvider(supportedComponentRegisters: registers)
+        let experienceDependency = ExperienceDependency(router: router,
+                                                        experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
+                                                        viewProvider: viewProvider,
+                                                        viewModelProvider: viewModelProvider)
 
         let experiencePresenter: ExperiencePresenter = {
             guard let presenter: ExperiencePresenter = router.presenter(for: viewModelID) else {
