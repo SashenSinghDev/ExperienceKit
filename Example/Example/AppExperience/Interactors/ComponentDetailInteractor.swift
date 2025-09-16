@@ -17,6 +17,8 @@ final class ComponentDetailInteractor: ExperienceInteractor {
             return nil
         case "button":
             return .init(title: "Buttons", displayMode: .inline, searchBar: nil)
+        case "fullscreen":
+            return .init(title: "", displayMode: .inline, searchBar: nil)
         default:
             fatalError(" \(String(describing: properties["componentTitle"])) component not defined")
         }
@@ -34,6 +36,8 @@ final class ComponentDetailInteractor: ExperienceInteractor {
                 welcomeExperience
             case "button":
                 buttonExperience
+            case "fullscreen":
+                fullScreenExperience
             default:
                 fatalError(" \(String(describing: properties["componentTitle"])) component not defined")
             }
@@ -72,16 +76,85 @@ extension ComponentDetailInteractor {
         return .fullScreen(component: .welcomeComponent(properties: properties))
     }
 
+    private var fullScreenExperience: ExperienceType {
+        let properties = FullScreenProperties(image: .init(uri: "welcome-image",
+                                                           bundle: Bundle.main.bundleIdentifier ?? ""),
+                                              horizontalAlignment: .center,
+                                              verticalAlignment: .top,
+                                              topComponents: [
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                              ],
+                                              middleComponents: [
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                              ],
+                                              bottomComponents: [
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                                .buttonComponent(properties: .init(title: "buttonTitle",
+                                                                                   style: .secondary,
+                                                                                   isFullWidth: false,
+                                                                                   navigation: .init(navigationType: .pop,
+                                                                                                     deferredLoadingWorkId: nil,
+                                                                                                     additionalProperties: [:]))),
+                                              ]
+        )
+        return .fullScreen(component: .fullscreenComponent(properties: properties))
+    }
+
     private var buttonExperience: ExperienceType {
         return .scrollable(components: [
-            .sectionTitleComponent(properties: .init(title: "PrimaryButton", showBottomBorder: false)),
+            .sectiontitleComponent(properties: .init(title: "PrimaryButton", showBottomBorder: false)),
             .buttonComponent(properties: .init(title: "PrimaryButton",
                                                style: .primary,
                                                isFullWidth: false,
                                                navigation: .init(navigationType: .pop,
                                                                  deferredLoadingWorkId: nil,
                                                                  additionalProperties: nil))),
-            .sectionTitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
+            .sectiontitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
             .containerComponent(properties: .init(
                 component: .buttonComponent(properties: .init(title: "Secondary",
                                                               style: .secondary,

@@ -1,6 +1,6 @@
 import Foundation
 
-// sourcery: component = "{{ argument.component }}"
+// sourcery: component = "{{ argument.component | lowercase }}"
 public struct {{ argument.component }}Properties {
     public let title: String
 

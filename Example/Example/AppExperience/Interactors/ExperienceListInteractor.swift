@@ -17,16 +17,21 @@ final class ExperienceListInteractor: ExperienceInteractor {
 
     private var componetList: [Component] {
         return [
-            .sectionTitleComponent(properties: .init(title: "Components", showBottomBorder: false)),
-            .genericListItemComponent(properties: .init(title: "Welcome",
+            .sectiontitleComponent(properties: .init(title: "Components", showBottomBorder: false)),
+            .genericlistitemComponent(properties: .init(title: "Welcome",
                                                         navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
                                                                           deferredLoadingWorkId: nil,
                                                                           additionalProperties: ["componentTitle": "welcome"]))),
             .separatorComponent(properties: .init(isFullWidth: false)),
-            .genericListItemComponent(properties: .init(title: "Button",
+            .genericlistitemComponent(properties: .init(title: "Button",
                                                         navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
                                                                           deferredLoadingWorkId: nil,
-                                                                          additionalProperties:  ["componentTitle": "button"])))
+                                                                          additionalProperties:  ["componentTitle": "button"]))),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(title: "FullScreen",
+                                                        navigation: .init(navigationType: .push(Experience.componentDetail.rawValue),
+                                                                          deferredLoadingWorkId: nil,
+                                                                          additionalProperties:  ["componentTitle": "fullscreen"]))),
         ]
     }
 
@@ -35,10 +40,10 @@ final class ExperienceListInteractor: ExperienceInteractor {
     }
 
     func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
-        guard let navigationBarModel = navigationBarModel else { return }
+        guard navigationBarModel != nil else { return }
 
         let searchText = workId
-        var filteredComponentList: [Component] = {
+        let filteredComponentList: [Component] = {
             guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 return componetList
             }

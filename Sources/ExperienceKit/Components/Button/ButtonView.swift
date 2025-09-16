@@ -28,7 +28,7 @@ struct ButtonView: ComponentView {
                 .foregroundColor(viewModel.style == .primary ? .white : .black)
                 .cornerRadius(100)
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, viewModel.isFullWidth ? 0 : 16)
     }
 }
 

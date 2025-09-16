@@ -49,7 +49,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     VStack {
                         makeView(from: viewModel)
                     }
-                    .ignoresSafeArea()
+//                    .ignoresSafeArea()
                 }
             }
 
