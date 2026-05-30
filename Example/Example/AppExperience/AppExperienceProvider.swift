@@ -10,9 +10,9 @@ import ExperienceKit
 import SwiftUI
 
 final class AppExperienceProvider: ExperienceProvider {
-    func returnExperienceInteractor(for id: String, properties: [String: String]?) -> ExperienceInteractor {
-        guard let experience = Experience(rawValue: id) else {
-            fatalError("Experience id \(id) not found")
+    func returnExperienceInteractor(for id: any ExperienceID, properties: [String: String]?) -> ExperienceInteractor {
+        guard let experience = Experience(rawValue: id.rawValue) else {
+            fatalError("Experience id \(id.rawValue) not found")
         }
 
         switch experience {

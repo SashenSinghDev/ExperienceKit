@@ -49,6 +49,7 @@ final class ComponentDetailInteractor: ExperienceInteractor {
     }
 
     func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+        completion(nil)
     }
 }
 
@@ -63,13 +64,13 @@ extension ComponentDetailInteractor {
                                                   primaryButton: .init(title: "mock primary button",
                                                                        style: .secondary,
                                                                        isFullWidth: true,
-                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
+                                                                       navigation: .init(navigationType: .modal(Experience.welcomeComponent),
                                                                                          deferredLoadingWorkId: nil,
                                                                                          additionalProperties: nil)),
                                                   secondaryButton: .init(title: "mock secondary button",
                                                                          style: .primary,
                                                                          isFullWidth: true,
-                                                                         navigation: .init(navigationType: .dismiss,
+                                                                         navigation: .init(navigationType: .pop,
                                                                                            deferredLoadingWorkId: "test",
                                                                                            additionalProperties: nil)))
 

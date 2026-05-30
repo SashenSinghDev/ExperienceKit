@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+public protocol ExperienceID: RawRepresentable, Codable, Hashable where RawValue == String {}
+
 public struct ExperienceContainerView: View {
 
-    private let experienceViewID: String
+    private let experienceViewID: ExperienceID
     private let presenter: ExperienceContainerPresenter
     @StateObject private var router: DefaultExperienceRouter
 
@@ -19,7 +21,7 @@ public struct ExperienceContainerView: View {
     private let experienceContainerID = UUID()
     private let properties: [String: String]?
 
-    public init(experienceViewID: String,
+    public init(experienceViewID: ExperienceID,
                 presenter: ExperienceContainerPresenter,
                 experienceRouterDelegate: ExperienceRouterDelegate?,
                 properties: [String: String]?) {
@@ -32,9 +34,9 @@ public struct ExperienceContainerView: View {
 
     public var body: some View {
         NavigationStack(path: $router.path) {
-            presenter.experienceView(for: experienceViewID, router: router, properties: properties, viewModelID: experienceContainerID, experienceID: experienceViewID)
+            presenter.experienceView(for: experienceViewID, router: router, properties: properties, viewModelID: experienceContainerID)
                 .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                    presenter.experienceView(for: viewModel.destination, router: router, properties: viewModel.properties, viewModelID: viewModel.id, experienceID: experienceViewID)
+                    presenter.experienceView(for: viewModel.destination, router: router, properties: viewModel.properties, viewModelID: viewModel.id)
                 }
         }
         .onChange(of: router.path) { _, newPath in

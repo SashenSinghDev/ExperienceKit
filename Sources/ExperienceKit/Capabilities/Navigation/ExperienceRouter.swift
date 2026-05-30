@@ -30,10 +30,10 @@ public class DefaultExperienceRouter: ExperienceRouter {
 
     public weak var delegate: ExperienceRouterDelegate?
 
-    private let expId: String
+    private let expId: ExperienceID
     private var markedToDismiss: Bool = false
 
-    public init(expId: String) {
+    public init(expId: ExperienceID) {
         self.expId = expId
         let address = Unmanaged.passUnretained(self).toOpaque()
         print("load Router at address \(address) \(expId)")

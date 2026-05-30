@@ -5,7 +5,9 @@
 //  Created by Sashen Singh on 18/06/2025.
 //
 
-enum Experience: String {
+import ExperienceKit
+
+enum Experience: String, ExperienceID {
     case welcomeComponent
     case componentDetail
     case scrollableScreen

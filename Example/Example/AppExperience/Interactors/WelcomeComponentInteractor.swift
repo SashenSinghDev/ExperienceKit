@@ -23,7 +23,7 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                                   primaryButton: .init(title: "Log In",
                                                                        style: .secondary,
                                                                        isFullWidth: true,
-                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent.rawValue),
+                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent),
                                                                                          deferredLoadingWorkId: nil, additionalProperties: nil)),
                                                   secondaryButton: .init(title: "Get Started",
                                                                          style: .primary,

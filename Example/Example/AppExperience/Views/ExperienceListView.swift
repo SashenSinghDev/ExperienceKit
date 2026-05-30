@@ -15,7 +15,7 @@ struct ExperienceListView: ExperienceContentView {
     init() {
         experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
                                                                     experienceProvider: AppExperienceProvider())
-        experienceContainerView = ExperienceContainerView(experienceViewID: Experience.experienceList.rawValue,
+        experienceContainerView = ExperienceContainerView(experienceViewID: Experience.experienceList,
                                                           presenter: experienceContainerPresenter,
                                                           experienceRouterDelegate: nil, properties: nil)
     }
