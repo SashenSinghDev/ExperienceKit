@@ -48,7 +48,7 @@ final class ComponentDetailInteractor: ExperienceInteractor {
         )
     }
 
-    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
         completion(nil)
     }
 }
@@ -71,7 +71,7 @@ extension ComponentDetailInteractor {
                                                                          style: .primary,
                                                                          isFullWidth: true,
                                                                          navigation: .init(navigationType: .pop,
-                                                                                           deferredLoadingWorkId: "test",
+                                                                                           deferredLoadingWorkId: DeferredWork.loadData,
                                                                                            additionalProperties: nil)))
 
         return .fullScreen(component: .welcomeComponent(properties: properties))

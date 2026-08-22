@@ -31,7 +31,7 @@ final class HomeContainerInteractor: ExperienceInteractor {
         }
     }
 
-    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             completion(nil)
         }

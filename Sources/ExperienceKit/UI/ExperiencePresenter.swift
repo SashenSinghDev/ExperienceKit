@@ -59,7 +59,7 @@ public final class ExperiencePresenter: ObservableObject {
     private func filterResults(for query: String) {
         guard case .loadedScrollable(_) = state, navigationBarModel?.searchBar != nil else { return }
 
-        experienceInteractor.performDeferredWork(workId: query) {  [weak self] experienceType in
+        experienceInteractor.performDeferredWork(workId: AnyDeferredWorkID(rawValue: query)) {  [weak self] experienceType in
             guard let self, let experienceType else { return }
             self.resolveState(for: experienceType)
         }

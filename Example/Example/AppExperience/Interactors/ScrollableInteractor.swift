@@ -9,6 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class ScrollableInteractor: ExperienceInteractor {
+    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
+        completion(nil)
+    }
+    
     var navigationBarModel: ExperienceKit.NavigationBarModel?
     
     init() {}
@@ -17,12 +21,6 @@ final class ScrollableInteractor: ExperienceInteractor {
         completion(
             .scrollable(components: exampleMocks)
         )
-    }
-
-    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            completion(nil)
-        }
     }
 }
 

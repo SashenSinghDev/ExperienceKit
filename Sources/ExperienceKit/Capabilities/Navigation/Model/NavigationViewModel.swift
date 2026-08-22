@@ -10,7 +10,7 @@ import Foundation
 public struct NavigationViewModel: Identifiable, Hashable {
     public let id = UUID()
     public let navigationType: NavigationType
-    public let deferredLoadingWorkId: String?
+    public let deferredLoadingWorkId: DeferredWorkID?
     public let properties: [String: String]?
     public var destination: ExperienceID {
         switch navigationType {
@@ -23,12 +23,19 @@ public struct NavigationViewModel: Identifiable, Hashable {
         }
     }
 
-    public init(navigationType: NavigationType, deferredLoadingWorkId: String?, properties: [String: String]?) {
+    public init(navigationType: NavigationType, deferredLoadingWorkId: DeferredWorkID?, properties: [String: String]?) {
         self.navigationType = navigationType
         self.deferredLoadingWorkId = deferredLoadingWorkId
         self.properties = properties
     }
-    
+
+    public static func == (lhs: NavigationViewModel, rhs: NavigationViewModel) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 public struct AnyExperienceID: ExperienceID {

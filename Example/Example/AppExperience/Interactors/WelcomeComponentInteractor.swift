@@ -28,14 +28,30 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                                   secondaryButton: .init(title: "Get Started",
                                                                          style: .primary,
                                                                          isFullWidth: true,
-                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: "test", additionalProperties: nil)))
+                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: DeferredWork.loadData, additionalProperties: nil)))
 
         completion(
             .fullScreen(component: .init(contentType: "welcome", properties: welcomeProperties, id: UUID()))
         )
     }
 
-    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+            completion(nil)
+            return
+        }
+
+        performDeferredWork(deferredWork, completion: completion)
+    }
+
+    private func performDeferredWork(_ deferredWork: DeferredWork, completion: @escaping (ExperienceType?) -> Void) {
+        switch deferredWork {
+        case .loadData:
+            loadData(completion: completion)
+        }
+    }
+
+    private func loadData(completion: @escaping (ExperienceType?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             completion(nil)
         }

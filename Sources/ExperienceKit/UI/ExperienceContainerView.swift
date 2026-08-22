@@ -8,6 +8,7 @@
 import SwiftUI
 
 public protocol ExperienceID: RawRepresentable, Codable, Hashable where RawValue == String {}
+public protocol DeferredWorkID: RawRepresentable, Codable, Hashable where RawValue == String {}
 
 public struct ExperienceContainerView: View {
 

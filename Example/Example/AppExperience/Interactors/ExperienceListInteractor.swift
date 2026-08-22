@@ -38,11 +38,11 @@ final class ExperienceListInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         completion(.scrollable(components: componetList))
     }
-
-    func performDeferredWork(workId: String, completion: @escaping (ExperienceType?) -> Void) {
+    
+    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
         guard navigationBarModel != nil else { return }
 
-        let searchText = workId
+        let searchText = workId.rawValue
         let filteredComponentList: [Component] = {
             guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                 return componetList
