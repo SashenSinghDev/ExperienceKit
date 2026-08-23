@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BFA7C0A3039BBF500ED3C82 /* DeferredWorkID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C093039BBF000ED3C82 /* DeferredWorkID.swift */; };
 		6BFA7C0C303A12F800ED3C82 /* ButtonComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */; };
 		6BFA7C0E303A143B00ED3C82 /* FullScreenComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0D303A143200ED3C82 /* FullScreenComponentInteractor.swift */; };
 		6BFA7C10303A279700ED3C82 /* NavigationCapabilityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */; };
@@ -24,7 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6BFA7C093039BBF000ED3C82 /* DeferredWorkID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeferredWorkID.swift; sourceTree = "<group>"; };
 		6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0D303A143200ED3C82 /* FullScreenComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCapabilityInteractor.swift; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 		9640DEA32E0365500076C4B9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6BFA7C093039BBF000ED3C82 /* DeferredWorkID.swift */,
 				9640DEA02E0363290076C4B9 /* Experience.swift */,
 			);
 			path = Models;
@@ -211,7 +208,6 @@
 				9640DE9F2E0362260076C4B9 /* ScrollableInteractor.swift in Sources */,
 				6BFA7C10303A279700ED3C82 /* NavigationCapabilityInteractor.swift in Sources */,
 				9653EFE52E0314A00077C0F7 /* WelcomeComponentInteractor.swift in Sources */,
-				6BFA7C0A3039BBF500ED3C82 /* DeferredWorkID.swift in Sources */,
 				6BFA7C0C303A12F800ED3C82 /* ButtonComponentInteractor.swift in Sources */,
 				96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */,
 				9640DEA12E0363320076C4B9 /* Experience.swift in Sources */,

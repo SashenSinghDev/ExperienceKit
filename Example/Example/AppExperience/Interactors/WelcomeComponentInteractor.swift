@@ -64,3 +64,7 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
         }
     }
 }
+
+private enum DeferredWork: String, DeferredWorkID {
+    case loadData
+}
