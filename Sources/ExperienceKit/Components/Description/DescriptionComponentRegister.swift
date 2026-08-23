@@ -12,7 +12,7 @@ import SwiftUI
 final class DescriptionComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "descriptionComponent"
+        "description"
     }
 
     var propertiesType: Properties.Type {

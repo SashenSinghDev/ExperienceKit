@@ -12,6 +12,7 @@ public struct NavigationViewModel: Identifiable, Hashable {
     public let navigationType: NavigationType
     public let deferredLoadingWorkId: DeferredWorkID?
     public let properties: [String: String]?
+    public let navigationBarModel: NavigationBarModel?
     public var destination: ExperienceID {
         switch navigationType {
             case .push(let value):
@@ -23,10 +24,12 @@ public struct NavigationViewModel: Identifiable, Hashable {
         }
     }
 
-    public init(navigationType: NavigationType, deferredLoadingWorkId: DeferredWorkID?, properties: [String: String]?) {
+    public init(navigationType: NavigationType, deferredLoadingWorkId: DeferredWorkID?, properties: [String: String]?,
+                navigationBarModel: NavigationBarModel?) {
         self.navigationType = navigationType
         self.deferredLoadingWorkId = deferredLoadingWorkId
         self.properties = properties
+        self.navigationBarModel = navigationBarModel
     }
 
     public static func == (lhs: NavigationViewModel, rhs: NavigationViewModel) -> Bool {

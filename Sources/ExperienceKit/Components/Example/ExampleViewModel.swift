@@ -23,7 +23,7 @@ public final class ExampleViewModel: ComponentViewModel, ObservableObject {
                 id: UUID) {
         self.id = id
         self.title = properties.title
-        self.primaryButton = .init(properties: .init(title: "Go to details", style: .primary, isFullWidth: true, navigation: .init(navigationType: .push(AnyExperienceID(rawValue: "fullScreen")), deferredLoadingWorkId: nil, additionalProperties: nil)),
+        self.primaryButton = .init(properties: .init(title: "Go to details", style: .primary, isFullWidth: true, navigation: .init(navigationType: .push(AnyExperienceID(rawValue: "fullScreen")), deferredLoadingWorkId: nil, additionalProperties: nil, navigationBarModel: nil)),
                                    dependency: dependency,
                                    id: UUID())
     }

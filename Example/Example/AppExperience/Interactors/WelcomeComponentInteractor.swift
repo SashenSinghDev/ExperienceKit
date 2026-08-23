@@ -9,26 +9,35 @@ import ExperienceKit
 import SwiftUI
 
 final class WelcomeComponentInteractor: ExperienceInteractor {
-    var navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
     
-    init() {}
+    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
+        self.navigationBarModel = navigationBarModel
+    }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
-
-        let welcomeProperties = WelcomeProperties(image: .init(uri: "welcome-image",
-                                                               bundle: Bundle.main.bundleIdentifier ?? ""),
-                                                  description: .init(title: "Welcome to 👋 GymBru",
-                                                                     subtitle: "A personal trainer in your pocket",
-                                                                     style: .large(.inverted)),
-                                                  primaryButton: .init(title: "Log In",
-                                                                       style: .secondary,
-                                                                       isFullWidth: true,
-                                                                       navigation: .init(navigationType: .push(Experience.welcomeComponent),
-                                                                                         deferredLoadingWorkId: nil, additionalProperties: nil)),
-                                                  secondaryButton: .init(title: "Get Started",
-                                                                         style: .primary,
-                                                                         isFullWidth: true,
-                                                                         navigation: .init(navigationType: .dismiss, deferredLoadingWorkId: DeferredWork.loadData, additionalProperties: nil)))
+        
+        let welcomeProperties = WelcomeProperties(
+            image: .init(uri: "welcome-image",
+                         bundle: Bundle.main.bundleIdentifier ?? ""),
+            description: .init(title: "Welcome to 👋 GymBru",
+                               subtitle: "A personal trainer in your pocket",
+                               style: .large(.inverted)),
+            primaryButton: .init(title: "Log In",
+                                 style: .secondary,
+                                 isFullWidth: true,
+                                 navigation: .init(navigationType: .popToRoot,
+                                                   deferredLoadingWorkId: nil,
+                                                   additionalProperties: nil,
+                                                   navigationBarModel: nil)),
+            secondaryButton: .init(title: "Get Started",
+                                   style: .primary,
+                                   isFullWidth: true,
+                                   navigation: .init(navigationType: .modal(Experience.welcomeComponent),
+                                                     deferredLoadingWorkId: DeferredWork.loadData,
+                                                     additionalProperties: nil,
+                                                     navigationBarModel: nil))
+        )
 
         completion(
             .fullScreen(component: .init(contentType: "welcome", properties: welcomeProperties, id: UUID()))

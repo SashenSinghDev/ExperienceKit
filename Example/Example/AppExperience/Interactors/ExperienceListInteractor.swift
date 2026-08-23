@@ -9,29 +9,59 @@ import ExperienceKit
 import SwiftUI
 
 final class ExperienceListInteractor: ExperienceInteractor {
-    var navigationBarModel: ExperienceKit.NavigationBarModel? {
-        return NavigationBarModel(title: "Experience Kit",
-                                  displayMode: .large,
-                                  searchBar: .init(placeholder: "components and capabilities"))
+    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    
+    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
+        self.navigationBarModel = navigationBarModel
     }
-
+    
     private var componetList: [Component] {
         return [
             .sectiontitleComponent(properties: .init(title: "Components", showBottomBorder: false)),
             .genericlistitemComponent(properties: .init(title: "Welcome",
-                                                        navigation: .init(navigationType: .push(Experience.componentDetail),
-                                                                          deferredLoadingWorkId: nil,
-                                                                          additionalProperties: ["componentTitle": "welcome"]))),
+                                                        navigation: .init(
+                                                            navigationType: .push(Experience.welcomeComponent),
+                                                            deferredLoadingWorkId: nil,
+                                                            additionalProperties: ["componentTitle": "welcome"],
+                                                            navigationBarModel: nil,
+                                                        ))
+            ),
             .separatorComponent(properties: .init(isFullWidth: false)),
-            .genericlistitemComponent(properties: .init(title: "Button",
-                                                        navigation: .init(navigationType: .push(Experience.componentDetail),
-                                                                          deferredLoadingWorkId: nil,
-                                                                          additionalProperties:  ["componentTitle": "button"]))),
+            .genericlistitemComponent(properties: .init(title: "Buttons",
+                                                        navigation: .init(
+                                                            navigationType: .push(Experience.buttonComponent),
+                                                            deferredLoadingWorkId: nil,
+                                                            additionalProperties:  ["componentTitle": "button"],
+                                                            navigationBarModel: .init(
+                                                                title: "Buttons",
+                                                                displayMode: .inline,
+                                                                searchBar: nil))
+                                                       )
+            ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(title: "FullScreen",
-                                                        navigation: .init(navigationType: .push(Experience.componentDetail),
-                                                                          deferredLoadingWorkId: nil,
-                                                                          additionalProperties:  ["componentTitle": "fullscreen"]))),
+                                                        navigation: .init(
+                                                            navigationType: .push(Experience.fullScreenComponent),
+                                                            deferredLoadingWorkId: nil,
+                                                            additionalProperties:  ["componentTitle": "fullscreen"],
+                                                            navigationBarModel: .init(
+                                                                title: "",
+                                                                displayMode: .inline,
+                                                                searchBar: nil))
+                                                       )
+            ),
+            .sectiontitleComponent(properties: .init(title: "Capabilities", showBottomBorder: false)),
+            .genericlistitemComponent(properties: .init(title: "Navigation",
+                                                        navigation: .init(
+                                                            navigationType: .push(Experience.navigationCapability),
+                                                            deferredLoadingWorkId: nil,
+                                                            additionalProperties:  ["componentTitle": "fullscreen"],
+                                                            navigationBarModel: .init(
+                                                                title: "Navigation",
+                                                                displayMode: .automatic,
+                                                                searchBar: nil))
+                                                       )
+            ),
         ]
     }
 

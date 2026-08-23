@@ -9,8 +9,9 @@ import ExperienceKit
 
 enum Experience: String, ExperienceID {
     case welcomeComponent
-    case componentDetail
     case scrollableScreen
-    case homeContainer
     case experienceList
+    case buttonComponent
+    case fullScreenComponent
+    case navigationCapability
 }

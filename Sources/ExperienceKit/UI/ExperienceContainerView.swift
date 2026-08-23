@@ -21,23 +21,26 @@ public struct ExperienceContainerView: View {
     private weak var experienceRouterDelegate: ExperienceRouterDelegate?
     private let experienceContainerID = UUID()
     private let properties: [String: String]?
+    private let navigationBarModel: NavigationBarModel?
 
     public init(experienceViewID: ExperienceID,
                 presenter: ExperienceContainerPresenter,
                 experienceRouterDelegate: ExperienceRouterDelegate?,
-                properties: [String: String]?) {
+                properties: [String: String]?,
+                navigationBarModel: NavigationBarModel?) {
         self.experienceViewID = experienceViewID
         self.presenter = presenter
         self.experienceRouterDelegate = experienceRouterDelegate
         self.properties = properties
+        self.navigationBarModel = navigationBarModel
         _router = StateObject(wrappedValue: DefaultExperienceRouter(expId: experienceViewID))
     }
 
     public var body: some View {
         NavigationStack(path: $router.path) {
-            presenter.experienceView(for: experienceViewID, router: router, properties: properties, viewModelID: experienceContainerID)
+            presenter.experienceView(for: experienceViewID, router: router, navigationBarModel: navigationBarModel, viewModelID: experienceContainerID)
                 .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                    presenter.experienceView(for: viewModel.destination, router: router, properties: viewModel.properties, viewModelID: viewModel.id)
+                    presenter.experienceView(for: viewModel.destination, router: router, navigationBarModel: viewModel.navigationBarModel, viewModelID: viewModel.id)
                 }
         }
         .onChange(of: router.path) { _, newPath in
@@ -46,11 +49,11 @@ public struct ExperienceContainerView: View {
                 for removedItem in removed {
                     router.removePresenter(for: removedItem.id)
                 }
-                previousPath.append(contentsOf: newPath)
+                previousPath = newPath
             }
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, properties: viewModel.properties)
+            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, properties: nil, navigationBarModel: viewModel.navigationBarModel)
         }
         .onAppear {
             if experienceRouterDelegate != nil {

@@ -7,14 +7,14 @@
 
 import Foundation
 
-public struct NavigationBarModel {
-    public enum DisplayMode {
+public struct NavigationBarModel: Codable {
+    public enum DisplayMode: Codable {
         case automatic
         case inline
         case large
     }
 
-    public struct SearchBar {
+    public struct SearchBar: Codable {
         public let placeholder: String
 
         public init(placeholder: String) {

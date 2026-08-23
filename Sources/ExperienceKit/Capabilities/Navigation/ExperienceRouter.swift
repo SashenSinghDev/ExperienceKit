@@ -58,9 +58,10 @@ public class DefaultExperienceRouter: ExperienceRouter {
         case .dismiss:
             let address = Unmanaged.passUnretained(self).toOpaque()
             print("dismiss nav func \(address) \(expId)")
+            guard let delegate else { return }
             markedToDismiss = true
             presenterCache.removeAll()
-            delegate?.dismissModal()
+            delegate.dismissModal()
         case .popToRoot:
             path.removeAll()
         }

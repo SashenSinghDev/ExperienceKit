@@ -25,7 +25,8 @@ public final class GenericListItemViewModel: ComponentViewModel, ObservableObjec
         if let navigationProperties = properties.navigation as? NavigationProperties {
             self.navigationViewModel = .init(navigationType: navigationProperties.navigationType,
                                              deferredLoadingWorkId: navigationProperties.deferredLoadingWorkId,
-                                             properties: navigationProperties.additionalProperties)
+                                             properties: navigationProperties.additionalProperties,
+                                             navigationBarModel: navigationProperties.navigationBarModel)
         } else {
             navigationViewModel = nil
         }
