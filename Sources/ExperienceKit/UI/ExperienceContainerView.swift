@@ -20,18 +20,15 @@ public struct ExperienceContainerView: View {
 
     private weak var experienceRouterDelegate: ExperienceRouterDelegate?
     private let experienceContainerID = UUID()
-    private let properties: [String: String]?
     private let navigationBarModel: NavigationBarModel?
 
     public init(experienceViewID: ExperienceID,
                 presenter: ExperienceContainerPresenter,
                 experienceRouterDelegate: ExperienceRouterDelegate?,
-                properties: [String: String]?,
                 navigationBarModel: NavigationBarModel?) {
         self.experienceViewID = experienceViewID
         self.presenter = presenter
         self.experienceRouterDelegate = experienceRouterDelegate
-        self.properties = properties
         self.navigationBarModel = navigationBarModel
         _router = StateObject(wrappedValue: DefaultExperienceRouter(expId: experienceViewID))
     }
@@ -53,7 +50,7 @@ public struct ExperienceContainerView: View {
             }
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, properties: nil, navigationBarModel: viewModel.navigationBarModel)
+            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, navigationBarModel: viewModel.navigationBarModel)
         }
         .onAppear {
             if experienceRouterDelegate != nil {

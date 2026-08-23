@@ -28,14 +28,12 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                  isFullWidth: true,
                                  navigation: .init(navigationType: .popToRoot,
                                                    deferredLoadingWorkId: nil,
-                                                   additionalProperties: nil,
                                                    navigationBarModel: nil)),
             secondaryButton: .init(title: "Get Started",
                                    style: .primary,
                                    isFullWidth: true,
                                    navigation: .init(navigationType: .modal(Experience.welcomeComponent),
                                                      deferredLoadingWorkId: DeferredWork.loadData,
-                                                     additionalProperties: nil,
                                                      navigationBarModel: nil))
         )
 

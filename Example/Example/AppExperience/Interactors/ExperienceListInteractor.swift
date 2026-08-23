@@ -22,7 +22,6 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                                         navigation: .init(
                                                             navigationType: .push(Experience.welcomeComponent),
                                                             deferredLoadingWorkId: nil,
-                                                            additionalProperties: ["componentTitle": "welcome"],
                                                             navigationBarModel: nil,
                                                         ))
             ),
@@ -31,7 +30,6 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                                         navigation: .init(
                                                             navigationType: .push(Experience.buttonComponent),
                                                             deferredLoadingWorkId: nil,
-                                                            additionalProperties:  ["componentTitle": "button"],
                                                             navigationBarModel: .init(
                                                                 title: "Buttons",
                                                                 displayMode: .inline,
@@ -43,7 +41,6 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                                         navigation: .init(
                                                             navigationType: .push(Experience.fullScreenComponent),
                                                             deferredLoadingWorkId: nil,
-                                                            additionalProperties:  ["componentTitle": "fullscreen"],
                                                             navigationBarModel: .init(
                                                                 title: "",
                                                                 displayMode: .inline,
@@ -55,7 +52,6 @@ final class ExperienceListInteractor: ExperienceInteractor {
                                                         navigation: .init(
                                                             navigationType: .push(Experience.navigationCapability),
                                                             deferredLoadingWorkId: nil,
-                                                            additionalProperties:  ["componentTitle": "fullscreen"],
                                                             navigationBarModel: .init(
                                                                 title: "Navigation",
                                                                 displayMode: .automatic,

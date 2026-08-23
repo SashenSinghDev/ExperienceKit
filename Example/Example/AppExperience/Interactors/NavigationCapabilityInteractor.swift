@@ -25,7 +25,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .buttonComponent(properties: .init(
@@ -34,7 +33,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: DeferredWork.loadData,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .buttonComponent(properties: .init(
@@ -43,7 +41,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .modal(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "Dismiss", showBottomBorder: true)),
@@ -53,7 +50,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .dismiss,
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .buttonComponent(properties: .init(
@@ -62,7 +58,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .buttonComponent(properties: .init(
@@ -71,7 +66,6 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .popToRoot,
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
             ])

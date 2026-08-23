@@ -25,7 +25,6 @@ struct ExperienceListView: ExperienceContentView {
         experienceContainerView = ExperienceContainerView(experienceViewID: Experience.experienceList,
                                                           presenter: experienceContainerPresenter,
                                                           experienceRouterDelegate: nil,
-                                                          properties: nil,
                                                           navigationBarModel: navigationBarModel)
     }
 

@@ -25,7 +25,6 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
-                                      additionalProperties: nil,
                                       navigationBarModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
@@ -36,7 +35,6 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                         isFullWidth: false,
                         navigation: .init(navigationType: .pop,
                                           deferredLoadingWorkId: nil,
-                                          additionalProperties: nil,
                                           navigationBarModel: nil))))
                 )
             ])
