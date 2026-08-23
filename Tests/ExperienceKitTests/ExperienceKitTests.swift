@@ -2,6 +2,24 @@ import XCTest
 @testable import ExperienceKit
 
 final class ExperienceKitTests: XCTestCase {
+    func testMissingNavigationBarModelUsesInlineDisplayMode() {
+        let presentation = NavigationBarPresentation(navigationBarModel: nil)
+
+        XCTAssertEqual(presentation.title, "")
+        XCTAssertEqual(presentation.displayMode, .inline)
+    }
+
+    func testNavigationBarModelPresentationUsesProvidedValues() {
+        let presentation = NavigationBarPresentation(
+            navigationBarModel: NavigationBarModel(title: "Navigation",
+                                                   displayMode: .large,
+                                                   searchBar: nil)
+        )
+
+        XCTAssertEqual(presentation.title, "Navigation")
+        XCTAssertEqual(presentation.displayMode, .large)
+    }
+
     func testDismissWithoutDelegateKeepsPresenterCache() {
         let router = DefaultExperienceRouter(expId: TestExperienceID.root)
         let presenter = NSObject()
@@ -11,7 +29,6 @@ final class ExperienceKitTests: XCTestCase {
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                properties: nil,
                                                 navigationBarModel: nil))
 
         let cachedPresenter: NSObject? = router.presenter(for: presenterID)
@@ -25,7 +42,6 @@ final class ExperienceKitTests: XCTestCase {
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                properties: nil,
                                                 navigationBarModel: nil))
 
         XCTAssertEqual(delegate.dismissCallCount, 1)
@@ -33,14 +49,14 @@ final class ExperienceKitTests: XCTestCase {
 
     func testDismissWithDelegateClearsPresenterCache() {
         let router = DefaultExperienceRouter(expId: TestExperienceID.root)
-        router.delegate = DismissDelegateSpy()
+        let delegate = DismissDelegateSpy()
+        router.delegate = delegate
         let presenterID = UUID()
 
         router.storePresenter(NSObject(), for: presenterID)
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                properties: nil,
                                                 navigationBarModel: nil))
 
         let cachedPresenter: NSObject? = router.presenter(for: presenterID)

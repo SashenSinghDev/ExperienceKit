@@ -23,6 +23,8 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
     }
 
     public var body: some View {
+        let navigationBarPresentation = NavigationBarPresentation(navigationBarModel: presenter.navigationBarModel)
+
         ZStack {
             VStack {
                 switch presenter.state {
@@ -77,8 +79,8 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                 }
             }
         )
-        .navigationTitle(presenter.navigationBarModel?.title ?? "")
-        .navigationBarTitleDisplayMode(presenter.navigationBarModel?.style ?? .automatic)
+        .navigationTitle(navigationBarPresentation.title)
+        .navigationBarTitleDisplayMode(navigationBarPresentation.displayMode.swiftUIDisplayMode)
         .animation(.easeInOut, value: router.isLoading)
     }
 
@@ -88,9 +90,9 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
     }
 }
 
-private extension NavigationBarModel {
-    var style: NavigationBarItem.TitleDisplayMode {
-        switch displayMode {
+private extension NavigationBarPresentation.DisplayMode {
+    var swiftUIDisplayMode: NavigationBarItem.TitleDisplayMode {
+        switch self {
         case .automatic:
             return .automatic
         case .inline:
