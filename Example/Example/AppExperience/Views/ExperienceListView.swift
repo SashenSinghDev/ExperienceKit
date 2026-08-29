@@ -8,26 +8,21 @@
 import SwiftUI
 import ExperienceKit
 
-struct ExperienceListView: ExperienceContentView {
-    internal let experienceContainerView: ExperienceContainerView
-    internal let experienceContainerPresenter: ExperienceContainerPresenter
+struct ExperienceListView: View {
+    private let experienceRootView: ExperienceRootView
 
     init() {
-        experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
-                                                                    experienceProvider: AppExperienceProvider())
-        
         let experienceViewModel: ExperienceKit.ExperienceViewModel? = {
             return ExperienceViewModel(searchBar: .init(placeholder: "components and capabilities"),
                                        navigationBar: .init(title: "Experience Kit", displayMode: .large))
         }()
-        
-        experienceContainerView = ExperienceContainerView(experienceViewID: Experience.experienceList,
-                                                          presenter: experienceContainerPresenter,
-                                                          experienceRouterDelegate: nil,
-                                                          experienceViewModel: experienceViewModel)
+
+        experienceRootView = ExperienceRootView(root: Experience.experienceList,
+                                                provider: AppExperienceProvider(),
+                                                configuration: experienceViewModel)
     }
 
     var body: some View {
-        experienceContainerView
+        experienceRootView
     }
 }
