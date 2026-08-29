@@ -12,11 +12,6 @@ public protocol ComponentRegister {
     var contentType: String { get }
     var propertiesType: Properties.Type { get }
 
-    func viewModel(from component: Component) -> AnyComponentViewModel
+    func viewModel(from component: Component, dependency: ExperienceDependency) -> AnyComponentViewModel
     func view(from viewModel: any ComponentViewModel) -> AnyView
 }
-
-public let allRegisters: [ComponentRegister] = [
-    ExampleComponentRegister(),
-    WelcomeComponentRegister()
-]

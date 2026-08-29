@@ -1,0 +1,15 @@
+import Foundation
+
+public final class {{ argument.component }}ViewModel: ComponentViewModel, ObservableObject {
+    public typealias Dependencies = EmptyDependency
+
+    public let id: UUID
+    let title: String
+
+    public init(properties: {{ argument.component }}Properties,
+                dependency: Dependencies,
+                id: UUID) {
+        self.id = id
+        self.title = properties.title
+    }
+}

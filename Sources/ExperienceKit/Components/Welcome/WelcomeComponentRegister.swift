@@ -8,18 +8,20 @@
 import Foundation
 import SwiftUI
 
+// sourcery: register
 final class WelcomeComponentRegister: ComponentRegister {
 
     var contentType: String {
-        "welcomeComponent"
+        "welcome"
     }
 
     var propertiesType: Properties.Type {
         WelcomeProperties.self
     }
 
-    func viewModel(from component: Component) -> AnyComponentViewModel {
+    func viewModel(from component: Component,  dependency: ExperienceDependency) -> AnyComponentViewModel {
         AnyComponentViewModel(WelcomeViewModel(any: component.properties,
+                                               dependency: dependency,
                                                id: component.id),
                               contentType: contentType)
     }

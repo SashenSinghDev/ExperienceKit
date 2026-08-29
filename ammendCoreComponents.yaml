@@ -1,0 +1,7 @@
+sources:
+  - Sources/ExperienceKit/Components
+
+templates:
+  - Templates/Core
+
+output: .build/generated-temp/

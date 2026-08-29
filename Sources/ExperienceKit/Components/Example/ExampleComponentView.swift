@@ -17,34 +17,40 @@ struct ExampleComponentView: ComponentView {
     }
 
     var body: some View {
-        TextEditor(text: $viewModel.profileText)
-            .foregroundStyle(.black)
+        VStack(spacing: 16) {
+            TextEditor(text: $viewModel.profileText)
+                .foregroundStyle(.black)
+                .padding(.horizontal, 16)
+                .frame(height: 30)
+
+            Picker(selection: $viewModel.publishedAmount, label: Text("Amount")) {
+                Text("€1").tag(1)
+                Text("€2").tag(2)
+                Text("€3").tag(3)
+                Text("€4").tag(4)
+            }
+            .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal, 16)
-            .frame(height: 30)
 
-        Picker(selection: $viewModel.publishedAmount, label: Text("Amount")) {
-            Text("€1").tag(1)
-            Text("€2").tag(2)
-            Text("€3").tag(3)
-            Text("€4").tag(4)
-        }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding(.horizontal, 16)
+            // Move navigation link outside the interactive content
+            ButtonView(viewModel: viewModel.primaryButton)
+            .padding(.horizontal, 16)
 
-        NavigationLink(value: viewModel) {
+            // Now your interactive content works independently
             VStack(alignment: .leading) {
                 Text("Title")
                     .bold()
                 Text("\(viewModel.title)")
                 Link(destination: URL(string: "https://www.google.com/?client=safari")!) {
                     Text("UrlLink")
+                        .foregroundColor(.blue)
                 }
             }
-            .frame(maxWidth: .infinity,
-                   alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
             .background(.white)
             .cornerRadius(8)
+
             Button(action: {
                 print(viewModel.publishedAmount)
             }, label: {
@@ -52,7 +58,7 @@ struct ExampleComponentView: ComponentView {
                     .frame(maxWidth: .infinity)
             })
             .padding(.horizontal, 16)
-            .buttonStyle(SecondaryButtonStyle())
+//            .buttonStyle(SecondaryButtonStyle())
         }
     }
 }

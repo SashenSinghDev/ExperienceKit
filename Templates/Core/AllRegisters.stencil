@@ -1,0 +1,5 @@
+public let allRegisters: [ComponentRegister] = [
+{% for type in types.classes where type.annotations.register %}
+  {{ type.name }}(),
+{% endfor %}
+]

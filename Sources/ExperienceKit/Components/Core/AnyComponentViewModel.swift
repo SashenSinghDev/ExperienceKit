@@ -16,7 +16,7 @@ public struct AnyComponentViewModel: ComponentViewModel, Identifiable {
     /// in the `AnyComponentViewModel` value. It's used to dequeuing reusable cells.
     let contentType: String
 
-    public init(properties: AnyProperties, id: UUID) {
+    public init(properties: AnyProperties, dependency: ExperienceDependency, id: UUID) {
         fatalError("Not to be used")
     }
 

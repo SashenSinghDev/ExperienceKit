@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct ExampleComponentRegister: ComponentRegister {
+// sourcery: register
+final class ExampleComponentRegister: ComponentRegister {
     var contentType: String {
         "exampleComponent"
     }
@@ -17,8 +18,9 @@ struct ExampleComponentRegister: ComponentRegister {
         ExampleProperties.self
     }
 
-    func viewModel(from component: Component) -> AnyComponentViewModel {
+    func viewModel(from component: Component, dependency: ExperienceDependency) -> AnyComponentViewModel {
         AnyComponentViewModel(ExampleViewModel(any: component.properties,
+                                               dependency: dependency,
                                                id: component.id),
                               contentType: contentType)
     }

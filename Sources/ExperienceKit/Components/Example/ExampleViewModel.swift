@@ -9,16 +9,23 @@ import Foundation
 import SwiftUI
 
 public final class ExampleViewModel: ComponentViewModel, ObservableObject {
+    public typealias Dependencies = HasExperiencePresenterNotifier & HasRouter
+
     public let id: UUID
     let title: String
+    let primaryButton: ButtonViewModel
 
     @Published public var profileText: String = "Enter your bio"
     @Published public var publishedAmount: Int = 1
 
     public init(properties: ExampleProperties,
-         id: UUID) {
+                dependency: Dependencies,
+                id: UUID) {
         self.id = id
         self.title = properties.title
+        self.primaryButton = .init(properties: .init(title: "Go to details", style: .primary, isFullWidth: true, navigation: .init(navigationType: .push(AnyExperienceID(rawValue: "fullScreen")), deferredLoadingWorkId: nil, experienceViewModel: nil)),
+                                   dependency: dependency,
+                                   id: UUID())
     }
 
     var navigatedView: AnyView? {

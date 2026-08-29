@@ -1,0 +1,16 @@
+import Foundation
+
+// sourcery: component = "{{ argument.component | lowercase }}"
+public struct {{ argument.component }}Properties {
+    public let title: String
+
+    public init(title: String) {
+        self.title = title
+    }
+}
+
+extension {{ argument.component }}Properties: Properties, Codable {
+    public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> {{ argument.component }}Properties {
+        return try properties.decode({{ argument.component }}Properties.self, forKey: .properties)
+    }
+}
