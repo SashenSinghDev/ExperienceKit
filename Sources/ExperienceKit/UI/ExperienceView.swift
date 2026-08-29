@@ -23,7 +23,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
     }
 
     public var body: some View {
-        let navigationBarPresentation = NavigationBarPresentation(navigationBarModel: presenter.navigationBarModel)
+        let navigationBarPresentation = NavigationBarPresentation(experienceViewModel: presenter.experienceViewModel)
 
         ZStack {
             VStack {
@@ -65,7 +65,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     .cornerRadius(12)
             }
 
-            if let searchBarModel = presenter.navigationBarModel?.searchBar {
+            if let searchBarModel = presenter.experienceViewModel?.searchBar {
                 VStack {
                     Spacer()
 
@@ -92,7 +92,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
     }
 
     private var searchBarReservedHeight: CGFloat {
-        presenter.navigationBarModel?.searchBar == nil ? 0 : 92
+        presenter.experienceViewModel?.searchBar == nil ? 0 : 92
     }
 }
 

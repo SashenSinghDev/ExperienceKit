@@ -23,24 +23,24 @@ public struct ExperienceContainerView: View {
 
     private weak var experienceRouterDelegate: ExperienceRouterDelegate?
     private let experienceContainerID = UUID()
-    private let navigationBarModel: NavigationBarModel?
+    private let experienceViewModel: ExperienceViewModel?
 
     public init(experienceViewID: ExperienceID,
                 presenter: ExperienceContainerPresenter,
                 experienceRouterDelegate: ExperienceRouterDelegate?,
-                navigationBarModel: NavigationBarModel?) {
+                experienceViewModel: ExperienceViewModel?) {
         self.experienceViewID = experienceViewID
         self.presenter = presenter
         self.experienceRouterDelegate = experienceRouterDelegate
-        self.navigationBarModel = navigationBarModel
+        self.experienceViewModel = experienceViewModel
         _router = StateObject(wrappedValue: DefaultExperienceRouter(expId: experienceViewID))
     }
 
     public var body: some View {
         NavigationStack(path: $router.path) {
-            presenter.experienceView(for: experienceViewID, router: router, navigationBarModel: navigationBarModel, viewModelID: experienceContainerID)
+            presenter.experienceView(for: experienceViewID, router: router, experienceViewModel: experienceViewModel, viewModelID: experienceContainerID)
                 .navigationDestination(for: NavigationViewModel.self) { viewModel in
-                    presenter.experienceView(for: viewModel.destination, router: router, navigationBarModel: viewModel.navigationBarModel, viewModelID: viewModel.id)
+                    presenter.experienceView(for: viewModel.destination, router: router, experienceViewModel: viewModel.experienceViewModel, viewModelID: viewModel.id)
                 }
         }
         .onChange(of: router.path) { _, newPath in
@@ -56,7 +56,7 @@ public struct ExperienceContainerView: View {
             }
         }
         .fullScreenCover(item: $router.navigationViewModel) { viewModel in
-            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, navigationBarModel: viewModel.navigationBarModel)
+            ExperienceContainerView(experienceViewID: viewModel.destination, presenter: presenter, experienceRouterDelegate: router, experienceViewModel: viewModel.experienceViewModel)
         }
         .onAppear {
             if experienceRouterDelegate != nil {

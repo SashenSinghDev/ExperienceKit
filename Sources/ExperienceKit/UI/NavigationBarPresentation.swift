@@ -15,9 +15,9 @@ struct NavigationBarPresentation {
     let title: String
     let displayMode: DisplayMode
 
-    init(navigationBarModel: NavigationBarModel?) {
-        title = navigationBarModel?.title ?? ""
-        switch navigationBarModel?.displayMode {
+    init(experienceViewModel: ExperienceViewModel?) {
+        title = experienceViewModel?.navigationBar?.title ?? ""
+        switch experienceViewModel?.navigationBar?.displayMode {
         case .automatic:
             displayMode = .automatic
         case .inline:

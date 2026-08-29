@@ -9,10 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class ExperienceListInteractor: ExperienceInteractor {
-    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
-    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
-        self.navigationBarModel = navigationBarModel
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+        self.experienceViewModel = experienceViewModel
     }
     
     private var componetList: [Component] {
@@ -25,7 +25,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
                 navigation: .init(
                     navigationType: .push(Experience.welcomeComponent),
                     deferredLoadingWorkId: nil,
-                    navigationBarModel: nil,
+                    experienceViewModel: nil,
                 ))
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
@@ -34,10 +34,9 @@ final class ExperienceListInteractor: ExperienceInteractor {
                 navigation: .init(
                     navigationType: .push(Experience.buttonComponent),
                     deferredLoadingWorkId: nil,
-                    navigationBarModel: .init(
-                        title: "Buttons",
-                        displayMode: .inline,
-                        searchBar: nil)))
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Buttons", displayMode: .inline))))
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
@@ -45,10 +44,9 @@ final class ExperienceListInteractor: ExperienceInteractor {
                 navigation: .init(
                     navigationType: .push(Experience.fullScreenComponent),
                     deferredLoadingWorkId: nil,
-                    navigationBarModel: .init(
-                        title: "",
-                        displayMode: .inline,
-                        searchBar: nil)))
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "", displayMode: .inline))))
             ),
             .sectiontitleComponent(properties: .init(
                 title: "Capabilities", showBottomBorder: false)
@@ -58,10 +56,9 @@ final class ExperienceListInteractor: ExperienceInteractor {
                 navigation: .init(
                     navigationType: .push(Experience.navigationCapability),
                     deferredLoadingWorkId: nil,
-                    navigationBarModel: .init(
-                        title: "Navigation",
-                        displayMode: .automatic,
-                        searchBar: nil)))
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Navigation", displayMode: .automatic))))
             ),
         ]
     }
@@ -71,7 +68,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
     }
     
     func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
-        guard navigationBarModel != nil else { return }
+        guard experienceViewModel != nil else { return }
         
         let searchText = workId.rawValue
         let filteredComponentList: [Component] = {

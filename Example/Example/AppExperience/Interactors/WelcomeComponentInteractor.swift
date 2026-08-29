@@ -9,10 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class WelcomeComponentInteractor: ExperienceInteractor {
-    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
-    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
-        self.navigationBarModel = navigationBarModel
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+        self.experienceViewModel = experienceViewModel
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -28,13 +28,13 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                  isFullWidth: true,
                                  navigation: .init(navigationType: .popToRoot,
                                                    deferredLoadingWorkId: nil,
-                                                   navigationBarModel: nil)),
+                                                   experienceViewModel: nil)),
             secondaryButton: .init(title: "Get Started",
                                    style: .primary,
                                    isFullWidth: true,
                                    navigation: .init(navigationType: .modal(Experience.welcomeComponent),
                                                      deferredLoadingWorkId: DeferredWork.loadData,
-                                                     navigationBarModel: nil))
+                                                     experienceViewModel: nil))
         )
 
         completion(

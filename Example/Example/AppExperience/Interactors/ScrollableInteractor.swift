@@ -13,7 +13,7 @@ final class ScrollableInteractor: ExperienceInteractor {
         completion(nil)
     }
     
-    var navigationBarModel: ExperienceKit.NavigationBarModel?
+    var experienceViewModel: ExperienceKit.ExperienceViewModel?
     
     init() {}
 

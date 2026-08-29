@@ -9,10 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class NavigationCapabilityInteractor: ExperienceInteractor {
-    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
-    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
-        self.navigationBarModel = navigationBarModel
+    init( experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+        self.experienceViewModel = experienceViewModel
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -25,7 +25,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .buttonComponent(properties: .init(
                     title: "push with loading",
@@ -33,7 +33,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: DeferredWork.loadData,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .buttonComponent(properties: .init(
                     title: "present modal",
@@ -41,7 +41,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .modal(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "Dismiss", showBottomBorder: true)),
                 .buttonComponent(properties: .init(
@@ -50,7 +50,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .dismiss,
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .buttonComponent(properties: .init(
                     title: "pop",
@@ -58,7 +58,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .buttonComponent(properties: .init(
                     title: "pop to root",
@@ -66,7 +66,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .popToRoot,
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
             ])
         }()

@@ -2,18 +2,19 @@ import XCTest
 @testable import ExperienceKit
 
 final class ExperienceKitTests: XCTestCase {
-    func testMissingNavigationBarModelUsesInlineDisplayMode() {
-        let presentation = NavigationBarPresentation(navigationBarModel: nil)
+    func testMissingExperienceViewModelUsesInlineDisplayMode() {
+        let presentation = NavigationBarPresentation(experienceViewModel: nil)
 
         XCTAssertEqual(presentation.title, "")
         XCTAssertEqual(presentation.displayMode, .inline)
     }
 
-    func testNavigationBarModelPresentationUsesProvidedValues() {
+    func testExperienceViewModelPresentationUsesProvidedValues() {
         let presentation = NavigationBarPresentation(
-            navigationBarModel: NavigationBarModel(title: "Navigation",
-                                                   displayMode: .large,
-                                                   searchBar: nil)
+            experienceViewModel: ExperienceViewModel(
+                searchBar: nil,
+                navigationBar: .init(title: "Navigation", displayMode: .large)
+            )
         )
 
         XCTAssertEqual(presentation.title, "Navigation")
@@ -29,7 +30,7 @@ final class ExperienceKitTests: XCTestCase {
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                navigationBarModel: nil))
+                                                experienceViewModel: nil))
 
         let cachedPresenter: NSObject? = router.presenter(for: presenterID)
         XCTAssertTrue(cachedPresenter === presenter)
@@ -42,7 +43,7 @@ final class ExperienceKitTests: XCTestCase {
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                navigationBarModel: nil))
+                                                experienceViewModel: nil))
 
         XCTAssertEqual(delegate.dismissCallCount, 1)
     }
@@ -57,7 +58,7 @@ final class ExperienceKitTests: XCTestCase {
 
         router.navigate(to: NavigationViewModel(navigationType: .dismiss,
                                                 deferredLoadingWorkId: nil,
-                                                navigationBarModel: nil))
+                                                experienceViewModel: nil))
 
         let cachedPresenter: NSObject? = router.presenter(for: presenterID)
         XCTAssertNil(cachedPresenter)

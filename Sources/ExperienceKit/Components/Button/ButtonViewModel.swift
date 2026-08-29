@@ -28,7 +28,7 @@ public struct ButtonViewModel: ComponentViewModel {
         self.isFullWidth = properties.isFullWidth
         self.navigationViewModel = .init(navigationType: properties.navigation.navigationType,
                                          deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId,
-                                         navigationBarModel: properties.navigation.navigationBarModel)
+                                         experienceViewModel: properties.navigation.experienceViewModel)
         self.router = dependency.router
         self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
     }

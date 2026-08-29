@@ -21,8 +21,8 @@ public final class ExperienceContainerPresenter {
         self.experienceProvider = experienceProvider
     }
 
-    func experienceView(for id: ExperienceID, router: DefaultExperienceRouter, navigationBarModel: NavigationBarModel?, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
-        let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id, navigationBarModel: navigationBarModel)
+    func experienceView(for id: ExperienceID, router: DefaultExperienceRouter, experienceViewModel: ExperienceViewModel?, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
+        let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id, experienceViewModel: experienceViewModel)
         let experienceDependency = ExperienceDependency(router: router,
                                                         experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
                                                         viewProvider: viewProvider,

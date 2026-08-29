@@ -16,16 +16,15 @@ struct ExperienceListView: ExperienceContentView {
         experienceContainerPresenter = ExperienceContainerPresenter(registers: allRegisters,
                                                                     experienceProvider: AppExperienceProvider())
         
-        let navigationBarModel: ExperienceKit.NavigationBarModel? = {
-            return NavigationBarModel(title: "Experience Kit",
-                                      displayMode: .large,
-                                      searchBar: .init(placeholder: "components and capabilities"))
+        let experienceViewModel: ExperienceKit.ExperienceViewModel? = {
+            return ExperienceViewModel(searchBar: .init(placeholder: "components and capabilities"),
+                                       navigationBar: .init(title: "Experience Kit", displayMode: .large))
         }()
         
         experienceContainerView = ExperienceContainerView(experienceViewID: Experience.experienceList,
                                                           presenter: experienceContainerPresenter,
                                                           experienceRouterDelegate: nil,
-                                                          navigationBarModel: navigationBarModel)
+                                                          experienceViewModel: experienceViewModel)
     }
 
     var body: some View {

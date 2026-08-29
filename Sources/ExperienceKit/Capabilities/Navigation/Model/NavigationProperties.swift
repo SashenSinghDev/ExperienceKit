@@ -8,20 +8,20 @@
 public struct NavigationProperties: Codable {
     public let navigationType: NavigationType
     public let deferredLoadingWorkId: AnyDeferredWorkID?
-    public let navigationBarModel: NavigationBarModel?
+    public let experienceViewModel: ExperienceViewModel?
 
     public init(navigationType: NavigationType,
                 deferredLoadingWorkId: (any DeferredWorkID)?,
-                navigationBarModel: NavigationBarModel?) {
+                experienceViewModel: ExperienceViewModel?) {
         self.navigationType = navigationType
         self.deferredLoadingWorkId = deferredLoadingWorkId.map { AnyDeferredWorkID(rawValue: $0.rawValue) }
-        self.navigationBarModel = navigationBarModel
+        self.experienceViewModel = experienceViewModel
     }
 
     private enum CodingKeys: String, CodingKey {
         case navigationType
         case deferredLoadingWorkId
-        case navigationBarModel
+        case experienceViewModel
     }
 
     public init(from decoder: Decoder) throws {
@@ -30,7 +30,7 @@ public struct NavigationProperties: Codable {
         navigationType = try container.decode(NavigationType.self, forKey: .navigationType)
         deferredLoadingWorkId = try container.decodeIfPresent(String.self, forKey: .deferredLoadingWorkId)
             .map(AnyDeferredWorkID.init(rawValue:))
-        navigationBarModel = try container.decodeIfPresent(NavigationBarModel.self, forKey: .navigationBarModel)
+        experienceViewModel = try container.decodeIfPresent(ExperienceViewModel.self, forKey: .experienceViewModel)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -38,7 +38,7 @@ public struct NavigationProperties: Codable {
 
         try container.encode(navigationType, forKey: .navigationType)
         try container.encodeIfPresent(deferredLoadingWorkId?.rawValue, forKey: .deferredLoadingWorkId)
-        try container.encodeIfPresent(navigationBarModel, forKey: .navigationBarModel)
+        try container.encodeIfPresent(experienceViewModel, forKey: .experienceViewModel)
     }
 }
 

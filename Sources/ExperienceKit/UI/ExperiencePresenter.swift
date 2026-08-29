@@ -25,7 +25,7 @@ public final class ExperiencePresenter: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     @Published var searchText: String = ""
 
-    let navigationBarModel: NavigationBarModel?
+    let experienceViewModel: ExperienceViewModel?
 
     private let viewModelProvider: ViewModelProvider
     private let experienceInteractor: ExperienceInteractor
@@ -37,7 +37,7 @@ public final class ExperiencePresenter: ObservableObject {
                 dependency: ExperienceDependency) {
         self.viewModelProvider = viewModelProvider
         self.experienceInteractor = experienceInteractor
-        self.navigationBarModel = experienceInteractor.navigationBarModel
+        self.experienceViewModel = experienceInteractor.experienceViewModel
         self.dependency = dependency
 
         dependency.experiencePresenterNotifier.delegate = self
@@ -57,7 +57,7 @@ public final class ExperiencePresenter: ObservableObject {
     }
 
     private func filterResults(for query: String) {
-        guard case .loadedScrollable(_) = state, navigationBarModel?.searchBar != nil else { return }
+        guard case .loadedScrollable(_) = state, experienceViewModel?.searchBar != nil else { return }
 
         experienceInteractor.performDeferredWork(workId: AnyDeferredWorkID(rawValue: query)) {  [weak self] experienceType in
             guard let self, let experienceType else { return }

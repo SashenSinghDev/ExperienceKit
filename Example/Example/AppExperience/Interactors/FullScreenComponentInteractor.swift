@@ -9,10 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class FullScreenComponentInteractor: ExperienceInteractor {
-    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
-    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
-        self.navigationBarModel = navigationBarModel
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+        self.experienceViewModel = experienceViewModel
     }
     
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -28,19 +28,19 @@ final class FullScreenComponentInteractor: ExperienceInteractor {
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                 ],
                 middleComponents: [
                     .buttonComponent(properties: .init(title: "buttonTitle",
@@ -48,19 +48,19 @@ final class FullScreenComponentInteractor: ExperienceInteractor {
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                 ],
                 bottomComponents: [
                     .buttonComponent(properties: .init(title: "buttonTitle",
@@ -68,19 +68,19 @@ final class FullScreenComponentInteractor: ExperienceInteractor {
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                     .buttonComponent(properties: .init(title: "buttonTitle",
                                                        style: .secondary,
                                                        isFullWidth: false,
                                                        navigation: .init(navigationType: .pop,
                                                                          deferredLoadingWorkId: nil,
-                                                                         navigationBarModel: nil))),
+                                                                         experienceViewModel: nil))),
                 ]
             )
             return .fullScreen(component: .fullscreenComponent(properties: properties))

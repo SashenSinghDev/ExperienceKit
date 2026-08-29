@@ -9,10 +9,10 @@ import ExperienceKit
 import SwiftUI
 
 final class ButtonComponentInteractor: ExperienceInteractor {
-    internal let navigationBarModel: ExperienceKit.NavigationBarModel?
+    internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
-    init( navigationBarModel: ExperienceKit.NavigationBarModel?) {
-        self.navigationBarModel = navigationBarModel
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+        self.experienceViewModel = experienceViewModel
     }
     
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -25,7 +25,7 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                     isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
-                                      navigationBarModel: nil))
+                                      experienceViewModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
                 .containerComponent(properties: .init(
@@ -35,7 +35,7 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                         isFullWidth: false,
                         navigation: .init(navigationType: .pop,
                                           deferredLoadingWorkId: nil,
-                                          navigationBarModel: nil))))
+                                          experienceViewModel: nil))))
                 )
             ])
         }()
