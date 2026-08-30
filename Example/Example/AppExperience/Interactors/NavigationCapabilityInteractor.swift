@@ -27,6 +27,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
+                .spacerComponent(properties: .init(size: .small)),
                 .buttonComponent(properties: .init(
                     title: "push with loading",
                     style: .primary,
@@ -35,6 +36,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: DeferredWork.loadData,
                                       experienceViewModel: nil))
                 ),
+                .spacerComponent(properties: .init(size: .small)),
                 .buttonComponent(properties: .init(
                     title: "present modal",
                     style: .primary,
@@ -52,6 +54,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
+                .spacerComponent(properties: .init(size: .small)),
                 .buttonComponent(properties: .init(
                     title: "pop",
                     style: .primary,
@@ -60,6 +63,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
+                .spacerComponent(properties: .init(size: .small)),
                 .buttonComponent(properties: .init(
                     title: "pop to root",
                     style: .primary,
