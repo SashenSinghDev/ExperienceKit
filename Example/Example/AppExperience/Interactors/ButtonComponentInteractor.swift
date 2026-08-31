@@ -28,14 +28,13 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                                       experienceViewModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
-                .containerComponent(properties: .init(
-                    component: .buttonComponent(properties: .init(
-                        title: "Secondary",
-                        style: .secondary,
-                        isFullWidth: false,
-                        navigation: .init(navigationType: .pop,
-                                          deferredLoadingWorkId: nil,
-                                          experienceViewModel: nil))))
+                .buttonComponent(properties: .init(
+                    title: "SecondaryButton",
+                    style: .secondary,
+                    isFullWidth: false,
+                    navigation: .init(navigationType: .pop,
+                                      deferredLoadingWorkId: nil,
+                                      experienceViewModel: nil))
                 )
             ])
         }()
