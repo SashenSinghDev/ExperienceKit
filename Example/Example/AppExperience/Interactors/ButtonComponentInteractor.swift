@@ -18,7 +18,7 @@ final class ButtonComponentInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         let buttonExperience: ExperienceType  = {
             return .scrollable(components: [
-                .sectiontitleComponent(properties: .init(title: "PrimaryButton", showBottomBorder: false)),
+                .sectiontitleComponent(properties: .init(title: "PrimaryButton")),
                 .buttonComponent(properties: .init(
                     title: "PrimaryButton",
                     style: .primary,
@@ -27,15 +27,14 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
-                .sectiontitleComponent(properties: .init(title: "SecondaryButton", showBottomBorder: false)),
-                .containerComponent(properties: .init(
-                    component: .buttonComponent(properties: .init(
-                        title: "Secondary",
-                        style: .secondary,
-                        isFullWidth: false,
-                        navigation: .init(navigationType: .pop,
-                                          deferredLoadingWorkId: nil,
-                                          experienceViewModel: nil))))
+                .sectiontitleComponent(properties: .init(title: "SecondaryButton")),
+                .buttonComponent(properties: .init(
+                    title: "SecondaryButton",
+                    style: .secondary,
+                    isFullWidth: false,
+                    navigation: .init(navigationType: .pop,
+                                      deferredLoadingWorkId: nil,
+                                      experienceViewModel: nil))
                 )
             ])
         }()

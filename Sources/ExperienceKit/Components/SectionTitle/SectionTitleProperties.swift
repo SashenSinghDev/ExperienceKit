@@ -10,11 +10,9 @@ import Foundation
 // sourcery: component = "sectiontitle"
 public struct SectionTitleProperties {
     public let title: String
-    public let showBottomBorder: Bool
 
-    public init(title: String, showBottomBorder: Bool) {
+    public init(title: String) {
         self.title = title
-        self.showBottomBorder = showBottomBorder
     }
 }
 

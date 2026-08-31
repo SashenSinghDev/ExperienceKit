@@ -21,14 +21,18 @@ struct ButtonView: ComponentView {
             viewModel.navigate()
         } label: {
             Text(viewModel.title)
-                .font(.bodyLargeBold)
+                .font(.body.weight(.semibold))
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(viewModel.style == .primary ? .black : .white)
-                .foregroundColor(viewModel.style == .primary ? .white : .black)
-                .cornerRadius(100)
+                .background(viewModel.style == .primary ? .button.primary.background : .button.secondary.background)
+                .foregroundColor(viewModel.style == .primary ? .button.primary.label : .button.secondary.label)
+                .cornerRadius(.radius.full)
+                .overlay(
+                    RoundedRectangle(cornerRadius: .radius.full)
+                        .strokeBorder(viewModel.style == .secondary ? .button.secondary.border : .clear, lineWidth: 1)
+                )
         }
-        .padding(.horizontal, viewModel.isFullWidth ? 0 : 16)
+        .padding(.horizontal, viewModel.isFullWidth ? .spacing.none : .spacing.medium)
     }
 }
 

@@ -49,6 +49,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func spacerComponent(properties: SpacerProperties) -> Component {
+        return Component(contentType: "spacer",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func welcomeComponent(properties: WelcomeProperties) -> Component {
         return Component(contentType: "welcome",
                          properties: properties,

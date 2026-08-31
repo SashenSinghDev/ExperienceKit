@@ -23,8 +23,8 @@ struct SectionTitleView: ComponentView {
                 .bold()
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.horizontal, .spacing.medium)
+        .padding(.vertical, .spacing.small)
     }
 }
 
