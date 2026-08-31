@@ -24,11 +24,13 @@ struct GenericListItemView: ComponentView {
                 HStack {
                     Text(viewModel.title)
                         .font(.headline)
+                        .foregroundStyle(.primary)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.gray) 
+                        .foregroundColor(.gray)
+                        .fontWeight(.semibold)
                 }
-                .padding(16)
+                .padding(.spacing.medium)
                 .frame(maxWidth: .infinity) // Make the HStack fill available width
                 .contentShape(Rectangle())
             }
@@ -39,7 +41,7 @@ struct GenericListItemView: ComponentView {
                     .font(.headline)
                 Spacer()
             }
-            .padding(16)
+            .padding(.spacing.medium)
         }
     }
 }

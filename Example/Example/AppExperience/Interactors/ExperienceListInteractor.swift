@@ -18,7 +18,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
     private var componetList: [Component] {
         return [
             .sectiontitleComponent(properties: .init(
-                title: "Components", showBottomBorder: false)
+                title: "Components")
             ),
             .genericlistitemComponent(properties: .init(
                 title: "Welcome",
@@ -49,7 +49,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         navigationBar: .init(title: "", displayMode: .inline))))
             ),
             .sectiontitleComponent(properties: .init(
-                title: "Capabilities", showBottomBorder: false)
+                title: "Capabilities")
             ),
             .genericlistitemComponent(properties: .init(
                 title: "Navigation",

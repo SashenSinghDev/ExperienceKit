@@ -18,7 +18,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         let buttonExperience: ExperienceType  = {
             return .scrollable(components: [
-                .sectiontitleComponent(properties: .init(title: "Present", showBottomBorder: true)),
+                .sectiontitleComponent(properties: .init(title: "Present")),
                 .buttonComponent(properties: .init(
                     title: "push without loading",
                     style: .primary,
@@ -45,7 +45,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
-                .sectiontitleComponent(properties: .init(title: "Dismiss", showBottomBorder: true)),
+                .sectiontitleComponent(properties: .init(title: "Dismiss")),
                 .buttonComponent(properties: .init(
                     title: "dismiss",
                     style: .primary,
