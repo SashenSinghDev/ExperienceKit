@@ -20,7 +20,7 @@ struct FullScreenView: ComponentView {
                     }
 
                     if !viewModel.topAnyComponentViewModels.isEmpty {
-                        VStack {
+                        VStack(spacing: .spacing.none) {
                             ForEach(viewModel.topAnyComponentViewModels) { viewModel in
                                 makeView(from: viewModel)
                             }
@@ -29,7 +29,7 @@ struct FullScreenView: ComponentView {
                     }
 
                     if !viewModel.middleAnyComponentViewModels.isEmpty {
-                        VStack {
+                        VStack(spacing: .spacing.none) {
                             Spacer()
                             ForEach(viewModel.middleAnyComponentViewModels) { viewModel in
                                 makeView(from: viewModel)
@@ -41,7 +41,7 @@ struct FullScreenView: ComponentView {
                     }
 
                     if !viewModel.bottomAnyComponentViewModels.isEmpty {
-                        VStack {
+                        VStack(spacing: .spacing.none) {
                             Spacer()
                             ForEach(viewModel.bottomAnyComponentViewModels) { viewModel in
                                 makeView(from: viewModel)
