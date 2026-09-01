@@ -17,22 +17,7 @@ final class TextComponentInteractor: ExperienceInteractor {
     
     func load(completion: @escaping (ExperienceType) -> Void) {
         let buttonExperience: ExperienceType  = {
-            return .scrollable(components: [
-                .textComponent(properties: .init(title: "Large Title Bold", font: .largeTitle, weight: .bold)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Large Title Medium", font: .largeTitle, weight: .medium)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Large Title Medium Italic", font: .largeTitle, weight: .mediumItalic)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Large Title Regular", font: .largeTitle, weight: .regular)),
-                .textComponent(properties: .init(title: "Large Title Regular Italic", font: .largeTitle, weight: .regularItalic)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Large Title Semi Bold", font: .largeTitle, weight: .semibold)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Large Title Semi Bold Italic", font: .largeTitle, weight: .semiboldItalic)),
-                .spacerComponent(properties: .init(size: .small)),
-                .textComponent(properties: .init(title: "Title 1 Bold", font: .title1, weight: .bold)),
-            ])
+            return .scrollable(components: textComponents)
         }()
     
         completion(buttonExperience)
@@ -57,6 +42,47 @@ final class TextComponentInteractor: ExperienceInteractor {
     private func loadData(completion: @escaping (ExperienceType?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             completion(nil)
+        }
+    }
+
+    private var textComponents: [Component] {
+        let fonts: [(title: String, font: TextProperties.Font)] = [
+            ("Large Title", .largeTitle),
+            ("Title 1", .title1),
+            ("Title 2", .title2),
+            ("Title 3", .title3),
+            ("Headline", .headline),
+            ("Body", .body),
+            ("Callout", .callout),
+            ("Subheadline", .subheadline),
+            ("Footnote", .footnote),
+            ("Caption 1", .caption1),
+            ("Caption 2", .caption2),
+        ]
+
+        let weights: [(title: String, weight: TextProperties.Weight)] = [
+            ("Bold", .bold),
+            ("Medium", .medium),
+            ("Medium Italic", .mediumItalic),
+            ("Regular", .regular),
+            ("Regular Italic", .regularItalic),
+            ("Semi Bold", .semibold),
+            ("Semi Bold Italic", .semiboldItalic),
+        ]
+
+        return fonts.flatMap { font in
+            weights.flatMap { weight in
+                [
+                    Component.textComponent(
+                        properties: .init(
+                            title: "\(font.title) \(weight.title)",
+                            font: font.font,
+                            weight: weight.weight
+                        )
+                    ),
+                    Component.spacerComponent(properties: .init(size: .small))
+                ]
+            }
         }
     }
 }
