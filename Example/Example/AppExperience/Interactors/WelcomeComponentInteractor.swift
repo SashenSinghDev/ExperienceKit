@@ -18,7 +18,7 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         
         let welcomeProperties = WelcomeProperties(
-            image: .init(uri: "welcome-image",
+            image: .init(uri: "welcome_image",
                          bundle: Bundle.main.bundleIdentifier ?? ""),
             description: .init(title: "Welcome to 👋 GymBru",
                                subtitle: "A personal trainer in your pocket",
