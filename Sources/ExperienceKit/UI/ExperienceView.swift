@@ -50,7 +50,7 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                     }
                 case .loadedFullScreen(let viewModel):
                     VStack {
-                        makeView(from: viewModel)
+                        FullScreenView(viewModel: viewModel)
                     }
 //                    .ignoresSafeArea()
                 }

@@ -1,6 +1,5 @@
 import Foundation
 
-// sourcery: component = "fullscreen"
 public struct FullScreenProperties {
     public let image: ExperienceImage?
     public let topComponents: [Component]
@@ -18,8 +17,4 @@ public struct FullScreenProperties {
     }
 }
 
-extension FullScreenProperties: Properties, Codable {
-    public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> FullScreenProperties {
-        return try properties.decode(FullScreenProperties.self, forKey: .properties)
-    }
-}
+extension FullScreenProperties: Codable {}

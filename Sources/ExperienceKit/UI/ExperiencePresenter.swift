@@ -17,7 +17,7 @@ public final class ExperiencePresenter: ObservableObject {
         case loading
         case failed(Error)
         case loadedScrollable([AnyComponentViewModel])
-        case loadedFullScreen(AnyComponentViewModel)
+        case loadedFullScreen(FullScreenViewModel)
     }
 
     @Published public var state: State = .idle
@@ -75,10 +75,11 @@ public final class ExperiencePresenter: ObservableObject {
 
     private func resolveState(for experienceType: ExperienceType) {
         switch experienceType {
-        case .fullScreen(let component):
-            let viewModel = self.viewModelProvider.viewModel(for: component, dependency: dependency)
+        case .fullScreen(let properties):
+            let viewModel = FullScreenViewModel(properties: properties,
+                                               dependency: dependency,
+                                               id: UUID())
             self.state = .loadedFullScreen(viewModel)
-            self.vm = viewModel
         case .scrollable(let components):
             let viewModels: [AnyComponentViewModel] = components.compactMap {
                 return self.viewModelProvider.viewModel(for: $0, dependency: self.dependency)

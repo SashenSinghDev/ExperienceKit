@@ -1,20 +1,6 @@
 import Foundation
 
-public final class FullScreenViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = ExperienceDependency
-
-    enum HorizontalAlignment {
-        case leading
-        case center
-        case trailing
-    }
-
-    enum VerticalAlignment {
-        case top
-        case center
-        case bottom
-    }
-
+public final class FullScreenViewModel: ObservableObject, Identifiable {
     public let id: UUID
     let image: ExperienceImage?
     let topAnyComponentViewModels: [AnyComponentViewModel]
@@ -23,7 +9,7 @@ public final class FullScreenViewModel: ComponentViewModel, ObservableObject {
     let viewProvider: ViewProvider
 
     public init(properties: FullScreenProperties,
-                dependency: Dependencies,
+                dependency: ExperienceDependency,
                 id: UUID) {
         self.id = id
         self.image = properties.image
@@ -33,4 +19,3 @@ public final class FullScreenViewModel: ComponentViewModel, ObservableObject {
         self.viewProvider = dependency.viewProvider
     }
 }
-

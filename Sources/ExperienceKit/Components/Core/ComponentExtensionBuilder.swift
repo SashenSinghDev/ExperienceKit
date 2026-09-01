@@ -25,12 +25,6 @@ public extension Component {
                          id: UUID())
     }
 
-    static func fullscreenComponent(properties: FullScreenProperties) -> Component {
-        return Component(contentType: "fullscreen",
-                         properties: properties,
-                         id: UUID())
-    }
-
     static func genericlistitemComponent(properties: GenericListItemProperties) -> Component {
         return Component(contentType: "genericlistitem",
                          properties: properties,

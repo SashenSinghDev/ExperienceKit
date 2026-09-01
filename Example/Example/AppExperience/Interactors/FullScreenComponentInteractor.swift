@@ -66,7 +66,7 @@ final class FullScreenComponentInteractor: ExperienceInteractor {
                                                                          experienceViewModel: nil))),
                 ]
             )
-            return .fullScreen(component: .fullscreenComponent(properties: properties))
+            return .fullScreen(properties: properties)
         }()
     
         completion(fullScreenExperience)

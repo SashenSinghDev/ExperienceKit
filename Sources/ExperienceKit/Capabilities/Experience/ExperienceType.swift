@@ -6,7 +6,7 @@
 //
 
 public enum ExperienceType {
-    case fullScreen(component: Component)
+    case fullScreen(properties: FullScreenProperties)
     case scrollable(components: [Component])
     case navigateImmediately(navigationViewModel: NavigationViewModel)
 }

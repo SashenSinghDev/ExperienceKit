@@ -3,7 +3,6 @@ public let allRegisters: [ComponentRegister] = [
   ContainerComponentRegister(),
   DescriptionComponentRegister(),
   ExampleComponentRegister(),
-  FullScreenComponentRegister(),
   GenericListItemComponentRegister(),
   SectionTitleComponentRegister(),
   SeparatorComponentRegister(),

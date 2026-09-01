@@ -38,7 +38,16 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
         )
 
         completion(
-            .fullScreen(component: .init(contentType: "welcome", properties: welcomeProperties, id: UUID()))
+            .fullScreen(
+                properties: FullScreenProperties(
+                    image: nil,
+                    topComponents: [],
+                    middleComponents: [
+                        .welcomeComponent(properties: welcomeProperties)
+                    ],
+                    bottomComponents: []
+                )
+            )
         )
     }
 
