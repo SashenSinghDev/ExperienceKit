@@ -9,8 +9,7 @@ struct ContainerView: ComponentView {
 
     var body: some View {
         makeView(from: viewModel.anyComponentViewModel)
-            .padding(.vertical, 8)
-            .background(.gray)
+            .padding(.vertical, viewModel.verticalSpacing.value)
     }
 
     @ViewBuilder
