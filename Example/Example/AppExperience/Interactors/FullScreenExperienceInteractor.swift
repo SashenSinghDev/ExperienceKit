@@ -18,6 +18,8 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         let fullScreenExperience: ExperienceType  = {
             let properties = FullScreenProperties(
+//                image: .init(uri: "welcome-image",
+//                             bundle: Bundle.main.bundleIdentifier ?? ""),
                 image: nil,
                 topComponents: [
                     .spacerComponent(properties: .init(size: .medium)),
@@ -25,7 +27,8 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
                         title: "Want want you to try our app for free",
                         font: .title1,
                         weight: .bold,
-                        alignment: .center)
+                        alignment: .center,
+                        foregroundStyle: .primary)
                     )
                 ],
                 middleComponents: [
@@ -44,26 +47,30 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
                                                                          experienceViewModel: nil)))
                 ],
                 bottomComponents: [
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil))),
-                    .spacerComponent(properties: .init(size: .small)),
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil))),
-                    .spacerComponent(properties: .init(size: .small)),
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil))),
+                    .textComponent(properties: .init(
+                        title: "✓ No payment due now",
+                        font: .subheadline,
+                        weight: .semibold,
+                        alignment: .center,
+                        foregroundStyle: .primary)
+                    ),
+                    .spacerComponent(properties: .init(size: .medium)),
+                    .buttonComponent(properties: .init(
+                        title: "Try for $0.00",
+                        style: .primary,
+                        isFullWidth: false,
+                        navigation: .init(
+                            navigationType: .push(Experience.fullScreen),
+                            deferredLoadingWorkId: nil,
+                            experienceViewModel: nil))
+                    ),
+                    .spacerComponent(properties: .init(size: .medium)),
+                    .textComponent(properties: .init(
+                        title: "Just $29.99 per year ($2.49/mo)",
+                        font: .footnote,
+                        weight: .regular,
+                        alignment: .center,
+                        foregroundStyle: .secondary))
                 ]
             )
             return .fullScreen(properties: properties)

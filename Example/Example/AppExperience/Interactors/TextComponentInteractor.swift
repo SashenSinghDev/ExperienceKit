@@ -78,7 +78,8 @@ final class TextComponentInteractor: ExperienceInteractor {
                             title: "\(font.title) \(weight.title)",
                             font: font.font,
                             weight: weight.weight,
-                            alignment: .center
+                            alignment: .center,
+                            foregroundStyle: .primary
                         )
                     ),
                     Component.spacerComponent(properties: .init(size: .small))

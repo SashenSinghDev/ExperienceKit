@@ -32,12 +32,20 @@ public final class TextViewModel: ComponentViewModel, ObservableObject {
         case center
         case trailing
     }
+    
+    public enum ForegroundStyle {
+        case primary
+        case secondary
+        case tertiary
+        case quaternary
+    }
 
     public let id: UUID
     let title: String
     let font: Font
     let weight: Weight
     let alignment: Alignment
+    let foregroundStyle :ForegroundStyle
 
     public init(properties: TextProperties,
                 dependency: Dependencies,
@@ -47,6 +55,7 @@ public final class TextViewModel: ComponentViewModel, ObservableObject {
         self.font = properties.font.toFont
         self.weight = properties.weight.toWeight
         self.alignment = properties.alignment.toAlignment
+        self.foregroundStyle = properties.foregroundStyle.toForegroundStyle
     }
 }
 
@@ -109,6 +118,21 @@ private extension TextProperties.Alignment {
             return .center
         case .trailing:
             return .trailing
+        }
+    }
+}
+
+private extension TextProperties.ForegroundStyle {
+    var toForegroundStyle: TextViewModel.ForegroundStyle {
+        switch self {
+        case .primary:
+            return .primary
+        case .secondary:
+            return .secondary
+        case .tertiary:
+            return .tertiary
+        case .quaternary:
+            return .quaternary
         }
     }
 }

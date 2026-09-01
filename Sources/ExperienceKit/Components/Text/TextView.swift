@@ -12,6 +12,7 @@ struct TextView: ComponentView {
             .font(viewModel.font.swiftUIFont.weight(viewModel.weight.swiftUIFontWeight))
             .italic(viewModel.weight.isItalic)
             .multilineTextAlignment(viewModel.alignment.swiftUITextAlignment)
+            .foregroundStyle(viewModel.foregroundStyle.swiftUIForegroundStyle)
     }
 }
 
@@ -32,7 +33,21 @@ private extension TextViewModel.Alignment {
             return .trailing
         }
     }
-    
+}
+
+private extension TextViewModel.ForegroundStyle {
+    var swiftUIForegroundStyle: HierarchicalShapeStyle {
+        switch self {
+        case .primary:
+            return .primary
+        case .secondary:
+            return .secondary
+        case .tertiary:
+            return .tertiary
+        case .quaternary:
+            return .quaternary
+        }
+    }
 }
 
 private extension TextViewModel.Font {

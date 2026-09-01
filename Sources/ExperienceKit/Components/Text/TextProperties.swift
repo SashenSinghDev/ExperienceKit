@@ -32,19 +32,29 @@ public struct TextProperties {
         case trailing
     }
     
+    public enum ForegroundStyle: Codable {
+        case primary
+        case secondary
+        case tertiary
+        case quaternary
+    }
+    
     public let title: String
     public let font: Font
     public let weight: Weight
     public let alignment: Alignment
+    public let foregroundStyle: ForegroundStyle
 
     public init(title: String,
                 font: Font,
                 weight: Weight,
-                alignment: Alignment) {
+                alignment: Alignment,
+                foregroundStyle: ForegroundStyle) {
         self.title = title
         self.font = font
         self.weight = weight
         self.alignment = alignment
+        self.foregroundStyle = foregroundStyle
     }
 }
 
