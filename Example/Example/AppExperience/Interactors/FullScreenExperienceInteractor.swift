@@ -18,7 +18,7 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         let fullScreenExperience: ExperienceType  = {
             let properties = FullScreenProperties(
-//                image: .init(uri: "welcome-image",
+//                image: .init(uri: "welcome_image",
 //                             bundle: Bundle.main.bundleIdentifier ?? ""),
                 image: nil,
                 topComponents: [
