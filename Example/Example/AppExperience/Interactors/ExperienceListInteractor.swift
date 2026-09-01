@@ -54,7 +54,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
             .genericlistitemComponent(properties: .init(
                 title: "Full Screen",
                 navigation: .init(
-                    navigationType: .push(Experience.fullScreenComponent),
+                    navigationType: .push(Experience.fullScreen),
                     deferredLoadingWorkId: nil,
                     experienceViewModel: .init(
                         searchBar: nil,

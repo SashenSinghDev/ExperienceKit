@@ -1,5 +1,5 @@
 //
-//  FullScreenComponentInteractor.swift
+//  FullScreenExperienceInteractor.swift
 //  Example
 //
 //  Created by Sashen Suneel Singh on 22/08/2026.
@@ -8,7 +8,7 @@
 import ExperienceKit
 import SwiftUI
 
-final class FullScreenComponentInteractor: ExperienceInteractor {
+final class FullScreenExperienceInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
@@ -18,15 +18,15 @@ final class FullScreenComponentInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         let fullScreenExperience: ExperienceType  = {
             let properties = FullScreenProperties(
-                image: .init(uri: "welcome-image",
-                             bundle: Bundle.main.bundleIdentifier ?? ""),
+                image: nil,
                 topComponents: [
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil)))
+                    .spacerComponent(properties: .init(size: .medium)),
+                    .textComponent(properties: .init(
+                        title: "Want want you to try our app for free",
+                        font: .title1,
+                        weight: .bold,
+                        alignment: .center)
+                    )
                 ],
                 middleComponents: [
                     .buttonComponent(properties: .init(title: "buttonTitle",

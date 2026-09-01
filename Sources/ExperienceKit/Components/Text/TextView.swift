@@ -11,6 +11,7 @@ struct TextView: ComponentView {
         Text("\(viewModel.title)")
             .font(viewModel.font.swiftUIFont.weight(viewModel.weight.swiftUIFontWeight))
             .italic(viewModel.weight.isItalic)
+            .multilineTextAlignment(viewModel.alignment.swiftUITextAlignment)
     }
 }
 
@@ -18,6 +19,20 @@ extension TextView {
     static func == (lhs: TextView, rhs: TextView) -> Bool {
         lhs.viewModel.id == rhs.viewModel.id
     }
+}
+
+private extension TextViewModel.Alignment {
+    var swiftUITextAlignment: TextAlignment {
+        switch self {
+        case .center:
+            return .center
+        case .leading:
+            return .leading
+        case .trailing:
+            return .trailing
+        }
+    }
+    
 }
 
 private extension TextViewModel.Font {

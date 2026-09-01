@@ -26,11 +26,18 @@ public final class TextViewModel: ComponentViewModel, ObservableObject {
         case semiboldItalic
         case bold
     }
+    
+    public enum Alignment {
+        case leading
+        case center
+        case trailing
+    }
 
     public let id: UUID
     let title: String
     let font: Font
     let weight: Weight
+    let alignment: Alignment
 
     public init(properties: TextProperties,
                 dependency: Dependencies,
@@ -39,6 +46,7 @@ public final class TextViewModel: ComponentViewModel, ObservableObject {
         self.title = properties.title
         self.font = properties.font.toFont
         self.weight = properties.weight.toWeight
+        self.alignment = properties.alignment.toAlignment
     }
 }
 
@@ -88,6 +96,19 @@ private extension TextProperties.Weight {
             return .semiboldItalic
         case .bold:
             return .bold
+        }
+    }
+}
+
+private extension TextProperties.Alignment {
+    var toAlignment: TextViewModel.Alignment {
+        switch self {
+        case .leading:
+            return .leading
+        case .center:
+            return .center
+        case .trailing:
+            return .trailing
         }
     }
 }

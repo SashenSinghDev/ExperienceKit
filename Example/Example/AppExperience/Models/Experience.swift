@@ -13,6 +13,6 @@ enum Experience: String, ExperienceID {
     case experienceList
     case buttonComponent
     case textComponent
-    case fullScreenComponent
+    case fullScreen
     case navigationCapability
 }

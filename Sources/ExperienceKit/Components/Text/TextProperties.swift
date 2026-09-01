@@ -26,16 +26,25 @@ public struct TextProperties {
         case bold
     }
     
+    public enum Alignment: Codable {
+        case leading
+        case center
+        case trailing
+    }
+    
     public let title: String
     public let font: Font
     public let weight: Weight
+    public let alignment: Alignment
 
     public init(title: String,
                 font: Font,
-                weight: Weight) {
+                weight: Weight,
+                alignment: Alignment) {
         self.title = title
         self.font = font
         self.weight = weight
+        self.alignment = alignment
     }
 }
 

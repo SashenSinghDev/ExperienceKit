@@ -24,8 +24,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return ExperienceListInteractor(experienceViewModel: experienceViewModel)
         case .buttonComponent:
             return ButtonComponentInteractor(experienceViewModel: experienceViewModel)
-        case .fullScreenComponent:
-            return FullScreenComponentInteractor(experienceViewModel: experienceViewModel)
+        case .fullScreen:
+            return FullScreenExperienceInteractor(experienceViewModel: experienceViewModel)
         case .navigationCapability:
             return NavigationCapabilityInteractor(experienceViewModel: experienceViewModel)
         case .textComponent:

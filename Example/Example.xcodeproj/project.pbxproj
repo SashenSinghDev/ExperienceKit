@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6BE32A2F30472A7E00C9B430 /* TextComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */; };
 		6BFA7C0C303A12F800ED3C82 /* ButtonComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */; };
-		6BFA7C0E303A143B00ED3C82 /* FullScreenComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0D303A143200ED3C82 /* FullScreenComponentInteractor.swift */; };
+		6BFA7C0E303A143B00ED3C82 /* FullScreenExperienceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */; };
 		6BFA7C10303A279700ED3C82 /* NavigationCapabilityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */; };
 		9640DE9F2E0362260076C4B9 /* ScrollableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640DE9E2E0362200076C4B9 /* ScrollableInteractor.swift */; };
 		9640DEA12E0363320076C4B9 /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9640DEA02E0363290076C4B9 /* Experience.swift */; };
@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponentInteractor.swift; sourceTree = "<group>"; };
-		6BFA7C0D303A143200ED3C82 /* FullScreenComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenComponentInteractor.swift; sourceTree = "<group>"; };
+		6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenExperienceInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCapabilityInteractor.swift; sourceTree = "<group>"; };
 		9640DE9E2E0362200076C4B9 /* ScrollableInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableInteractor.swift; sourceTree = "<group>"; };
 		9640DEA02E0363290076C4B9 /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */,
 				6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */,
-				6BFA7C0D303A143200ED3C82 /* FullScreenComponentInteractor.swift */,
+				6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */,
 				6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */,
 				965912E02E1A679D0064DD3A /* ExperienceListInteractor.swift */,
 				9640DE9E2E0362200076C4B9 /* ScrollableInteractor.swift */,
@@ -207,7 +207,7 @@
 				96FB9FF82C36DEB500803A47 /* AppExperienceProvider.swift in Sources */,
 				6BE32A2F30472A7E00C9B430 /* TextComponentInteractor.swift in Sources */,
 				965912E12E1A67A40064DD3A /* ExperienceListInteractor.swift in Sources */,
-				6BFA7C0E303A143B00ED3C82 /* FullScreenComponentInteractor.swift in Sources */,
+				6BFA7C0E303A143B00ED3C82 /* FullScreenExperienceInteractor.swift in Sources */,
 				965912E32E1A69400064DD3A /* ExperienceListView.swift in Sources */,
 				9640DE9F2E0362260076C4B9 /* ScrollableInteractor.swift in Sources */,
 				6BFA7C10303A279700ED3C82 /* NavigationCapabilityInteractor.swift in Sources */,
