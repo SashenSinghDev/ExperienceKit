@@ -32,19 +32,10 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
                     )
                 ],
                 middleComponents: [
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil))),
-                    .spacerComponent(properties: .init(size: .small)),
-                    .buttonComponent(properties: .init(title: "buttonTitle",
-                                                       style: .secondary,
-                                                       isFullWidth: false,
-                                                       navigation: .init(navigationType: .pop,
-                                                                         deferredLoadingWorkId: nil,
-                                                                         experienceViewModel: nil)))
+                    .imageComponent(properties: .init(
+                        uri: "notification_bell_icon",
+                        bundle: Bundle.main.bundleIdentifier ?? "")
+                    )
                 ],
                 bottomComponents: [
                     .textComponent(properties: .init(

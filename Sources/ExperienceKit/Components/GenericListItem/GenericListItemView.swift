@@ -27,7 +27,7 @@ struct GenericListItemView: ComponentView {
                         .foregroundStyle(.primary)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.secondary)
                         .fontWeight(.semibold)
                 }
                 .padding(.spacing.medium)

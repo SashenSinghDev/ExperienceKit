@@ -31,6 +31,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func imageComponent(properties: ImageProperties) -> Component {
+        return Component(contentType: "image",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func sectiontitleComponent(properties: SectionTitleProperties) -> Component {
         return Component(contentType: "sectiontitle",
                          properties: properties,
