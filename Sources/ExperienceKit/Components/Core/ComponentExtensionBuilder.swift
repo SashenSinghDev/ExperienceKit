@@ -49,6 +49,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func textComponent(properties: TextProperties) -> Component {
+        return Component(contentType: "text",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func welcomeComponent(properties: WelcomeProperties) -> Component {
         return Component(contentType: "welcome",
                          properties: properties,

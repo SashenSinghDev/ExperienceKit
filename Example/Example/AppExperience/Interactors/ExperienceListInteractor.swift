@@ -40,13 +40,25 @@ final class ExperienceListInteractor: ExperienceInteractor {
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
-                title: "FullScreen",
+                title: "Text",
+                navigation: .init(
+                    navigationType: .push(Experience.textComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Text", displayMode: .inline))))
+            ),
+            .sectiontitleComponent(properties: .init(
+                title: "UI Types")
+            ),
+            .genericlistitemComponent(properties: .init(
+                title: "Full Screen",
                 navigation: .init(
                     navigationType: .push(Experience.fullScreenComponent),
                     deferredLoadingWorkId: nil,
                     experienceViewModel: .init(
                         searchBar: nil,
-                        navigationBar: .init(title: "", displayMode: .inline))))
+                        navigationBar: nil)))
             ),
             .sectiontitleComponent(properties: .init(
                 title: "Capabilities")

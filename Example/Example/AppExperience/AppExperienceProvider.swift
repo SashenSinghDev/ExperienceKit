@@ -28,6 +28,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return FullScreenComponentInteractor(experienceViewModel: experienceViewModel)
         case .navigationCapability:
             return NavigationCapabilityInteractor(experienceViewModel: experienceViewModel)
+        case .textComponent:
+            return TextComponentInteractor(experienceViewModel: experienceViewModel)
         }
     }
 }

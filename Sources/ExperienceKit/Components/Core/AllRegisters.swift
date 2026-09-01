@@ -7,5 +7,6 @@ public let allRegisters: [ComponentRegister] = [
   SectionTitleComponentRegister(),
   SeparatorComponentRegister(),
   SpacerComponentRegister(),
+  TextComponentRegister(),
   WelcomeComponentRegister(),
 ]
