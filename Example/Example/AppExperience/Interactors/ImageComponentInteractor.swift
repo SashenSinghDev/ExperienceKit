@@ -20,7 +20,9 @@ final class ImageComponentInteractor: ExperienceInteractor {
             .sectiontitleComponent(properties: .init(title: "Circle Image")),
             .imageComponent(properties: .init(
                 uri: "circle_image",
-                bundle: Bundle.main.bundleIdentifier ?? ""
+                bundle: Bundle.main.bundleIdentifier ?? "",
+                width: 88,
+                height: 88
             )),
         ]))
     }

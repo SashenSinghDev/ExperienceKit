@@ -17,12 +17,19 @@ public final class ContainerViewModel: ComponentViewModel, ObservableObject {
         }
     }
 
+    public enum Alignment {
+        case leading
+        case center
+        case trailing
+    }
+
     public let id: UUID
     private let component: Component
     let anyComponentViewModel: AnyComponentViewModel
     let viewProvider: ViewProvider
     let verticalSpacing: Spacing?
     let horizontalSpacing: Spacing?
+    let alignment: Alignment?
 
     public init(properties: ContainerProperties,
                 dependency: Dependencies,
@@ -34,6 +41,7 @@ public final class ContainerViewModel: ComponentViewModel, ObservableObject {
         self.viewProvider = dependency.viewProvider
         self.verticalSpacing = properties.verticalSpacing?.toSpacing
         self.horizontalSpacing = properties.horizontalSpacing?.toSpacing
+        self.alignment = properties.alignment?.toAlignment
     }
 }
 
@@ -43,6 +51,16 @@ private extension ContainerProperties.Spacing {
         case .small: return .small
         case .medium: return .medium
         case .large: return .large
+        }
+    }
+}
+
+private extension ContainerProperties.Alignment {
+    var toAlignment: ContainerViewModel.Alignment {
+        switch self {
+        case .leading: return .leading
+        case .center: return .center
+        case .trailing: return .trailing
         }
     }
 }

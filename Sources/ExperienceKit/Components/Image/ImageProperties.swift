@@ -4,11 +4,17 @@ import Foundation
 public struct ImageProperties {
     public let uri: String
     public let bundle: String
+    public let width: Double?
+    public let height: Double?
 
     public init(uri: String,
-                bundle: String) {
+                bundle: String,
+                width: Double? = nil,
+                height: Double? = nil) {
         self.uri = uri
         self.bundle = bundle
+        self.width = width
+        self.height = height
     }
 }
 

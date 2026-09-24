@@ -23,27 +23,39 @@ final class PlaygroundInteractor: ExperienceInteractor {
             middleComponents: [
             ],
             bottomComponents: [
-                .imageComponent(properties: .init(
-                    uri: "circle_image",
-                    bundle: mainBundleIdentifier)
+                .containerComponent(properties: .init(
+                    component: .imageComponent(properties: .init(
+                        uri: "circle_image",
+                        bundle: mainBundleIdentifier,
+                        width: 132,
+                        height: 132)
+                    ),
+                    horizontalSpacing: .medium,
+                    alignment: .leading)
                 ),
                 .spacerComponent(properties: .init(size: .medium)),
-                .containerComponent(properties: .init(component:                 .textComponent(properties: .init(
-                    title: "Portionly",
-                    font: .title1,
-                    weight: .bold,
-                    alignment: .leading,
-                    foregroundStyle: .primary)
-                ),horizontalSpacing: .medium)),
+                .containerComponent(properties: .init(
+                    component: .textComponent(properties: .init(
+                        title: "Portionly",
+                        font: .largeTitle,
+                        weight: .bold,
+                        alignment: .leading,
+                        foregroundStyle: .primary)
+                    ),
+                    horizontalSpacing: .medium)
+                ),
                 .spacerComponent(properties: .init(size: .medium)),
-                .containerComponent(properties: .init(component:                 .textComponent(properties: .init(
-                    title: "A few quick questions and you'll have a week of macro targets built for your body. No food diary to fill in first.",
-                    font: .footnote,
-                    weight: .regular,
-                    alignment: .leading,
-                    foregroundStyle: .secondary)
-                ),horizontalSpacing: .medium)),
-                .spacerComponent(properties: .init(size: .medium)),
+                .containerComponent(properties: .init(
+                    component: .textComponent(properties: .init(
+                        title: "A few quick questions and you'll have a week of macro targets built for your body. No food diary to fill in first.",
+                        font: .body,
+                        weight: .regular,
+                        alignment: .leading,
+                        foregroundStyle: .secondary)
+                    ),
+                    horizontalSpacing: .medium)
+                ),
+                .spacerComponent(properties: .init(size: .large)),
                 .containerComponent(properties: .init(
                     component: .buttonComponent(properties: .init(
                         title: "Build my plan",

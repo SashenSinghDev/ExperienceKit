@@ -8,18 +8,27 @@ public struct ContainerProperties {
         case large
     }
 
+    public enum Alignment: Codable {
+        case leading
+        case center
+        case trailing
+    }
+
     public typealias VerticalSpacing = Spacing
     
     public let component: Component
     public let verticalSpacing: Spacing?
     public let horizontalSpacing: Spacing?
+    public let alignment: Alignment?
 
     public init(component: Component,
                 verticalSpacing: Spacing? = nil,
-                horizontalSpacing: Spacing? = nil) {
+                horizontalSpacing: Spacing? = nil,
+                alignment: Alignment? = nil) {
         self.component = component
         self.verticalSpacing = verticalSpacing
         self.horizontalSpacing = horizontalSpacing
+        self.alignment = alignment
     }
 }
 

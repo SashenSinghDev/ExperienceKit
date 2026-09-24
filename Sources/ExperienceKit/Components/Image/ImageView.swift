@@ -12,7 +12,19 @@ struct ImageView: ComponentView {
               bundle: .init(identifier: viewModel.bundle))
         .resizable()
         .aspectRatio(contentMode: .fit)
+        .frame(width: width,
+               height: height)
         .clipped()
+    }
+
+    private var width: CGFloat? {
+        guard let width = viewModel.width else { return nil }
+        return CGFloat(width)
+    }
+
+    private var height: CGFloat? {
+        guard let height = viewModel.height else { return nil }
+        return CGFloat(height)
     }
 }
 

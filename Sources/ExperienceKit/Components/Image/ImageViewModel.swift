@@ -6,6 +6,8 @@ public final class ImageViewModel: ComponentViewModel, ObservableObject {
     public let id: UUID
     public let uri: String
     public let bundle: String
+    public let width: Double?
+    public let height: Double?
 
     public init(properties: ImageProperties,
                 dependency: Dependencies,
@@ -13,5 +15,7 @@ public final class ImageViewModel: ComponentViewModel, ObservableObject {
         self.id = id
         self.uri = properties.uri
         self.bundle = properties.bundle
+        self.width = properties.width
+        self.height = properties.height
     }
 }
