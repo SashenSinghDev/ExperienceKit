@@ -43,6 +43,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func selectioncardComponent(properties: SelectionCardProperties) -> Component {
+        return Component(contentType: "selectioncard",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func separatorComponent(properties: SeparatorProperties) -> Component {
         return Component(contentType: "separator",
                          properties: properties,

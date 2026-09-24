@@ -82,7 +82,36 @@ final class TextComponentInteractor: ExperienceInteractor {
                             foregroundStyle: .primary
                         )
                     ),
-                    Component.spacerComponent(properties: .init(size: .small))
+                    Component.spacerComponent(properties: .init(size: .small)),
+                    Component.textComponent(
+                        properties: .init(
+                            title: "\(font.title) \(weight.title) Secondary",
+                            font: font.font,
+                            weight: weight.weight,
+                            alignment: .center,
+                            foregroundStyle: .secondary
+                        )
+                    ),
+                    Component.spacerComponent(properties: .init(size: .small)),
+                    Component.textComponent(
+                        properties: .init(
+                            title: "\(font.title) \(weight.title) quaternary",
+                            font: font.font,
+                            weight: weight.weight,
+                            alignment: .center,
+                            foregroundStyle: .quaternary
+                        )
+                    ),
+                    Component.spacerComponent(properties: .init(size: .small)),
+                    Component.textComponent(
+                        properties: .init(
+                            title: "\(font.title) \(weight.title) tertiary",
+                            font: font.font,
+                            weight: weight.weight,
+                            alignment: .center,
+                            foregroundStyle: .tertiary
+                        )
+                    ),
                 ]
             }
         }

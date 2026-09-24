@@ -17,6 +17,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
     
     private var componetList: [Component] {
         return [
+            // Components --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "Components")
             ),
@@ -48,6 +49,17 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         searchBar: nil,
                         navigationBar: .init(title: "Text", displayMode: .inline))))
             ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
+                title: "Selection Card",
+                navigation: .init(
+                    navigationType: .push(Experience.selectionCardComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Selection Card", displayMode: .inline))))
+            ),
+            // UI Types --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "UI Types")
             ),
@@ -60,6 +72,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         searchBar: nil,
                         navigationBar: nil)))
             ),
+            // Capabilities --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "Capabilities")
             ),
