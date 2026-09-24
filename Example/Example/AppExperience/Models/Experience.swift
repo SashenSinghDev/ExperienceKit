@@ -15,6 +15,7 @@ enum Experience: String, ExperienceID {
     case textComponent
     case selectionCardComponent
     case imageComponent
+    case playground
     case fullScreen
     case navigationCapability
 }

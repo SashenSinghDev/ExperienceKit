@@ -17,6 +17,19 @@ final class ExperienceListInteractor: ExperienceInteractor {
     
     private var componetList: [Component] {
         return [
+            // Playground --------------------------------
+            .sectiontitleComponent(properties: .init(
+                title: "Playground")
+            ),
+            .genericlistitemComponent(properties: .init(
+                title: "Playground",
+                navigation: .init(
+                    navigationType: .push(Experience.playground),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Playground", displayMode: .inline))))
+            ),
             // Components --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "Components")
@@ -94,7 +107,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
                     experienceViewModel: .init(
                         searchBar: nil,
                         navigationBar: .init(title: "Navigation", displayMode: .automatic))))
-            ),
+            )
         ]
     }
     
