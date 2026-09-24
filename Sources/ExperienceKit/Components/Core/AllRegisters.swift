@@ -6,6 +6,7 @@ public let allRegisters: [ComponentRegister] = [
   GenericListItemComponentRegister(),
   ImageComponentRegister(),
   SectionTitleComponentRegister(),
+  SelectionCardComponentRegister(),
   SeparatorComponentRegister(),
   SpacerComponentRegister(),
   TextComponentRegister(),

@@ -14,6 +14,9 @@ extension CGFloat {
         
         /// Figma: radius/sm — 8pt
         static let medium: CGFloat = 8
+
+        /// Figma: radius/md — 14pt
+        static let md: CGFloat = 14
         
         /// Figma: radius/full — 999pt
         static let full: CGFloat = 999

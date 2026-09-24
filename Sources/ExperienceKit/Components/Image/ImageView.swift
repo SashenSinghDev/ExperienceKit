@@ -10,6 +10,9 @@ struct ImageView: ComponentView {
     var body: some View {
         Image(viewModel.uri,
               bundle: .init(identifier: viewModel.bundle))
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .clipped()
     }
 }
 
