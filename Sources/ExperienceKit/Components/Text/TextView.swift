@@ -12,6 +12,7 @@ struct TextView: ComponentView {
             .font(viewModel.font.swiftUIFont.weight(viewModel.weight.swiftUIFontWeight))
             .italic(viewModel.weight.isItalic)
             .multilineTextAlignment(viewModel.alignment.swiftUITextAlignment)
+            .frame(maxWidth: .infinity, alignment: viewModel.alignment.swiftUIAlignment)
             .foregroundStyle(viewModel.foregroundStyle.swiftUIForegroundStyle)
     }
 }
@@ -23,6 +24,17 @@ extension TextView {
 }
 
 private extension TextViewModel.Alignment {
+    var swiftUIAlignment: Alignment {
+        switch self {
+        case .center:
+            return .center
+        case .leading:
+            return .leading
+        case .trailing:
+            return .trailing
+        }
+    }
+
     var swiftUITextAlignment: TextAlignment {
         switch self {
         case .center:

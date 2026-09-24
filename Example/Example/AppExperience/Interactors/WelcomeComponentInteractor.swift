@@ -25,13 +25,11 @@ final class WelcomeComponentInteractor: ExperienceInteractor {
                                style: .large(.inverted)),
             primaryButton: .init(title: "Log In",
                                  style: .secondary,
-                                 isFullWidth: true,
                                  navigation: .init(navigationType: .popToRoot,
                                                    deferredLoadingWorkId: nil,
                                                    experienceViewModel: nil)),
             secondaryButton: .init(title: "Get Started",
                                    style: .primary,
-                                   isFullWidth: true,
                                    navigation: .init(navigationType: .modal(Experience.welcomeComponent),
                                                      deferredLoadingWorkId: DeferredWork.loadData,
                                                      experienceViewModel: nil))

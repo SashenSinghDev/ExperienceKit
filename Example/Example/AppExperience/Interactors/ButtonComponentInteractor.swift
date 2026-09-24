@@ -19,19 +19,25 @@ final class ButtonComponentInteractor: ExperienceInteractor {
         let buttonExperience: ExperienceType  = {
             return .scrollable(components: [
                 .sectiontitleComponent(properties: .init(title: "PrimaryButton")),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "PrimaryButton",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "SecondaryButton")),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "SecondaryButton",
                     style: .secondary,
-                    isFullWidth: false,
+                    navigation: .init(navigationType: .pop,
+                                      deferredLoadingWorkId: nil,
+                                      experienceViewModel: nil))
+                ),
+                .sectiontitleComponent(properties: .init(title: "BorderlessButton")),
+                insetButton(.init(
+                    title: "BorderlessButton",
+                    style: .borderless,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
@@ -62,6 +68,13 @@ final class ButtonComponentInteractor: ExperienceInteractor {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             completion(nil)
         }
+    }
+
+    private func insetButton(_ properties: ButtonProperties) -> Component {
+        .containerComponent(properties: .init(
+            component: .buttonComponent(properties: properties),
+            horizontalSpacing: .medium)
+        )
     }
 }
 

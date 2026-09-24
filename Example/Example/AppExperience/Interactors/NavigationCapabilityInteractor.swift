@@ -19,55 +19,49 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
         let buttonExperience: ExperienceType  = {
             return .scrollable(components: [
                 .sectiontitleComponent(properties: .init(title: "Present")),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "push without loading",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
                 .spacerComponent(properties: .init(size: .small)),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "push with loading",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .push(Experience.navigationCapability),
                                       deferredLoadingWorkId: DeferredWork.loadData,
                                       experienceViewModel: nil))
                 ),
                 .spacerComponent(properties: .init(size: .small)),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "present modal",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .modal(Experience.navigationCapability),
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
                 .sectiontitleComponent(properties: .init(title: "Dismiss")),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "dismiss",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .dismiss,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
                 .spacerComponent(properties: .init(size: .small)),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "pop",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
                 ),
                 .spacerComponent(properties: .init(size: .small)),
-                .buttonComponent(properties: .init(
+                insetButton(.init(
                     title: "pop to root",
                     style: .primary,
-                    isFullWidth: false,
                     navigation: .init(navigationType: .popToRoot,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
@@ -99,9 +93,15 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
             completion(nil)
         }
     }
+
+    private func insetButton(_ properties: ButtonProperties) -> Component {
+        .containerComponent(properties: .init(
+            component: .buttonComponent(properties: properties),
+            horizontalSpacing: .medium)
+        )
+    }
 }
 
 private enum DeferredWork: String, DeferredWorkID {
     case loadData
 }
-

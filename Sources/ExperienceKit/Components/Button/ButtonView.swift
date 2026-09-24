@@ -24,20 +24,50 @@ struct ButtonView: ComponentView {
                 .font(.body.weight(.semibold))
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(viewModel.style == .primary ? .button.primary.background : .button.secondary.background)
-                .foregroundColor(viewModel.style == .primary ? .button.primary.label : .button.secondary.label)
+                .background(viewModel.style.backgroundColor)
+                .foregroundColor(viewModel.style.labelColor)
                 .cornerRadius(.radius.full)
                 .overlay(
                     RoundedRectangle(cornerRadius: .radius.full)
-                        .strokeBorder(viewModel.style == .secondary ? .button.secondary.border : .clear, lineWidth: 1)
+                        .strokeBorder(viewModel.style.borderColor, lineWidth: 1)
                 )
         }
-        .padding(.horizontal, viewModel.isFullWidth ? .spacing.none : .spacing.medium)
     }
 }
 
 extension ButtonView {
     static func == (lhs: ButtonView, rhs: ButtonView) -> Bool {
         lhs.viewModel.id == rhs.viewModel.id
+    }
+}
+
+private extension ButtonProperties.Style {
+    var backgroundColor: Color {
+        switch self {
+        case .primary:
+            return .button.primary.background
+        case .secondary:
+            return .button.secondary.background
+        case .borderless:
+            return .clear
+        }
+    }
+
+    var labelColor: Color {
+        switch self {
+        case .primary:
+            return .button.primary.label
+        case .secondary, .borderless:
+            return .button.secondary.label
+        }
+    }
+
+    var borderColor: Color {
+        switch self {
+        case .primary, .borderless:
+            return .clear
+        case .secondary:
+            return .button.secondary.border
+        }
     }
 }

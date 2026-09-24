@@ -13,7 +13,6 @@ public struct ButtonViewModel: ComponentViewModel {
 
     public let id: UUID
     public let title: String
-    public let isFullWidth: Bool
     let style: ButtonProperties.Style
     private let router: any ExperienceRouter
     private let navigationViewModel: NavigationViewModel
@@ -25,7 +24,6 @@ public struct ButtonViewModel: ComponentViewModel {
         self.id = id
         self.title = properties.title
         self.style = properties.style
-        self.isFullWidth = properties.isFullWidth
         self.navigationViewModel = .init(navigationType: properties.navigation.navigationType,
                                          deferredLoadingWorkId: properties.navigation.deferredLoadingWorkId,
                                          experienceViewModel: properties.navigation.experienceViewModel)

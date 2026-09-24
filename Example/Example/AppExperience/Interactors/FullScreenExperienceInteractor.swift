@@ -46,14 +46,16 @@ final class FullScreenExperienceInteractor: ExperienceInteractor {
                         foregroundStyle: .primary)
                     ),
                     .spacerComponent(properties: .init(size: .medium)),
-                    .buttonComponent(properties: .init(
-                        title: "Try for $0.00",
-                        style: .primary,
-                        isFullWidth: false,
-                        navigation: .init(
-                            navigationType: .push(Experience.fullScreen),
-                            deferredLoadingWorkId: nil,
-                            experienceViewModel: nil))
+                    .containerComponent(properties: .init(
+                        component: .buttonComponent(properties: .init(
+                            title: "Try for $0.00",
+                            style: .primary,
+                            navigation: .init(
+                                navigationType: .push(Experience.fullScreen),
+                                deferredLoadingWorkId: nil,
+                                experienceViewModel: nil))
+                        ),
+                        horizontalSpacing: .medium)
                     ),
                     .spacerComponent(properties: .init(size: .medium)),
                     .textComponent(properties: .init(
