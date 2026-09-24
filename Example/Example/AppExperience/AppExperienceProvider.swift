@@ -30,6 +30,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return NavigationCapabilityInteractor(experienceViewModel: experienceViewModel)
         case .textComponent:
             return TextComponentInteractor(experienceViewModel: experienceViewModel)
+        case .selectionCardComponent:
+            return SelectionCardComponentInteractor(experienceViewModel: experienceViewModel)
         }
     }
 }

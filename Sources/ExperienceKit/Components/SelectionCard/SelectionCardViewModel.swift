@@ -14,8 +14,9 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
     public let id: UUID
     let title: String
     let subtitle: String
+    let value: String
     let isSelected: Bool
-    let showBadge: Bool
+    let badgeText: String?
     let navigationViewModel: NavigationViewModel?
     private let experiencePresenterNotifier: ExperiencePresenterNotifier
 
@@ -25,8 +26,9 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         self.id = id
         self.title = properties.title
         self.subtitle = properties.subtitle
+        self.value = properties.value
         self.isSelected = properties.isSelected
-        self.showBadge = properties.showBadge
+        self.badgeText = properties.badgeText
 
         if let navigationProperties = properties.navigation {
             self.navigationViewModel = .init(navigationType: navigationProperties.navigationType,

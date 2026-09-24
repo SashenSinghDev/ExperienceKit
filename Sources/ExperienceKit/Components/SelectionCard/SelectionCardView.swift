@@ -30,59 +30,51 @@ struct SelectionCardView: ComponentView {
     }
 
     private var content: some View {
-        HStack(spacing: .spacing.medium) {
+        HStack(spacing: .spacing.small) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(viewModel.title)
                     .font(.headline)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Color(.label))
                 Text(viewModel.subtitle)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .font(.footnote)
+                    .foregroundStyle(Color(.secondaryLabel))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            if let badgeText = viewModel.badgeText {
+                Text(badgeText)
+                    .font(.caption2)
+                    .foregroundStyle(Color(.systemBackground))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 3)
+                    .background(
+                        Capsule()
+                            .fill(Color(.label))
+                    )
             }
 
-            Spacer(minLength: .spacing.small)
-
-            indicator
+            Text(viewModel.value)
+                .font(.body)
+                .foregroundStyle(Color(.label))
         }
         .padding(.spacing.medium)
         .background(
-            RoundedRectangle(cornerRadius: .radius.md)
-                .fill(Color(.systemBackground))
+            RoundedRectangle(cornerRadius: .radius.lg)
+                .fill(viewModel.isSelected ? Color(.secondarySystemBackground) : Color.clear)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: .radius.md)
-                .strokeBorder(Color(.separator), lineWidth: 1)
+            RoundedRectangle(cornerRadius: .radius.lg)
+                .strokeBorder(viewModel.isSelected ? Color(.label) : Color(.opaqueSeparator), lineWidth: 1)
         )
         .contentShape(Rectangle())
-    }
-
-    private var indicator: some View {
-        ZStack(alignment: .bottomTrailing) {
-            Circle()
-                .strokeBorder(viewModel.isSelected ? Color.clear : Color(.separator), lineWidth: 2)
-                .background(Circle().fill(viewModel.isSelected ? Color.accentColor : Color.clear))
-                .frame(width: 24, height: 24)
-                .overlay {
-                    if viewModel.isSelected {
-                        Circle().fill(.white).frame(width: 8, height: 8)
-                    }
-                }
-
-            if viewModel.showBadge {
-                Circle()
-                    .fill(.red)
-                    .frame(width: 8, height: 8)
-                    .overlay(Circle().strokeBorder(.white, lineWidth: 1.5))
-            }
-        }
-        .frame(width: 28, height: 28, alignment: .topLeading)
     }
 }
 
 extension SelectionCardView {
     static func == (lhs: SelectionCardView, rhs: SelectionCardView) -> Bool {
         lhs.viewModel.id == rhs.viewModel.id &&
+        lhs.viewModel.value == rhs.viewModel.value &&
         lhs.viewModel.isSelected == rhs.viewModel.isSelected &&
-        lhs.viewModel.showBadge == rhs.viewModel.showBadge
+        lhs.viewModel.badgeText == rhs.viewModel.badgeText
     }
 }

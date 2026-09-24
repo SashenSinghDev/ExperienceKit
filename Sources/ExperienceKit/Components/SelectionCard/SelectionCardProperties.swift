@@ -11,19 +11,22 @@ import Foundation
 public struct SelectionCardProperties {
     public let title: String
     public let subtitle: String
+    public let value: String
     public let isSelected: Bool
-    public let showBadge: Bool
+    public let badgeText: String?
     public let navigation: NavigationProperties?
 
     public init(title: String,
                 subtitle: String,
+                value: String,
                 isSelected: Bool,
-                showBadge: Bool,
+                badgeText: String?,
                 navigation: NavigationProperties?) {
         self.title = title
         self.subtitle = subtitle
+        self.value = value
         self.isSelected = isSelected
-        self.showBadge = showBadge
+        self.badgeText = badgeText
         self.navigation = navigation
     }
 }
@@ -39,19 +42,21 @@ public extension SelectionCardProperties {
     static var mock: Component {
         Component(contentType: "selectioncard",
                   properties: SelectionCardProperties(title: "Monthly",
-                                                       subtitle: "$9.99 /mo",
+                                                       subtitle: "Billed monthly",
+                                                       value: "$9.99",
                                                        isSelected: false,
-                                                       showBadge: false,
+                                                       badgeText: nil,
                                                        navigation: nil),
                   id: UUID())
     }
 
     static var selectedMock: Component {
         Component(contentType: "selectioncard",
-                  properties: SelectionCardProperties(title: "Yearly",
-                                                       subtitle: "$89.99 /yr",
+                  properties: SelectionCardProperties(title: "Annual",
+                                                       subtitle: "Billed once a year",
+                                                       value: "$39.99",
                                                        isSelected: true,
-                                                       showBadge: true,
+                                                       badgeText: "Save 63%",
                                                        navigation: nil),
                   id: UUID())
     }

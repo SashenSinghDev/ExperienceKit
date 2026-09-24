@@ -49,6 +49,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         searchBar: nil,
                         navigationBar: .init(title: "Text", displayMode: .inline))))
             ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
+                title: "Selection Card",
+                navigation: .init(
+                    navigationType: .push(Experience.selectionCardComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Selection Card", displayMode: .inline))))
+            ),
             // UI Types --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "UI Types")
