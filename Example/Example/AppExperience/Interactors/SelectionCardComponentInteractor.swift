@@ -17,23 +17,63 @@ final class SelectionCardComponentInteractor: ExperienceInteractor {
 
     func load(completion: @escaping (ExperienceType) -> Void) {
         completion(.scrollable(components: [
-            .sectiontitleComponent(properties: .init(title: "Default")),
-            .selectioncardComponent(properties: .init(
-                title: "Monthly",
-                subtitle: "Billed monthly",
-                value: "$9.99",
-                isSelected: false,
-                badgeText: nil,
-                navigation: nil
+            .sectiontitleComponent(properties: .init(title: "Plans")),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Yearly",
+                    subtitle: "£3.33 a month, billed once",
+                    value: "£39.99",
+                    isSelected: true,
+                    badgeText: "Save 44%",
+                    selectionId: "yearly",
+                    selectionGroupId: "plans",
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
             )),
-            .sectiontitleComponent(properties: .init(title: "Selected")),
-            .selectioncardComponent(properties: .init(
-                title: "Annual",
-                subtitle: "Billed once a year",
-                value: "$39.99",
-                isSelected: true,
-                badgeText: "Save 63%",
-                navigation: nil
+            .spacerComponent(properties: .init(size: .medium)),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Monthly",
+                    subtitle: "Cancel whenever you like",
+                    value: "£5.99",
+                    isSelected: false,
+                    badgeText: nil,
+                    selectionId: "monthly",
+                    selectionGroupId: "plans",
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
+            )),
+            .sectiontitleComponent(properties: .init(title: "Add ons")),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Extra baggage",
+                    subtitle: "Add one checked bag",
+                    value: "£12.00",
+                    isSelected: false,
+                    badgeText: nil,
+                    selectionId: "extra-baggage",
+                    selectionGroupId: "add-ons",
+                    selectionMode: .multiple,
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
+            )),
+            .spacerComponent(properties: .init(size: .medium)),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Priority boarding",
+                    subtitle: "Board before general boarding",
+                    value: "£4.99",
+                    isSelected: true,
+                    badgeText: nil,
+                    selectionId: "priority-boarding",
+                    selectionGroupId: "add-ons",
+                    selectionMode: .multiple,
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
             )),
         ]))
     }

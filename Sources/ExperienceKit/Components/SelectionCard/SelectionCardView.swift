@@ -17,16 +17,12 @@ struct SelectionCardView: ComponentView {
     }
 
     var body: some View {
-        if viewModel.navigationViewModel != nil {
-            Button {
-                viewModel.select()
-            } label: {
-                content
-            }
-            .buttonStyle(.plain)
-        } else {
+        Button {
+            viewModel.select()
+        } label: {
             content
         }
+        .buttonStyle(.plain)
     }
 
     private var content: some View {
@@ -73,6 +69,8 @@ struct SelectionCardView: ComponentView {
 extension SelectionCardView {
     static func == (lhs: SelectionCardView, rhs: SelectionCardView) -> Bool {
         lhs.viewModel.id == rhs.viewModel.id &&
+        lhs.viewModel.title == rhs.viewModel.title &&
+        lhs.viewModel.subtitle == rhs.viewModel.subtitle &&
         lhs.viewModel.value == rhs.viewModel.value &&
         lhs.viewModel.isSelected == rhs.viewModel.isSelected &&
         lhs.viewModel.badgeText == rhs.viewModel.badgeText

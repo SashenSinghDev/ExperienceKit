@@ -9,11 +9,19 @@ import Foundation
 
 // sourcery: component = "selectioncard"
 public struct SelectionCardProperties {
+    public enum SelectionMode: String, Codable {
+        case single
+        case multiple
+    }
+
     public let title: String
     public let subtitle: String
     public let value: String
     public let isSelected: Bool
     public let badgeText: String?
+    public let selectionId: String?
+    public let selectionGroupId: String?
+    public let selectionMode: SelectionMode
     public let navigation: NavigationProperties?
 
     public init(title: String,
@@ -21,12 +29,18 @@ public struct SelectionCardProperties {
                 value: String,
                 isSelected: Bool,
                 badgeText: String?,
+                selectionId: String? = nil,
+                selectionGroupId: String? = nil,
+                selectionMode: SelectionMode = .single,
                 navigation: NavigationProperties?) {
         self.title = title
         self.subtitle = subtitle
         self.value = value
         self.isSelected = isSelected
         self.badgeText = badgeText
+        self.selectionId = selectionId
+        self.selectionGroupId = selectionGroupId
+        self.selectionMode = selectionMode
         self.navigation = navigation
     }
 }
