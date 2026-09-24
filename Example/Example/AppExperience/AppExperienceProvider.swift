@@ -34,6 +34,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return SelectionCardComponentInteractor(experienceViewModel: experienceViewModel)
         case .imageComponent:
             return ImageComponentInteractor(experienceViewModel: experienceViewModel)
+        case .progressStepperComponent:
+            return ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel)
         case .playground:
             return PlaygroundInteractor(experienceViewModel: experienceViewModel)
         }

@@ -37,6 +37,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func progressstepperComponent(properties: ProgressStepperProperties) -> Component {
+        return Component(contentType: "progressstepper",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func sectiontitleComponent(properties: SectionTitleProperties) -> Component {
         return Component(contentType: "sectiontitle",
                          properties: properties,

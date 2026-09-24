@@ -20,8 +20,14 @@ extension Color {
             static let border = Color("Button/secondaryBorder", bundle: .module)
         }
     }
+
+    enum progressStepper {
+        static let activeSegment = Color("ProgressStepper/activeSegment", bundle: .module)
+        static let inactiveSegment = Color("ProgressStepper/inactiveSegment", bundle: .module)
+    }
 }
 
 extension ShapeStyle where Self == Color {
     static var button: Color.button.Type { Color.button.self }
+    static var progressStepper: Color.progressStepper.Type { Color.progressStepper.self }
 }
