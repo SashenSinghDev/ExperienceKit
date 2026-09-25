@@ -18,6 +18,17 @@ Start here when:
 - Adding a component to the example app
 - Updating `ExperienceListInteractor` for a new component
 
+### Design System
+
+- [DESIGNSYSTEM.md](DESIGNSYSTEM.md) - Figma-to-Swift token mapping, colour asset naming, Swift token accessors, and component token usage
+
+Start here when:
+
+- Adding or consuming design-system colour, spacing, radius, or typography tokens
+- Mapping Figma tokens to `Assets.xcassets` and Swift accessors
+- Reviewing raw colours, UIKit colour substitutions, or component-local colour aliases
+- Updating `Sources/ExperienceKit/DesignSystem/`
+
 ## AI Rules Overview
 
 Each architecture document includes AI rules for agents:
@@ -49,6 +60,7 @@ During code review:
 - **Typed properties**: Components should expose clear property and view model types.
 - **Small views**: SwiftUI views should render state and keep behavior out of layout code.
 - **Catalogue visibility**: New components should appear in the example component list when they are part of the public component set.
+- **Token fidelity**: Design-system tokens should preserve Figma naming and hierarchy in asset paths and Swift accessors.
 
 ## Contributing To These Docs
 

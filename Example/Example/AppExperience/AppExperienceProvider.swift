@@ -32,6 +32,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return TextComponentInteractor(experienceViewModel: experienceViewModel)
         case .selectionCardComponent:
             return SelectionCardComponentInteractor(experienceViewModel: experienceViewModel)
+        case .segmentedControlComponent:
+            return SegmentedControlComponentInteractor(experienceViewModel: experienceViewModel)
         case .imageComponent:
             return ImageComponentInteractor(experienceViewModel: experienceViewModel)
         case .progressStepperComponent:

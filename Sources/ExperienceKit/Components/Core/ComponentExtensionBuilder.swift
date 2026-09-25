@@ -49,6 +49,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func segmentedcontrolComponent(properties: SegmentedControlProperties) -> Component {
+        return Component(contentType: "segmentedcontrol",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func selectioncardComponent(properties: SelectionCardProperties) -> Component {
         return Component(contentType: "selectioncard",
                          properties: properties,

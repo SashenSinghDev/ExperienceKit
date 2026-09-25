@@ -48,7 +48,24 @@ Reject component views that own business decisions, parsing, or registration beh
 
 ---
 
-## 3. Core Registration
+## 3. Design System Usage
+
+**Principle:**
+Components should consume canonical ExperienceKit design-system tokens instead of owning ad hoc styling.
+
+**Guidelines:**
+
+- Read [DESIGNSYSTEM.md](DESIGNSYSTEM.md) before adding or consuming design-system colour, spacing, radius, or typography tokens.
+- Prefer existing design-system helpers under `Sources/ExperienceKit/DesignSystem/` for spacing, radius, colors, and typography.
+- When a Figma token is missing from the design system, add it following [DESIGNSYSTEM.md](DESIGNSYSTEM.md) instead of substituting raw colours or component-local aliases.
+- Keep component views as consumers of semantic tokens, for example `.fill(.surface.primary)`.
+
+**AI Rule:**
+Reject component styling that bypasses the design-system token guidance in [DESIGNSYSTEM.md](DESIGNSYSTEM.md).
+
+---
+
+## 4. Core Registration
 
 **Principle:**
 The core component registry should be updated by generation so every component can be created and rendered through the same ExperienceKit lookup path.
@@ -66,7 +83,7 @@ Reject component changes where the component files, `AllRegisters.swift`, and `C
 
 ---
 
-## 4. Example App Wiring
+## 5. Example App Wiring
 
 **Principle:**
 A component added to the kit should be easy to discover and inspect in the example app.
@@ -86,7 +103,7 @@ Reject public component additions that are not reachable from `ExperienceListInt
 
 ---
 
-## 5. Verification
+## 6. Verification
 
 **Principle:**
 Component changes should prove both the package and the example wiring still compile.

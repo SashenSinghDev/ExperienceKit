@@ -7,6 +7,7 @@ public let allRegisters: [ComponentRegister] = [
   ImageComponentRegister(),
   ProgressStepperComponentRegister(),
   SectionTitleComponentRegister(),
+  SegmentedControlComponentRegister(),
   SelectionCardComponentRegister(),
   SeparatorComponentRegister(),
   SpacerComponentRegister(),

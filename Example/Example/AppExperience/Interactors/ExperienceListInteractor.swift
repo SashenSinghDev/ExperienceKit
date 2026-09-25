@@ -74,6 +74,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
+                title: "Segmented Control",
+                navigation: .init(
+                    navigationType: .push(Experience.segmentedControlComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Segmented Control", displayMode: .inline))))
+            ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
                 title: "Image",
                 navigation: .init(
                     navigationType: .push(Experience.imageComponent),
