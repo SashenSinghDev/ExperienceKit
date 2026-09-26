@@ -73,7 +73,7 @@ final class PlaygroundInteractor: ExperienceInteractor {
                         title: "I already have an account",
                         style: .borderless,
                         navigation: .init(
-                            navigationType: .push(Experience.experienceList),
+                            navigationType: .dismiss,
                             deferredLoadingWorkId: nil,
                             experienceViewModel: nil))
                     ),

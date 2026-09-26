@@ -24,11 +24,11 @@ final class ExperienceListInteractor: ExperienceInteractor {
             .genericlistitemComponent(properties: .init(
                 title: "Playground",
                 navigation: .init(
-                    navigationType: .push(Experience.playground),
+                    navigationType: .modal(Experience.playground),
                     deferredLoadingWorkId: nil,
                     experienceViewModel: .init(
                         searchBar: nil,
-                        navigationBar: .init(title: "Playground", displayMode: .inline))))
+                        navigationBar: nil)))
             ),
             // Components --------------------------------
             .sectiontitleComponent(properties: .init(
