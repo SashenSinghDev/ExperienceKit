@@ -66,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B6C97973067DD7E00256178 /* Playground */ = {
+			isa = PBXGroup;
+			children = (
+				6BE32A343247CD8400C9B430 /* PlaygroundInteractor.swift */,
+				6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */,
+			);
+			path = Playground;
+			sourceTree = "<group>";
+		};
 		9640DEA22E03653A0076C4B9 /* AppExperience */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,13 +141,12 @@
 		96FB9FFA2C36FBDC00803A47 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
+				6B6C97973067DD7E00256178 /* Playground */,
 				6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */,
 				6BE32A30324798D000C9B430 /* SelectionCardComponentInteractor.swift */,
 				6BE32A323247BB8C00C9B430 /* ImageComponentInteractor.swift */,
 				6BE32A363248239300C9B430 /* ProgressStepperComponentInteractor.swift */,
 				6BE32A38324932AA00C9B430 /* SegmentedControlComponentInteractor.swift */,
-				6BE32A343247CD8400C9B430 /* PlaygroundInteractor.swift */,
-				6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */,
 				6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */,
 				6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */,
 				6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */,
