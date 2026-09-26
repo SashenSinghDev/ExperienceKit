@@ -40,7 +40,7 @@ struct TextFieldView: ComponentView {
                 if let unit = viewModel.unit {
                     Text(unit)
                         .font(.body)
-                        .foregroundStyle(symbolColor)
+                        .foregroundStyle(unitColor)
                         .lineLimit(1)
                 }
 
@@ -58,13 +58,13 @@ struct TextFieldView: ComponentView {
                     .disabled(viewModel.isDisabled)
                 }
             }
-            .padding(.horizontal, .spacing.medium)
-            .padding(.vertical, 11)
-            .frame(minHeight: 44)
+            .padding(.horizontal, Self.fieldHorizontalPadding)
+            .padding(.vertical, Self.fieldVerticalPadding)
+            .frame(minHeight: Self.fieldMinHeight)
             .background(fieldBackground)
-            .clipShape(RoundedRectangle(cornerRadius: .radius.medium, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: .radius.full, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: .radius.medium, style: .continuous)
+                RoundedRectangle(cornerRadius: .radius.full, style: .continuous)
                     .strokeBorder(borderColor, lineWidth: borderWidth)
             )
             .accessibilityElement(children: .contain)
@@ -110,7 +110,10 @@ struct TextFieldView: ComponentView {
     }
 
     private var shouldShowClearButton: Bool {
-        !text.isEmpty && (isFocused || viewModel.state == .focused) && !viewModel.isDisabled
+        viewModel.showsClearButton &&
+        !text.isEmpty &&
+        (isFocused || viewModel.state == .focused) &&
+        !viewModel.isDisabled
     }
 }
 
@@ -139,61 +142,56 @@ extension TextFieldView {
 }
 
 private extension TextFieldView {
-    var isVibrant: Bool {
-        viewModel.appearance == .vibrant
-    }
+    /// Figma: Field horizontal padding — 20pt (not bound to a spacing token in Figma).
+    static let fieldHorizontalPadding: CGFloat = 20
 
-    @ViewBuilder
-    var fieldBackground: some View {
-        if viewModel.isDisabled {
-            Color.fills.quaternary
-        } else {
-            switch viewModel.appearance {
-            case .standard:
-                Color.fills.tertiary
-            case .vibrant:
-                ZStack {
-                    Color.overlays.default
-                    Color.fillsVibrant.secondary
-                }
-            }
-        }
+    /// Centres Type/Body (22pt line height) in the 52pt Figma field while letting it grow with Dynamic Type.
+    static let fieldVerticalPadding: CGFloat = 15
+
+    /// Figma: Field min height — 44pt.
+    static let fieldMinHeight: CGFloat = 44
+
+    /// Figma: Error border — 1.5pt color/accents/red.
+    static let errorBorderWidth: CGFloat = 1.5
+
+    var fieldBackground: Color {
+        .backgroundsGrouped.secondary
     }
 
     var labelColor: Color {
-        isVibrant ? .labelsVibrant.secondary : .labels.secondary
+        viewModel.isDisabled ? .labels.tertiary : .labels.secondary
     }
 
     var symbolColor: Color {
-        isVibrant ? .labelsVibrant.secondary : .labels.secondary
+        viewModel.isDisabled ? .labels.tertiary : .labels.secondary
+    }
+
+    var unitColor: Color {
+        viewModel.isDisabled ? .labels.tertiary : .labels.secondary
     }
 
     var clearButtonColor: Color {
-        isVibrant ? .labelsVibrant.quaternary : .labels.secondary
+        .labels.tertiary
     }
 
     var valueColor: Color {
-        isVibrant ? .labelsVibrant.secondary : .labels.primary
+        .labels.primary
     }
 
     var placeholderColor: Color {
-        if viewModel.isDisabled {
-            return .labels.quaternary
-        }
-
-        return isVibrant ? .labelsVibrant.tertiary : .labels.tertiary
+        viewModel.isDisabled ? .labels.quaternary : .labels.tertiary
     }
 
     var caretColor: Color {
-        isVibrant ? .labelsVibrant.overlay : .accents.blue
+        .accents.blue
     }
 
     var messageColor: Color {
         if viewModel.showsError {
-            return isVibrant ? .labelsVibrant.secondary : .accents.red
+            return .accents.red
         }
 
-        return isVibrant ? .labelsVibrant.secondary : .labels.secondary
+        return viewModel.isDisabled ? .labels.tertiary : .labels.secondary
     }
 
     var borderColor: Color {
@@ -201,10 +199,6 @@ private extension TextFieldView {
     }
 
     var borderWidth: CGFloat {
-        guard viewModel.showsError else {
-            return 0
-        }
-
-        return isVibrant ? 2 : 1.5
+        viewModel.showsError ? Self.errorBorderWidth : 0
     }
 }

@@ -26,6 +26,11 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
         let navigationBarPresentation = NavigationBarPresentation(experienceViewModel: presenter.experienceViewModel)
 
         ZStack {
+            // Full-bleed background. Ignores ALL safe-area regions, including the
+            // keyboard, so nothing white shows through the keyboard's rounded corners.
+            Self.screenBackground
+                .ignoresSafeArea()
+
             VStack {
                 switch presenter.state {
                 case .idle:
@@ -48,20 +53,22 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
                         .frame(maxWidth: .infinity)
                         .padding(.bottom, searchBarReservedHeight)
                     }
+                    .scrollDismissesKeyboard(.interactively)
+                    .background(Self.screenBackground)
                 case .loadedFullScreen(let viewModel):
                     VStack {
                         FullScreenView(viewModel: viewModel)
                     }
-//                    .ignoresSafeArea()
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             if router.isLoading {
                 Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
                 ProgressView("Loading...")
                     .padding()
-                    .background(.white)
+                    .background(.background)
                     .cornerRadius(12)
             }
 
@@ -84,6 +91,11 @@ public struct ExperienceView<Presenter>: View where Presenter: ExperiencePresent
         .navigationTitle(navigationBarPresentation.title)
         .navigationBarTitleDisplayMode(navigationBarPresentation.displayMode.swiftUIDisplayMode)
         .animation(.easeInOut, value: router.isLoading)
+    }
+
+    /// Same as the old RGB(242, 242, 247) in light mode, but adapts to dark mode.
+    private static var screenBackground: Color {
+        Color(.systemGroupedBackground)
     }
 
     @ViewBuilder

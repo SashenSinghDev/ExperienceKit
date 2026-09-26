@@ -67,6 +67,35 @@ final class TextFieldViewModelTests: XCTestCase {
 
         XCTAssertEqual(viewModel.keyboardType, .decimalPad)
     }
+
+    func testClearButtonIsShownByDefault() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(
+                state: .focused,
+                placeholder: "Search",
+                value: "Coffee near me"
+            ),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        XCTAssertTrue(viewModel.showsClearButton)
+    }
+
+    func testClearButtonCanBeHidden() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(
+                state: .focused,
+                placeholder: "Search",
+                value: "Coffee near me",
+                showsClearButton: false
+            ),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        XCTAssertFalse(viewModel.showsClearButton)
+    }
 }
 
 private struct EmptyTextFieldDependency: HasExperienceSelectionStateStore {

@@ -89,28 +89,6 @@ final class TextFieldComponentInteractor: ExperienceInteractor {
                 value: "",
                 leadingSystemImage: nil,
                 helperText: nil
-            ),
-            .spacerComponent(properties: .init(size: .large)),
-            .sectiontitleComponent(properties: .init(title: "Vibrant")),
-            textField(
-                appearance: .vibrant,
-                state: .filled,
-                keyboardType: .emailAddress,
-                label: "Email",
-                placeholder: "name@example.com",
-                value: "jordan@example.com",
-                leadingSystemImage: "envelope",
-                helperText: nil
-            ),
-            textField(
-                appearance: .vibrant,
-                state: .focused,
-                isSecure: true,
-                label: "Password",
-                placeholder: "Required",
-                value: "password",
-                leadingSystemImage: "lock",
-                helperText: nil
             )
         ]))
     }
@@ -119,21 +97,20 @@ final class TextFieldComponentInteractor: ExperienceInteractor {
         completion(nil)
     }
 
-    private func textField(appearance: TextFieldProperties.Appearance = .standard,
-                           state: TextFieldProperties.State,
+    private func textField(state: TextFieldProperties.State,
                            isSecure: Bool = false,
                            keyboardType: TextFieldProperties.KeyboardType = .standard,
                            label: String?,
                            placeholder: String = "name@example.com",
                            value: String = "jordan@example.com",
                            leadingSystemImage: String? = "envelope",
+                           showsClearButton: Bool = true,
                            unit: String? = nil,
                            helperText: String? = "We'll send a confirmation link to this address.",
                            errorMessage: String? = "Enter a valid email address.",
                            accessibilityLabel: String? = nil) -> Component {
         .containerComponent(properties: .init(
             component: .textfieldComponent(properties: .init(
-                appearance: appearance,
                 state: state,
                 isSecure: isSecure,
                 keyboardType: keyboardType,
@@ -141,11 +118,12 @@ final class TextFieldComponentInteractor: ExperienceInteractor {
                 placeholder: placeholder,
                 value: isSecure ? "password" : value,
                 leadingSystemImage: leadingSystemImage,
+                showsClearButton: showsClearButton,
                 unit: unit,
                 helperText: helperText,
                 errorMessage: errorMessage,
                 accessibilityLabel: accessibilityLabel ?? label,
-                selectionKey: "\(appearance)-\(state)-\(isSecure)-\(placeholder)-\(label ?? "unlabelled")"
+                selectionKey: "\(state)-\(isSecure)-\(placeholder)-\(label ?? "unlabelled")"
             )),
             horizontalSpacing: .medium)
         )

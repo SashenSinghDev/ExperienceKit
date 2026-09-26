@@ -2,11 +2,6 @@ import Foundation
 
 // sourcery: component = "textfield"
 public struct TextFieldProperties {
-    public enum Appearance: Codable {
-        case standard
-        case vibrant
-    }
-
     public enum State: Codable {
         case empty
         case filled
@@ -23,7 +18,6 @@ public struct TextFieldProperties {
         case phonePad
     }
 
-    public let appearance: Appearance
     public let state: State
     public let isSecure: Bool
     public let keyboardType: KeyboardType
@@ -31,26 +25,26 @@ public struct TextFieldProperties {
     public let placeholder: String
     public let value: String
     public let leadingSystemImage: String?
+    public let showsClearButton: Bool
     public let unit: String?
     public let helperText: String?
     public let errorMessage: String?
     public let accessibilityLabel: String?
     public let selectionKey: String?
 
-    public init(appearance: Appearance = .standard,
-                state: State = .empty,
+    public init(state: State = .empty,
                 isSecure: Bool = false,
                 keyboardType: KeyboardType = .standard,
                 label: String? = nil,
                 placeholder: String,
                 value: String = "",
                 leadingSystemImage: String? = nil,
+                showsClearButton: Bool = true,
                 unit: String? = nil,
                 helperText: String? = nil,
                 errorMessage: String? = nil,
                 accessibilityLabel: String? = nil,
                 selectionKey: String? = nil) {
-        self.appearance = appearance
         self.state = state
         self.isSecure = isSecure
         self.keyboardType = keyboardType
@@ -58,6 +52,7 @@ public struct TextFieldProperties {
         self.placeholder = placeholder
         self.value = value
         self.leadingSystemImage = leadingSystemImage
+        self.showsClearButton = showsClearButton
         self.unit = unit
         self.helperText = helperText
         self.errorMessage = errorMessage

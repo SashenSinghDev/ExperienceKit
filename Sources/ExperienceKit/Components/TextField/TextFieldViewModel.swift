@@ -4,13 +4,13 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
     public typealias Dependencies = HasExperienceSelectionStateStore
 
     public let id: UUID
-    let appearance: TextFieldProperties.Appearance
     let state: TextFieldProperties.State
     let isSecure: Bool
     let keyboardType: TextFieldProperties.KeyboardType
     let label: String?
     let placeholder: String
     let leadingSystemImage: String?
+    let showsClearButton: Bool
     let unit: String?
     let accessibilityLabel: String
     let selectionKey: String
@@ -23,13 +23,13 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
                 dependency: Dependencies,
                 id: UUID) {
         self.id = id
-        self.appearance = properties.appearance
         self.state = properties.state
         self.isSecure = properties.isSecure
         self.keyboardType = properties.keyboardType
         self.label = properties.label
         self.placeholder = properties.placeholder
         self.leadingSystemImage = properties.leadingSystemImage
+        self.showsClearButton = properties.showsClearButton
         self.unit = properties.unit
         self.helperText = properties.helperText
         self.errorMessage = properties.errorMessage
