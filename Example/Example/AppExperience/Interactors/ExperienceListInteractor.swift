@@ -64,6 +64,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
+                title: "Text Field",
+                navigation: .init(
+                    navigationType: .push(Experience.textFieldComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Text Field", displayMode: .inline))))
+            ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
                 title: "Selection Card",
                 navigation: .init(
                     navigationType: .push(Experience.selectionCardComponent),

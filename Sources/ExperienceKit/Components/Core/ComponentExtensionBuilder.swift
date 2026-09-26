@@ -73,6 +73,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func textfieldComponent(properties: TextFieldProperties) -> Component {
+        return Component(contentType: "textfield",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func textComponent(properties: TextProperties) -> Component {
         return Component(contentType: "text",
                          properties: properties,

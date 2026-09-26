@@ -30,6 +30,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return .init(interactor: NavigationCapabilityInteractor(experienceViewModel: experienceViewModel))
         case .textComponent:
             return .init(interactor: TextComponentInteractor(experienceViewModel: experienceViewModel))
+        case .textFieldComponent:
+            return .init(interactor: TextFieldComponentInteractor(experienceViewModel: experienceViewModel))
         case .selectionCardComponent:
             return .init(interactor: SelectionCardComponentInteractor(experienceViewModel: experienceViewModel))
         case .segmentedControlComponent:

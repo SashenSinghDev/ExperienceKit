@@ -13,6 +13,7 @@ enum Experience: String, ExperienceID {
     case experienceList
     case buttonComponent
     case textComponent
+    case textFieldComponent
     case selectionCardComponent
     case segmentedControlComponent
     case imageComponent

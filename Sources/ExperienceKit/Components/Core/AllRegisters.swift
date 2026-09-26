@@ -12,5 +12,6 @@ public let allRegisters: [ComponentRegister] = [
   SeparatorComponentRegister(),
   SpacerComponentRegister(),
   TextComponentRegister(),
+  TextFieldComponentRegister(),
   WelcomeComponentRegister(),
 ]
