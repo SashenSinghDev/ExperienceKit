@@ -74,7 +74,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                 .containerComponent(properties: .init(
                     component: .buttonComponent(properties: .init(
                         title: "Continue",
-                        style: .primary,
+                        style: .glass,
                         navigation: .init(
                             navigationType: .dismiss,
                             deferredLoadingWorkId: DeferredWork.continue,
