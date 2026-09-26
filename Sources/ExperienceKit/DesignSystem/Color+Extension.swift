@@ -19,6 +19,11 @@ extension Color {
             static let label = Color("Button/secondaryLabel", bundle: .module)
             static let border = Color("Button/secondaryBorder", bundle: .module)
         }
+
+        enum glass {
+            /// Figma: color/button/glassTint
+            static let tint = Color("Button/glassTint", bundle: .module)
+        }
     }
 
     enum progressStepper {

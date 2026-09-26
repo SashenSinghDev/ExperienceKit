@@ -41,6 +41,14 @@ final class ButtonComponentInteractor: ExperienceInteractor {
                     navigation: .init(navigationType: .pop,
                                       deferredLoadingWorkId: nil,
                                       experienceViewModel: nil))
+                ),
+                .sectiontitleComponent(properties: .init(title: "GlassButton")),
+                insetButton(.init(
+                    title: "GlassButton",
+                    style: .glass,
+                    navigation: .init(navigationType: .pop,
+                                      deferredLoadingWorkId: nil,
+                                      experienceViewModel: nil))
                 )
             ])
         }()

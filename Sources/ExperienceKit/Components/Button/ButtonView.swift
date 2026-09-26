@@ -24,13 +24,8 @@ struct ButtonView: ComponentView {
                 .font(.body.weight(.semibold))
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(viewModel.style.backgroundColor)
                 .foregroundColor(viewModel.style.labelColor)
-                .cornerRadius(.radius.full)
-                .overlay(
-                    RoundedRectangle(cornerRadius: .radius.full)
-                        .strokeBorder(viewModel.style.borderColor, lineWidth: 1)
-                )
+                .buttonSurface(for: viewModel.style)
         }
     }
 }
@@ -48,7 +43,7 @@ private extension ButtonProperties.Style {
             return .button.primary.background
         case .secondary:
             return .button.secondary.background
-        case .borderless:
+        case .borderless, .glass:
             return .clear
         }
     }
@@ -57,17 +52,40 @@ private extension ButtonProperties.Style {
         switch self {
         case .primary:
             return .button.primary.label
-        case .secondary, .borderless:
+        case .secondary, .borderless, .glass:
             return .button.secondary.label
         }
     }
 
     var borderColor: Color {
         switch self {
-        case .primary, .borderless:
+        case .primary, .borderless, .glass:
             return .clear
         case .secondary:
             return .button.secondary.border
+        }
+    }
+}
+
+private extension View {
+    /// Applies the pill surface for a button style.
+    /// Glass uses the native Liquid Glass material (Figma: Material/Liquid Glass) tinted with
+    /// `color/button/glassTint`; the glass edge highlight replaces the border.
+    @ViewBuilder
+    func buttonSurface(for style: ButtonProperties.Style) -> some View {
+        switch style {
+        case .glass:
+            self
+                .contentShape(.capsule)
+                .glassEffect(.regular.tint(Color.button.glass.tint).interactive(), in: .capsule)
+        case .primary, .secondary, .borderless:
+            self
+                .background(style.backgroundColor)
+                .cornerRadius(.radius.full)
+                .overlay(
+                    RoundedRectangle(cornerRadius: .radius.full)
+                        .strokeBorder(style.borderColor, lineWidth: 1)
+                )
         }
     }
 }

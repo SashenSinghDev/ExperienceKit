@@ -13,6 +13,8 @@ public struct ButtonProperties {
         case primary
         case secondary
         case borderless
+        /// Liquid Glass material with a monochrome label. Use over media, maps or imagery.
+        case glass
     }
 
     public let title: String
