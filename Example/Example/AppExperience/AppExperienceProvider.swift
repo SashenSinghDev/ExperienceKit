@@ -10,62 +10,45 @@ import ExperienceKit
 import SwiftUI
 
 final class AppExperienceProvider: ExperienceProvider {
-    func returnExperienceInteractor(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceInteractor {
+    func experienceSession(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSession {
         guard let experience = Experience(rawValue: id.rawValue) else {
             fatalError("Experience id \(id.rawValue) not found")
         }
 
         switch experience {
         case .welcomeComponent:
-            return WelcomeComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: WelcomeComponentInteractor(experienceViewModel: experienceViewModel))
         case .scrollableScreen:
-            return ScrollableInteractor()
+            return .init(interactor: ScrollableInteractor())
         case .experienceList: 
-            return ExperienceListInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: ExperienceListInteractor(experienceViewModel: experienceViewModel))
         case .buttonComponent:
-            return ButtonComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: ButtonComponentInteractor(experienceViewModel: experienceViewModel))
         case .fullScreen:
-            return FullScreenExperienceInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: FullScreenExperienceInteractor(experienceViewModel: experienceViewModel))
         case .navigationCapability:
-            return NavigationCapabilityInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: NavigationCapabilityInteractor(experienceViewModel: experienceViewModel))
         case .textComponent:
-            return TextComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: TextComponentInteractor(experienceViewModel: experienceViewModel))
         case .selectionCardComponent:
-            return SelectionCardComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: SelectionCardComponentInteractor(experienceViewModel: experienceViewModel))
         case .segmentedControlComponent:
-            return SegmentedControlComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: SegmentedControlComponentInteractor(experienceViewModel: experienceViewModel))
         case .imageComponent:
-            return ImageComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: ImageComponentInteractor(experienceViewModel: experienceViewModel))
         case .progressStepperComponent:
-            return ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel))
         case .playground:
-            return PlaygroundInteractor(experienceViewModel: experienceViewModel)
+            return .init(interactor: PlaygroundInteractor(experienceViewModel: experienceViewModel))
         case .playgroundGoalUnits:
-            return PlaygroundGoalUnitsInteractor(experienceViewModel: experienceViewModel)
-        }
-    }
-
-    func selectionStateStore(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore? {
-        guard let experience = Experience(rawValue: id.rawValue) else {
-            return nil
-        }
-
-        switch experience {
-        case .playgroundGoalUnits:
-            return AppExperienceSelectionStateStore()
-        case .welcomeComponent,
-             .scrollableScreen,
-             .experienceList,
-             .buttonComponent,
-             .fullScreen,
-             .navigationCapability,
-             .textComponent,
-             .selectionCardComponent,
-             .segmentedControlComponent,
-             .imageComponent,
-             .progressStepperComponent,
-             .playground:
-            return nil
+            let selectionStateStore = AppExperienceSelectionStateStore()
+            return .init(
+                interactor: PlaygroundGoalUnitsInteractor(
+                    experienceViewModel: experienceViewModel,
+                    experienceSelectionStateStore: selectionStateStore
+                ),
+                selectionStateStore: selectionStateStore
+            )
         }
     }
 }

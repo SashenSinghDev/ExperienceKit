@@ -7,13 +7,17 @@
 
 import Foundation
 
-public protocol ExperienceProvider {
-    func returnExperienceInteractor(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceInteractor
-    func selectionStateStore(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore?
+public struct ExperienceSession {
+    public let interactor: ExperienceInteractor
+    public let selectionStateStore: ExperienceSelectionStateStore?
+
+    public init(interactor: ExperienceInteractor,
+                selectionStateStore: ExperienceSelectionStateStore? = nil) {
+        self.interactor = interactor
+        self.selectionStateStore = selectionStateStore
+    }
 }
 
-public extension ExperienceProvider {
-    func selectionStateStore(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore? {
-        nil
-    }
+public protocol ExperienceProvider {
+    func experienceSession(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSession
 }

@@ -17,7 +17,3 @@ public protocol ExperienceSelectionStateStore: AnyObject {
 public protocol HasExperienceSelectionStateStore {
     var experienceSelectionStateStore: ExperienceSelectionStateStore? { get }
 }
-
-public protocol ExperienceSelectionStateConsuming: AnyObject {
-    var experienceSelectionStateStore: ExperienceSelectionStateStore? { get set }
-}

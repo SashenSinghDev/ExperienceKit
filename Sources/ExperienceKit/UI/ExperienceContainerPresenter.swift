@@ -22,20 +22,18 @@ public final class ExperienceContainerPresenter {
     }
 
     func experienceView(for id: ExperienceID, router: DefaultExperienceRouter, experienceViewModel: ExperienceViewModel?, viewModelID: UUID) -> ExperienceView<ExperiencePresenter> {
-        let experienceInteractor = experienceProvider.returnExperienceInteractor(for: id, experienceViewModel: experienceViewModel)
-        let experienceSelectionStateStore = experienceProvider.selectionStateStore(for: id, experienceViewModel: experienceViewModel)
-        (experienceInteractor as? ExperienceSelectionStateConsuming)?.experienceSelectionStateStore = experienceSelectionStateStore
+        let experienceSession = experienceProvider.experienceSession(for: id, experienceViewModel: experienceViewModel)
 
         let experienceDependency = ExperienceDependency(router: router,
                                                         experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
                                                         viewProvider: viewProvider,
                                                         viewModelProvider: viewModelProvider,
-                                                        experienceSelectionStateStore: experienceSelectionStateStore)
+                                                        experienceSelectionStateStore: experienceSession.selectionStateStore)
 
         let experiencePresenter: ExperiencePresenter = {
             guard let presenter: ExperiencePresenter = router.presenter(for: viewModelID) else {
                 let presenterToReturn = ExperiencePresenter(viewModelProvider: viewModelProvider,
-                                                            experienceInteractor: experienceInteractor,
+                                                            experienceInteractor: experienceSession.interactor,
                                                             dependency: experienceDependency)
 
                 let address = Unmanaged.passUnretained(presenterToReturn).toOpaque()

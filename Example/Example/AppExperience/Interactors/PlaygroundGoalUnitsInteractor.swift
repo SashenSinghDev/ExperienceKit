@@ -10,10 +10,12 @@ import SwiftUI
 
 final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    var experienceSelectionStateStore: ExperienceSelectionStateStore?
+    private let experienceSelectionStateStore: ExperienceSelectionStateStore
 
-    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
+         experienceSelectionStateStore: ExperienceSelectionStateStore) {
         self.experienceViewModel = experienceViewModel
+        self.experienceSelectionStateStore = experienceSelectionStateStore
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -161,8 +163,6 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
     }
 }
 
-extension PlaygroundGoalUnitsInteractor: ExperienceSelectionStateConsuming {}
-
 private extension PlaygroundGoalUnitsInteractor {
     enum DeferredWork: String, DeferredWorkID {
         case `continue`
@@ -174,6 +174,6 @@ private extension PlaygroundGoalUnitsInteractor {
     }
 
     func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore?.selectedValues(for: key).first ?? "nil"
+        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 }
