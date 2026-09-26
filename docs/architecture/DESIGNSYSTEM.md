@@ -77,7 +77,7 @@ Adding a token should update the asset catalog and Swift API together so runtime
 - Add the token `.colorset` under the matching Figma token path.
 - Add the corresponding Swift accessor to `Color+Extension.swift`.
 - Use camelCase only where Swift cannot represent the Figma token literally, for example `non-opaque` becomes `nonOpaque`.
-- Build the package or example app after adding asset catalog tokens so asset compilation catches path or JSON mistakes.
+- Build the package or host app after adding asset catalog tokens so asset compilation catches path or JSON mistakes.
 
 **AI Rule:**
 Reject colour-token changes where `Assets.xcassets` and `Color+Extension.swift` do not expose the same token.

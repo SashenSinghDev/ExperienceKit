@@ -83,23 +83,24 @@ Reject component changes where the component files, `AllRegisters.swift`, and `C
 
 ---
 
-## 5. Example App Wiring
+## 5. App Catalogue Wiring
 
 **Principle:**
-A component added to the kit should be easy to discover and inspect in the example app.
+A component added to the kit should be easy to discover and inspect in an app catalogue.
 
 **Guidelines:**
 
 - Add an `Experience` case in `Example/Example/AppExperience/Models/Experience.swift` for the component's demo screen.
-- Add an interactor in `Example/Example/AppExperience/Interactors/` that returns an `ExperienceType` containing the new component.
+- Add an app interactor that returns an `ExperienceType` containing the new component.
 - Add a switch case in `Example/Example/AppExperience/AppExperienceProvider.swift` that returns the new interactor.
 - Add a component entry in `Example/Example/AppExperience/Interactors/ExperienceListInteractor.swift` under the Components section.
 - Include a separator before the new list item when it follows the existing component-list pattern.
 - Give the list item a clear title and push navigation to the new `Experience` case.
 - Set a navigation bar title that matches the visible component name.
+- Read [APPEXPERIENCE.md](APPEXPERIENCE.md) before adding custom flow behavior, deferred work, or app-owned state to an app interactor.
 
 **AI Rule:**
-Reject public component additions that are not reachable from `ExperienceListInteractor` in the example app, unless the component is intentionally internal and that choice is documented in the change.
+Reject public component additions that are not reachable from the app catalogue, unless the component is intentionally internal and that choice is documented in the change.
 
 ---
 
@@ -111,7 +112,7 @@ Component changes should prove both the package and the example wiring still com
 **Guidelines:**
 
 - Run the narrowest meaningful package check after component source changes.
-- Build or test the example app when changing `Example/Example/AppExperience/`.
+- Build or test the host app when changing app experience wiring.
 - Confirm generated files do not contain stale placeholders from the templates.
 - Confirm the new component appears in the example component list when launched.
 - Document any skipped verification with the reason.
