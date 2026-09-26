@@ -40,6 +40,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel)
         case .playground:
             return PlaygroundInteractor(experienceViewModel: experienceViewModel)
+        case .playgroundGoalUnits:
+            return PlaygroundGoalUnitsInteractor(experienceViewModel: experienceViewModel)
         }
     }
 }

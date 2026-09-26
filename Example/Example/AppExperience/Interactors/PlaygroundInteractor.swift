@@ -61,9 +61,11 @@ final class PlaygroundInteractor: ExperienceInteractor {
                         title: "Build my plan",
                         style: .primary,
                         navigation: .init(
-                            navigationType: .push(Experience.playground),
+                            navigationType: .push(Experience.playgroundGoalUnits),
                             deferredLoadingWorkId: nil,
-                            experienceViewModel: nil))
+                            experienceViewModel: .init(
+                                searchBar: nil,
+                                navigationBar: nil)))
                     ),
                     horizontalSpacing: .medium)
                 ),
