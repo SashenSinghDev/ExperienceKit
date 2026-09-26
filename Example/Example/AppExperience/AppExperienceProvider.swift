@@ -44,4 +44,28 @@ final class AppExperienceProvider: ExperienceProvider {
             return PlaygroundGoalUnitsInteractor(experienceViewModel: experienceViewModel)
         }
     }
+
+    func selectionStateStore(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore? {
+        guard let experience = Experience(rawValue: id.rawValue) else {
+            return nil
+        }
+
+        switch experience {
+        case .playgroundGoalUnits:
+            return AppExperienceSelectionStateStore()
+        case .welcomeComponent,
+             .scrollableScreen,
+             .experienceList,
+             .buttonComponent,
+             .fullScreen,
+             .navigationCapability,
+             .textComponent,
+             .selectionCardComponent,
+             .segmentedControlComponent,
+             .imageComponent,
+             .progressStepperComponent,
+             .playground:
+            return nil
+        }
+    }
 }

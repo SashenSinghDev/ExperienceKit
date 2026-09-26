@@ -12,13 +12,13 @@ public class ExperienceDependency: EmptyDependency, HasRouter, HasExperiencePres
     public var experiencePresenterNotifier: ExperiencePresenterNotifier
     public let viewProvider: ViewProvider
     public let viewModelProvider: ViewModelProvider
-    public let experienceSelectionStateStore: ExperienceSelectionStateStore
+    public let experienceSelectionStateStore: ExperienceSelectionStateStore?
 
     public init(router: any ExperienceRouter,
                 experiencePresenterNotifier: ExperiencePresenterNotifier,
                 viewProvider: ViewProvider,
                 viewModelProvider: ViewModelProvider,
-                experienceSelectionStateStore: ExperienceSelectionStateStore = DefaultExperienceSelectionStateStore()) {
+                experienceSelectionStateStore: ExperienceSelectionStateStore? = nil) {
         self.router = router
         self.experiencePresenterNotifier = experiencePresenterNotifier
         self.viewProvider = viewProvider

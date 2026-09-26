@@ -9,4 +9,11 @@ import Foundation
 
 public protocol ExperienceProvider {
     func returnExperienceInteractor(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceInteractor
+    func selectionStateStore(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore?
+}
+
+public extension ExperienceProvider {
+    func selectionStateStore(for id: ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSelectionStateStore? {
+        nil
+    }
 }

@@ -21,7 +21,7 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
     let selectionMode: SelectionCardProperties.SelectionMode
     let navigationViewModel: NavigationViewModel?
     private let experiencePresenterNotifier: ExperiencePresenterNotifier
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let experienceSelectionStateStore: ExperienceSelectionStateStore?
     @Published public var isSelected: Bool
     private static var selectionGroups: [String: [WeakSelectionCardViewModelReference]] = [:]
 
@@ -77,12 +77,12 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         if let selectionGroupId {
             switch selectionMode {
             case .single:
-                experienceSelectionStateStore.setSelectedValue(selectionId, for: selectionGroupId)
+                experienceSelectionStateStore?.setSelectedValue(selectionId, for: selectionGroupId)
             case .multiple:
-                experienceSelectionStateStore.addSelectedValue(selectionId, for: selectionGroupId)
+                experienceSelectionStateStore?.addSelectedValue(selectionId, for: selectionGroupId)
             }
         } else {
-            experienceSelectionStateStore.setSelectedValue(selectionId, for: id.uuidString)
+            experienceSelectionStateStore?.setSelectedValue(selectionId, for: id.uuidString)
         }
     }
 
@@ -98,13 +98,13 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             selectSingleCard(in: selectionGroupId)
-            experienceSelectionStateStore.setSelectedValue(selectionId, for: selectionGroupId)
+            experienceSelectionStateStore?.setSelectedValue(selectionId, for: selectionGroupId)
         case .multiple:
             toggleMultipleSelection()
             if isSelected {
-                experienceSelectionStateStore.addSelectedValue(selectionId, for: selectionGroupId)
+                experienceSelectionStateStore?.addSelectedValue(selectionId, for: selectionGroupId)
             } else {
-                experienceSelectionStateStore.removeSelectedValue(selectionId, for: selectionGroupId)
+                experienceSelectionStateStore?.removeSelectedValue(selectionId, for: selectionGroupId)
             }
         }
     }
@@ -113,13 +113,13 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             isSelected = true
-            experienceSelectionStateStore.setSelectedValue(selectionId, for: id.uuidString)
+            experienceSelectionStateStore?.setSelectedValue(selectionId, for: id.uuidString)
         case .multiple:
             isSelected.toggle()
             if isSelected {
-                experienceSelectionStateStore.addSelectedValue(selectionId, for: id.uuidString)
+                experienceSelectionStateStore?.addSelectedValue(selectionId, for: id.uuidString)
             } else {
-                experienceSelectionStateStore.removeSelectedValue(selectionId, for: id.uuidString)
+                experienceSelectionStateStore?.removeSelectedValue(selectionId, for: id.uuidString)
             }
         }
     }
