@@ -1,15 +1,7 @@
 import SwiftUI
 
 struct SegmentedControlView: ComponentView {
-    private enum Constant {
-        static let trackInset: CGFloat = 1
-        static let segmentMinimumHeight: CGFloat = 44
-        static let strokeWidth: CGFloat = 1
-    }
-
     @ObservedObject var viewModel: SegmentedControlViewModel
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Namespace private var selectedSegment
     @State private var selectedValue: String
 
     init(viewModel: SegmentedControlViewModel) {
@@ -18,20 +10,17 @@ struct SegmentedControlView: ComponentView {
     }
 
     var body: some View {
-        HStack(spacing: .spacing.none) {
+        Picker(viewModel.accessibilityLabel, selection: $selectedValue) {
             ForEach(viewModel.options, id: \.value) { option in
-                button(for: option)
+                Text(option.label)
+                    .tag(option.value)
             }
         }
-        .padding(Constant.trackInset)
-        .overlay(
-            Capsule()
-                .strokeBorder(.separators.nonOpaque, lineWidth: Constant.strokeWidth)
-        )
-        .clipShape(Capsule())
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(viewModel.accessibilityLabel)
-        .animation(reduceMotion ? nil : .snappy, value: selectedValue)
+        .pickerStyle(.segmented)
+        .tint(.surface.primary)
+        .onChange(of: selectedValue) { _, newValue in
+            viewModel.selectValue(newValue)
+        }
         .onReceive(viewModel.$selectedValue) { newValue in
             guard selectedValue != newValue else {
                 return
@@ -39,42 +28,6 @@ struct SegmentedControlView: ComponentView {
 
             selectedValue = newValue
         }
-    }
-
-    private func button(for option: SegmentedControlProperties.Option) -> some View {
-        let isSelected = selectedValue == option.value
-
-        return Button {
-            select(option)
-        } label: {
-            Text(option.label)
-                .font(.footnote)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .foregroundStyle(isSelected ? Color.text.primary : .labels.primary)
-                .padding(.horizontal, .spacing.small)
-                .frame(maxWidth: .infinity, minHeight: Constant.segmentMinimumHeight)
-                .background {
-                    if isSelected {
-                        Capsule()
-                            .fill(.surface.primary)
-                            .matchedGeometryEffect(id: "selectedSegment", in: selectedSegment)
-                            .allowsHitTesting(false)
-                    }
-                }
-                .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-
-    private func select(_ option: SegmentedControlProperties.Option) {
-        guard selectedValue != option.value else {
-            return
-        }
-
-        selectedValue = option.value
-        viewModel.select(option)
     }
 }
 
