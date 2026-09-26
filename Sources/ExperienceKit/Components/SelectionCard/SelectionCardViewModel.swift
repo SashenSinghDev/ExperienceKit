@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public final class SelectionCardViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = HasExperiencePresenterNotifier
+    public typealias Dependencies = HasExperiencePresenterNotifier & HasExperienceSelectionStateStore
 
     public let id: UUID
     let title: String
@@ -21,6 +21,7 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
     let selectionMode: SelectionCardProperties.SelectionMode
     let navigationViewModel: NavigationViewModel?
     private let experiencePresenterNotifier: ExperiencePresenterNotifier
+    private let experienceSelectionStateStore: ExperienceSelectionStateStore
     @Published public var isSelected: Bool
     private static var selectionGroups: [String: [WeakSelectionCardViewModelReference]] = [:]
 
@@ -46,7 +47,9 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         }
 
         self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
+        self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
         registerSelectionGroupIfNeeded()
+        registerInitialSelectionIfNeeded()
     }
 
     // The initial selection state comes from properties. Tapping updates the
@@ -68,6 +71,21 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         Self.selectionGroups[selectionGroupId] = existingGroup + [WeakSelectionCardViewModelReference(value: self)]
     }
 
+    private func registerInitialSelectionIfNeeded() {
+        guard isSelected else { return }
+
+        if let selectionGroupId {
+            switch selectionMode {
+            case .single:
+                experienceSelectionStateStore.setSelectedValue(selectionId, for: selectionGroupId)
+            case .multiple:
+                experienceSelectionStateStore.addSelectedValue(selectionId, for: selectionGroupId)
+            }
+        } else {
+            experienceSelectionStateStore.setSelectedValue(selectionId, for: id.uuidString)
+        }
+    }
+
     private func updateSelectionState() {
         guard let selectionGroupId else {
             updateStandaloneSelectionState()
@@ -80,8 +98,14 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             selectSingleCard(in: selectionGroupId)
+            experienceSelectionStateStore.setSelectedValue(selectionId, for: selectionGroupId)
         case .multiple:
             toggleMultipleSelection()
+            if isSelected {
+                experienceSelectionStateStore.addSelectedValue(selectionId, for: selectionGroupId)
+            } else {
+                experienceSelectionStateStore.removeSelectedValue(selectionId, for: selectionGroupId)
+            }
         }
     }
 
@@ -89,8 +113,14 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             isSelected = true
+            experienceSelectionStateStore.setSelectedValue(selectionId, for: id.uuidString)
         case .multiple:
             isSelected.toggle()
+            if isSelected {
+                experienceSelectionStateStore.addSelectedValue(selectionId, for: id.uuidString)
+            } else {
+                experienceSelectionStateStore.removeSelectedValue(selectionId, for: id.uuidString)
+            }
         }
     }
 

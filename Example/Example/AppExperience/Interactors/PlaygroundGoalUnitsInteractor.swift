@@ -10,6 +10,7 @@ import SwiftUI
 
 final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
+    var experienceSelectionStateStore: ExperienceSelectionStateStore?
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
         self.experienceViewModel = experienceViewModel
@@ -74,7 +75,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                         style: .primary,
                         navigation: .init(
                             navigationType: .dismiss,
-                            deferredLoadingWorkId: nil,
+                            deferredLoadingWorkId: DeferredWork.continue,
                             experienceViewModel: nil))
                     ),
                     horizontalSpacing: .medium)
@@ -85,6 +86,17 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
     }
 
     func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+            completion(nil)
+            return
+        }
+
+        switch deferredWork {
+        case .continue:
+            print("Selected goal: \(selectedValue(for: SelectionKey.goal))")
+            print("Selected units: \(selectedValue(for: SelectionKey.units))")
+        }
+
         completion(nil)
     }
 
@@ -146,5 +158,22 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
             ),
             horizontalSpacing: .medium)
         )
+    }
+}
+
+extension PlaygroundGoalUnitsInteractor: ExperienceSelectionStateConsuming {}
+
+private extension PlaygroundGoalUnitsInteractor {
+    enum DeferredWork: String, DeferredWorkID {
+        case `continue`
+    }
+
+    enum SelectionKey {
+        static let goal = "playground-goal"
+        static let units = "Units"
+    }
+
+    func selectedValue(for key: String) -> String {
+        experienceSelectionStateStore?.selectedValues(for: key).first ?? "nil"
     }
 }

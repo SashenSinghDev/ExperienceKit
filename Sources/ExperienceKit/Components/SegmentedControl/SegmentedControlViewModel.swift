@@ -1,12 +1,13 @@
 import Foundation
 
 public final class SegmentedControlViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = EmptyDependency
+    public typealias Dependencies = HasExperienceSelectionStateStore
 
     public let id: UUID
     let options: [SegmentedControlProperties.Option]
     let accessibilityLabel: String
     @Published public private(set) var selectedValue: String
+    private let experienceSelectionStateStore: ExperienceSelectionStateStore
 
     public init(properties: SegmentedControlProperties,
                 dependency: Dependencies,
@@ -18,6 +19,8 @@ public final class SegmentedControlViewModel: ComponentViewModel, ObservableObje
             properties.selectedValue,
             options: self.options
         )
+        self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
+        experienceSelectionStateStore.setSelectedValue(self.selectedValue, for: self.accessibilityLabel)
     }
 
     func select(_ option: SegmentedControlProperties.Option) {
@@ -30,6 +33,7 @@ public final class SegmentedControlViewModel: ComponentViewModel, ObservableObje
         }
 
         selectedValue = value
+        experienceSelectionStateStore.setSelectedValue(value, for: accessibilityLabel)
     }
 
     func isSelected(_ option: SegmentedControlProperties.Option) -> Bool {
