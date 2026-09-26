@@ -7,6 +7,8 @@ This document is the architecture reference for ExperienceKit design-system toke
 **Principle:**
 ExperienceKit styling should reference canonical design-system tokens, with Swift names and asset names matching the Figma token path one-to-one wherever possible.
 
+Figma is the source of truth for design-system values. Extend tokens only when extending ExperienceKit itself, such as creating or changing components. App experiences should consume existing ExperienceKit components and tokens without adding host-app-only styling or new token values.
+
 **Guidelines:**
 
 - Treat Figma token names as the source for semantic token shape.

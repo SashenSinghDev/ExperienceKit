@@ -58,6 +58,8 @@ Components should consume canonical ExperienceKit design-system tokens instead o
 - Read [DESIGNSYSTEM.md](DESIGNSYSTEM.md) before adding or consuming design-system colour, spacing, radius, or typography tokens.
 - Prefer existing design-system helpers under `Sources/ExperienceKit/DesignSystem/` for spacing, radius, colors, and typography.
 - When a Figma token is missing from the design system, add it following [DESIGNSYSTEM.md](DESIGNSYSTEM.md) instead of substituting raw colours or component-local aliases.
+- New design-system values are only added when extending ExperienceKit itself, such as creating or changing a component.
+- Figma is the source of truth for new design-system values, and token additions should map one-to-one to the Figma token path.
 - Keep component views as consumers of semantic tokens, for example `.fill(.surface.primary)`.
 
 **AI Rule:**
@@ -98,6 +100,7 @@ A component added to the kit should be easy to discover and inspect in an app ca
 - Give the list item a clear title and push navigation to the new `Experience` case.
 - Set a navigation bar title that matches the visible component name.
 - Read [APPEXPERIENCE.md](APPEXPERIENCE.md) before adding custom flow behavior, deferred work, or app-owned state to an app interactor.
+- Compose catalogue screens with ExperienceKit components and design-system tokens only.
 
 **AI Rule:**
 Reject public component additions that are not reachable from the app catalogue, unless the component is intentionally internal and that choice is documented in the change.

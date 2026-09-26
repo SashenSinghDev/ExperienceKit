@@ -31,6 +31,10 @@ Each interactor owns one experience screen or one clear flow step.
 
 - Build the experience in `load(completion:)`.
 - Prefer generated component builders such as `.buttonComponent(...)` and `.textComponent(...)`.
+- Compose screens strictly from components available in ExperienceKit.
+- Use ExperienceKit design-system tokens for typography, colour, spacing, radius, and other styling decisions.
+- Do not introduce host-app-only visual styling, raw design values, or new design-system tokens from an app experience.
+- If an app experience cannot be built with the current ExperienceKit component and token surface, extend ExperienceKit first through the component/design-system workflow.
 - Keep layout helpers private to the interactor when they only serve that screen.
 - Keep screen-specific constants, deferred work ids, and selection keys inside the interactor.
 - Accept app dependencies through the interactor initializer.
@@ -39,7 +43,7 @@ Each interactor owns one experience screen or one clear flow step.
 - Use `experienceViewModel` only when the existing navigation or container APIs need it.
 
 **AI Rule:**
-Reject app interactors that reach into component views, own framework internals, or use global mutable state for screen-local behavior.
+Reject app interactors that reach into component views, own framework internals, use global mutable state for screen-local behavior, or create screens from UI/styling outside the existing ExperienceKit component and design-system surface.
 
 ## Provider Wiring
 
@@ -77,7 +81,7 @@ Reject provider code that creates an interactor needing session state but does n
 
 1. Add an `Experience` case with a stable raw value.
 2. Create an interactor in the app's AppExperience interactor area.
-3. Implement `load(completion:)` using existing components and design-system-backed component properties.
+3. Implement `load(completion:)` using existing ExperienceKit components and design-system-backed component properties.
 4. Add an `AppExperienceProvider` switch case returning an `ExperienceSession`.
 5. Add navigation from the source screen to the new `Experience` case.
 6. Add a catalogue entry only when the screen should be a discoverable catalogue item.

@@ -73,9 +73,11 @@ During code review:
 - **Explicit examples**: Components intended for humans to inspect should be reachable from an app catalogue.
 - **Typed properties**: Components should expose clear property and view model types.
 - **Small views**: SwiftUI views should render state and keep behavior out of layout code.
-- **Catalogue visibility**: New components should appear in the example component list when they are part of the public component set.
+- **Catalogue visibility**: New components should appear in an app catalogue when they are part of the public component set.
 - **Token fidelity**: Design-system tokens should preserve Figma naming and hierarchy in asset paths and Swift accessors.
 - **App-owned experience state**: App flow state should be owned by the host app and injected into ExperienceKit through `ExperienceSession`.
+- **ExperienceKit-only composition**: App screens should be composed from existing ExperienceKit components and design-system tokens, not host-app-only UI or styling.
+- **Figma-sourced extension**: New design-system values may be added only when extending ExperienceKit itself, and should map one-to-one from Figma as the source of truth.
 
 ## Contributing To These Docs
 
