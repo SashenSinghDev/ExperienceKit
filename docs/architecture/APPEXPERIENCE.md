@@ -56,15 +56,16 @@ Reject app interactors that reach into component views, own framework internals,
 - Return `ExperienceSession(interactor:)` when the screen has no extra session dependencies.
 - Create app-owned dependencies in the provider when the screen needs shared state across component view models and the interactor.
 - Pass the same dependency instance to the interactor and to `ExperienceSession`.
+- For state shared across a multi-screen flow, hold the dependency on the provider instead of creating it per session; see [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md#flow-scoped-stores).
 - Keep concrete app dependency implementations in the app target, not in `Sources/ExperienceKit/`.
 
 Example:
 
 ```swift
-case .playgroundGoalUnits:
+case .selectionScreen:
     let selectionStateStore = AppExperienceSelectionStateStore()
     return .init(
-        interactor: PlaygroundGoalUnitsInteractor(
+        interactor: SelectionScreenInteractor(
             experienceViewModel: experienceViewModel,
             experienceSelectionStateStore: selectionStateStore
         ),
