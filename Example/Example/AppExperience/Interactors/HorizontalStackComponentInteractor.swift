@@ -49,7 +49,28 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
                 spacing: .small,
                 alignment: .center,
                 distribution: .fillEqually
-            )
+            ),
+            .spacerComponent(properties: .init(size: .large)),
+            .sectiontitleComponent(properties: .init(title: "Scrollable")),
+            // Not wrapped in a container: the content inset lines the first card
+            // up with the page margin while the row still scrolls edge to edge.
+            .horizontalstackComponent(properties: .init(
+                components: [
+                    card(title: "The 30-Day Cutting Pack",
+                         subtitle: "Six high-volume dinners on rotation for a month.",
+                         value: "£8.99"),
+                    card(title: "High-Protein Batch Cook",
+                         subtitle: "Six one-pot meals that hold in the fridge for four days.",
+                         value: "£6.99"),
+                    card(title: "Mornings, Sorted",
+                         subtitle: "Five make-ahead breakfasts you build on Sunday.",
+                         value: "£4.99")
+                ],
+                spacing: .small,
+                distribution: .scrollable,
+                contentInset: .medium,
+                itemWidth: 228
+            ))
         ]))
     }
 
@@ -79,6 +100,19 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
             placeholder: placeholder,
             showsClearButton: false,
             unit: unit
+        ))
+    }
+
+    private func card(title: String, subtitle: String, value: String) -> Component {
+        .selectioncardComponent(properties: .init(
+            title: title,
+            subtitle: subtitle,
+            value: value,
+            isSelected: false,
+            badgeText: nil,
+            selectionId: title,
+            selectionGroupId: "horizontal-stack-demo",
+            navigation: nil
         ))
     }
 

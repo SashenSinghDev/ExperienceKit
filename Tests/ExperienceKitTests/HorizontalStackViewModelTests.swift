@@ -26,6 +26,26 @@ final class HorizontalStackViewModelTests: XCTestCase {
         XCTAssertEqual(makeViewModel(components: [], spacing: .large).spacing, 32)
     }
 
+    func testMapsContentInsetToDesignSystemTokens() {
+        XCTAssertEqual(makeViewModel(components: []).contentInset, 0)
+        XCTAssertEqual(makeViewModel(components: [], contentInset: .medium).contentInset, 16)
+    }
+
+    func testScrollableRowKeepsItemWidth() {
+        let viewModel = makeViewModel(
+            components: [text("One"), text("Two")],
+            distribution: .scrollable,
+            itemWidth: 228
+        )
+
+        XCTAssertEqual(viewModel.distribution, .scrollable)
+        XCTAssertEqual(viewModel.itemWidth, 228)
+    }
+
+    func testItemWidthDefaultsToNilSoChildrenSizeThemselves() {
+        XCTAssertNil(makeViewModel(components: [text("One")]).itemWidth)
+    }
+
     func testChildrenReceiveTheSessionSelectionStateStore() {
         let store = HorizontalStackSelectionStateStore()
 
@@ -46,11 +66,20 @@ final class HorizontalStackViewModelTests: XCTestCase {
 
     private func makeViewModel(components: [Component],
                                spacing: HorizontalStackProperties.Spacing = .small,
+                               distribution: HorizontalStackProperties.Distribution = .fillEqually,
+                               contentInset: HorizontalStackProperties.Spacing = .none,
+                               itemWidth: Double? = nil,
                                store: ExperienceSelectionStateStore? = nil) -> HorizontalStackViewModel {
         let registers: [ComponentRegister] = [TextComponentRegister(), TextFieldComponentRegister()]
 
         return HorizontalStackViewModel(
-            properties: .init(components: components, spacing: spacing),
+            properties: .init(
+                components: components,
+                spacing: spacing,
+                distribution: distribution,
+                contentInset: contentInset,
+                itemWidth: itemWidth
+            ),
             dependency: ExperienceDependency(
                 router: DefaultExperienceRouter(expId: HorizontalStackTestExperienceID.root),
                 experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),

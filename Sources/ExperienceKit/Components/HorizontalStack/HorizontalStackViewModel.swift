@@ -9,6 +9,8 @@ public final class HorizontalStackViewModel: ComponentViewModel, ObservableObjec
     let spacing: CGFloat
     let alignment: HorizontalStackProperties.Alignment
     let distribution: HorizontalStackProperties.Distribution
+    let contentInset: CGFloat
+    let itemWidth: CGFloat?
 
     public init(properties: HorizontalStackProperties,
                 dependency: Dependencies,
@@ -23,6 +25,8 @@ public final class HorizontalStackViewModel: ComponentViewModel, ObservableObjec
         self.spacing = properties.spacing.value
         self.alignment = properties.alignment
         self.distribution = properties.distribution
+        self.contentInset = properties.contentInset.value
+        self.itemWidth = properties.itemWidth.map { CGFloat($0) }
     }
 }
 

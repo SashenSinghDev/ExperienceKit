@@ -8,6 +8,23 @@ struct HorizontalStackView: ComponentView {
     }
 
     var body: some View {
+        switch viewModel.distribution {
+        case .fillEqually, .leading:
+            row
+                .padding(.horizontal, viewModel.contentInset)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        case .scrollable:
+            ScrollView(.horizontal, showsIndicators: false) {
+                row
+                    .scrollTargetLayout()
+            }
+            .contentMargins(.horizontal, viewModel.contentInset, for: .scrollContent)
+            .scrollTargetBehavior(.viewAligned)
+            .scrollClipDisabled()
+        }
+    }
+
+    private var row: some View {
         HStack(alignment: viewModel.alignment.verticalAlignment, spacing: viewModel.spacing) {
             ForEach(viewModel.children) { child in
                 childView(for: child)
@@ -17,7 +34,6 @@ struct HorizontalStackView: ComponentView {
                 Spacer(minLength: .spacing.none)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     @ViewBuilder
@@ -26,9 +42,14 @@ struct HorizontalStackView: ComponentView {
         case .fillEqually:
             viewModel.viewProvider.view(for: child)
                 .frame(maxWidth: .infinity, alignment: .leading)
-        case .leading:
-            viewModel.viewProvider.view(for: child)
-                .fixedSize(horizontal: true, vertical: false)
+        case .leading, .scrollable:
+            if let itemWidth = viewModel.itemWidth {
+                viewModel.viewProvider.view(for: child)
+                    .frame(width: itemWidth, alignment: .leading)
+            } else {
+                viewModel.viewProvider.view(for: child)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
         }
     }
 }
