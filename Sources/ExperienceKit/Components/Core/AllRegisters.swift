@@ -4,6 +4,7 @@ public let allRegisters: [ComponentRegister] = [
   DescriptionComponentRegister(),
   ExampleComponentRegister(),
   GenericListItemComponentRegister(),
+  HorizontalStackComponentRegister(),
   ImageComponentRegister(),
   ProgressStepperComponentRegister(),
   SectionTitleComponentRegister(),

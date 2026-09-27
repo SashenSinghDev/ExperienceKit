@@ -31,6 +31,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func horizontalstackComponent(properties: HorizontalStackProperties) -> Component {
+        return Component(contentType: "horizontalstack",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func imageComponent(properties: ImageProperties) -> Component {
         return Component(contentType: "image",
                          properties: properties,
