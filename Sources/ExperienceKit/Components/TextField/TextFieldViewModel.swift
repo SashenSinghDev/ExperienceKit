@@ -16,6 +16,10 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
     let selectionKey: String
     let requestsFocus: Bool
     @Published var text: String
+    /// Starts from the `.error` state and clears once the user types a value, so a
+    /// fixed field stops looking wrong before the screen is submitted again. It is
+    /// not set back if the field is emptied; the next submit re-validates it.
+    @Published private(set) var showsError: Bool
     private let helperText: String?
     private let errorMessage: String?
     private let experienceSelectionStateStore: ExperienceSelectionStateStore?
@@ -38,12 +42,13 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
         self.selectionKey = properties.selectionKey ?? properties.label ?? properties.placeholder
         self.requestsFocus = properties.requestsFocus && properties.state != .disabled
         self.text = properties.state == .empty ? "" : properties.value
+        self.showsError = properties.state == .error
         self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
         experienceSelectionStateStore?.setSelectedValue(text, for: selectionKey)
     }
 
     var message: String? {
-        state == .error ? errorMessage : helperText
+        showsError ? errorMessage : helperText
     }
 
     var isDisabled: Bool {
@@ -54,16 +59,15 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
         state == .focused || requestsFocus
     }
 
-    var showsError: Bool {
-        state == .error
-    }
-
     func updateText(_ text: String) {
         guard self.text != text else {
             return
         }
 
         self.text = text
+        if showsError, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            showsError = false
+        }
         experienceSelectionStateStore?.setSelectedValue(text, for: selectionKey)
     }
 }

@@ -99,6 +99,15 @@ case .playgroundBodyStats:
 **AI Rule:**
 Reject flow screens that create their own store when a later screen in the same flow reads their values, and reject flow stores that are reset from `experienceSession(for:)`.
 
+## Reacting To Other Components
+
+`ExperienceDependency` wraps the app's store so every component write is also published on `experienceSelectionChanges`, keyed by selection key. A component that must update while the user edits a different component, such as `ValidationMessage` following text fields, adopts `HasExperienceSelectionChanges` and reads the new value from the store.
+
+**Guidelines:**
+
+- Reads and writes still go to the app-owned store unchanged; the wrapper only publishes.
+- Keep flow decisions in the interactor. Use change observation for presentation that has to follow typing, not for deciding where the user goes next.
+
 ## Component Keys
 
 **Guidelines:**

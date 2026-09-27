@@ -144,6 +144,44 @@ final class TextFieldViewModelTests: XCTestCase {
         XCTAssertEqual(store.selectedValues(for: "weight"), ["88"])
     }
 
+    func testErrorClearsWhenUserTypesAValue() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .error, placeholder: "180", errorMessage: "Required"),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        viewModel.updateText("1")
+
+        XCTAssertFalse(viewModel.showsError)
+        XCTAssertNil(viewModel.message)
+    }
+
+    func testErrorStaysWhileOnlyWhitespaceIsTyped() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .error, placeholder: "180"),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        viewModel.updateText("  ")
+
+        XCTAssertTrue(viewModel.showsError)
+    }
+
+    func testClearedErrorIsNotRestoredWhenFieldIsEmptiedAgain() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .error, placeholder: "180"),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        viewModel.updateText("1")
+        viewModel.updateText("")
+
+        XCTAssertFalse(viewModel.showsError)
+    }
+
     func testDecodingDefaultsOmittedProperties() throws {
         let json = Data(#"{"placeholder": "Email"}"#.utf8)
 

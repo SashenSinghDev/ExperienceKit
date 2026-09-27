@@ -122,6 +122,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         searchBar: nil,
                         navigationBar: .init(title: "Horizontal Container", displayMode: .inline))))
             ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
+                title: "Validation Message",
+                navigation: .init(
+                    navigationType: .push(Experience.validationMessageComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Validation Message", displayMode: .inline))))
+            ),
             // UI Types --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "UI Types")

@@ -38,7 +38,6 @@ public final class TextViewModel: ComponentViewModel, ObservableObject {
         case secondary
         case tertiary
         case quaternary
-        case error
     }
 
     public let id: UUID
@@ -134,8 +133,6 @@ private extension TextProperties.ForegroundStyle {
             return .tertiary
         case .quaternary:
             return .quaternary
-        case .error:
-            return .error
         }
     }
 }

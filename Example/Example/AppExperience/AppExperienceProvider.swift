@@ -50,6 +50,13 @@ final class AppExperienceProvider: ExperienceProvider {
             return .init(interactor: ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel))
         case .horizontalContainerComponent:
             return .init(interactor: HorizontalContainerComponentInteractor(experienceViewModel: experienceViewModel))
+        case .validationMessageComponent:
+            // The message reacts to what the text fields write, so both need a store.
+            let selectionStateStore = AppExperienceSelectionStateStore()
+            return .init(
+                interactor: ValidationMessageComponentInteractor(experienceViewModel: experienceViewModel),
+                selectionStateStore: selectionStateStore
+            )
         case .playground:
             return .init(interactor: PlaygroundInteractor(
                 experienceViewModel: experienceViewModel,

@@ -173,34 +173,25 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
         )
     }
 
-    /// One shared message under the measurements row rather than one per field.
+    /// One shared message under the measurements row rather than one per field. It
+    /// updates as the user types, dropping each field once it has a value.
     private func measurementsError(for missingMeasurements: [BodyMeasurement]) -> [Component] {
         guard !missingMeasurements.isEmpty else {
             return []
         }
 
         return [
-            .spacerComponent(properties: .init(size: .small)),
-            insetText(
-                title: Self.missingMeasurementsMessage(for: missingMeasurements),
-                font: .footnote,
-                weight: .regular,
-                foregroundStyle: .error
+            .containerComponent(properties: .init(
+                component: .validationmessageComponent(properties: .init(
+                    fields: missingMeasurements.map {
+                        .init(name: $0.label.lowercased(), selectionKey: $0.selectionKey)
+                    },
+                    template: "Add your {fields} to continue.")
+                ),
+                horizontalSpacing: .medium,
+                alignment: .leading)
             )
         ]
-    }
-
-    /// "Add your height and age to continue." / "Add your weight, height and age to continue."
-    private static func missingMeasurementsMessage(for missingMeasurements: [BodyMeasurement]) -> String {
-        let names = missingMeasurements.map { $0.label.lowercased() }
-        let list: String
-        if names.count > 1 {
-            list = names.dropLast().joined(separator: ", ") + " and " + names[names.count - 1]
-        } else {
-            list = names.first ?? ""
-        }
-
-        return "Add your \(list) to continue."
     }
 
     private func insetSexSegmentedControl() -> Component {

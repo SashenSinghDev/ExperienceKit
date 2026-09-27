@@ -19,6 +19,7 @@ enum Experience: String, ExperienceID {
     case imageComponent
     case progressStepperComponent
     case horizontalContainerComponent
+    case validationMessageComponent
     case playground
     case playgroundGoalUnits
     case playgroundBodyStats
