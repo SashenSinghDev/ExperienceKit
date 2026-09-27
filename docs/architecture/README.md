@@ -43,6 +43,17 @@ Start here when:
 - Reviewing raw colours, UIKit colour substitutions, or component-local colour aliases
 - Updating `Sources/ExperienceKit/DesignSystem/`
 
+### Apple Human Interface Guidelines
+
+- [APPLEHIG.md](APPLEHIG.md) - Following Apple's HIG for component behaviour and styling, the component-to-HIG page map, reading the HIG as an agent, and the Liquid Glass checklist
+
+Start here when:
+
+- Creating a component, or changing a component's appearance, states or interaction
+- Adding custom styling such as tints, strokes, shadows or materials, including Liquid Glass
+- Implementing or reviewing a Figma component against platform conventions
+- Deciding between a system style and a custom one
+
 ## AI Rules Overview
 
 Each architecture document includes AI rules for agents:
@@ -74,6 +85,7 @@ During code review:
 - **Typed properties**: Components should expose clear property and view model types.
 - **Small views**: SwiftUI views should render state and keep behavior out of layout code.
 - **Catalogue visibility**: New components should appear in an app catalogue when they are part of the public component set.
+- **HIG first**: Component behaviour and styling should follow Apple's Human Interface Guidelines for that control, preferring system styles over custom treatment.
 - **Token fidelity**: Design-system tokens should preserve Figma naming and hierarchy in asset paths and Swift accessors.
 - **App-owned experience state**: App flow state should be owned by the host app and injected into ExperienceKit through `ExperienceSession`.
 - **ExperienceKit-only composition**: App screens should be composed from existing ExperienceKit components and design-system tokens, not host-app-only UI or styling.
