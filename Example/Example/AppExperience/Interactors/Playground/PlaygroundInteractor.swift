@@ -11,9 +11,12 @@ import Foundation
 final class PlaygroundInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     private let mainBundleIdentifier = Bundle.main.bundleIdentifier ?? ""
+    private let playgroundFlowSelectionStateStore: AppExperienceSelectionStateStore
 
-    init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
+    init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
+         playgroundFlowSelectionStateStore: AppExperienceSelectionStateStore) {
         self.experienceViewModel = experienceViewModel
+        self.playgroundFlowSelectionStateStore = playgroundFlowSelectionStateStore
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -62,7 +65,7 @@ final class PlaygroundInteractor: ExperienceInteractor {
                         style: .primary,
                         navigation: .init(
                             navigationType: .push(Experience.playgroundGoalUnits),
-                            deferredLoadingWorkId: nil,
+                            deferredLoadingWorkId: DeferredWork.buildMyPlan,
                             experienceViewModel: .init(
                                 searchBar: nil,
                                 navigationBar: nil)))
@@ -86,6 +89,23 @@ final class PlaygroundInteractor: ExperienceInteractor {
     }
 
     func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+            completion(nil)
+            return
+        }
+
+        switch deferredWork {
+        case .buildMyPlan:
+            // A new run of the flow starts here, so drop values from any previous run.
+            playgroundFlowSelectionStateStore.removeAllSelectedValues()
+        }
+
         completion(nil)
+    }
+}
+
+private extension PlaygroundInteractor {
+    enum DeferredWork: String, DeferredWorkID {
+        case buildMyPlan
     }
 }

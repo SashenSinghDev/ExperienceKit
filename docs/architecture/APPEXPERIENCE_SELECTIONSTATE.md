@@ -31,7 +31,7 @@ sequenceDiagram
 
 - Keep `ExperienceSelectionStateStore` as an ExperienceKit protocol.
 - Keep concrete store implementations in the app target.
-- Create a new store instance per experience session that needs selection handoff.
+- Create a new store instance per experience session that needs selection handoff, unless the screen is one step of a multi-screen flow (see [Flow-Scoped Stores](#flow-scoped-stores)).
 - Pass the same store instance to the interactor and to `ExperienceSession`.
 - Do not use a static or process-wide selection store for screen-local flow state.
 - Do not make ExperienceKit know about app concrete store types.
@@ -41,7 +41,7 @@ Example provider wiring:
 ```swift
 let selectionStateStore = AppExperienceSelectionStateStore()
 return .init(
-    interactor: PlaygroundGoalUnitsInteractor(
+    interactor: SelectionScreenInteractor(
         experienceViewModel: experienceViewModel,
         experienceSelectionStateStore: selectionStateStore
     ),
@@ -65,6 +65,39 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
 
 **AI Rule:**
 Reject selection state handoff where the interactor reads from a different store instance than the one injected into `ExperienceSession`.
+
+## Flow-Scoped Stores
+
+**Principle:**
+When several screens form one flow and a later screen needs values captured on earlier screens, every screen in the flow shares one store instance owned by `AppExperienceProvider`.
+
+**Guidelines:**
+
+- Hold the flow store as a private property on `AppExperienceProvider`, named after the flow.
+- Pass that same instance to each flow screen's interactor and its `ExperienceSession`.
+- Do not create the flow store inside `experienceSession(for:)`. ExperienceKit calls it again whenever SwiftUI re-evaluates the navigation stack, and cached presenters keep the store they were first given, so a store recreated there silently splits the flow.
+- Clear the store in deferred work on the action that starts a new run of the flow, not when a session is created.
+- Keep selection keys unique across every screen in the flow, because they share one namespace.
+
+Example (Playground onboarding flow):
+
+```swift
+private let playgroundFlowSelectionStateStore = AppExperienceSelectionStateStore()
+
+case .playgroundBodyStats:
+    return .init(
+        interactor: PlaygroundBodyStatsInteractor(
+            experienceViewModel: experienceViewModel,
+            experienceSelectionStateStore: playgroundFlowSelectionStateStore
+        ),
+        selectionStateStore: playgroundFlowSelectionStateStore
+    )
+```
+
+`PlaygroundInteractor` clears the store in its `buildMyPlan` deferred work, before pushing the first flow screen.
+
+**AI Rule:**
+Reject flow screens that create their own store when a later screen in the same flow reads their values, and reject flow stores that are reset from `experienceSession(for:)`.
 
 ## Component Keys
 

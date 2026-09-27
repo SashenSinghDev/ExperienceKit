@@ -10,6 +10,14 @@ import ExperienceKit
 import SwiftUI
 
 final class AppExperienceProvider: ExperienceProvider {
+    /// Selection state shared by every screen in the Playground onboarding flow.
+    ///
+    /// ExperienceKit asks for a session each time SwiftUI re-evaluates the navigation
+    /// stack, so the store must outlive individual `experienceSession(for:)` calls.
+    /// It is owned here and cleared by `PlaygroundInteractor` when a new run of the
+    /// flow starts, so each screen can capture values and a final screen can act on them.
+    private let playgroundFlowSelectionStateStore = AppExperienceSelectionStateStore()
+
     func experienceSession(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSession {
         guard let experience = Experience(rawValue: id.rawValue) else {
             fatalError("Experience id \(id.rawValue) not found")
@@ -43,15 +51,25 @@ final class AppExperienceProvider: ExperienceProvider {
         case .horizontalContainerComponent:
             return .init(interactor: HorizontalContainerComponentInteractor(experienceViewModel: experienceViewModel))
         case .playground:
-            return .init(interactor: PlaygroundInteractor(experienceViewModel: experienceViewModel))
+            return .init(interactor: PlaygroundInteractor(
+                experienceViewModel: experienceViewModel,
+                playgroundFlowSelectionStateStore: playgroundFlowSelectionStateStore
+            ))
         case .playgroundGoalUnits:
-            let selectionStateStore = AppExperienceSelectionStateStore()
             return .init(
                 interactor: PlaygroundGoalUnitsInteractor(
                     experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: selectionStateStore
+                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
                 ),
-                selectionStateStore: selectionStateStore
+                selectionStateStore: playgroundFlowSelectionStateStore
+            )
+        case .playgroundBodyStats:
+            return .init(
+                interactor: PlaygroundBodyStatsInteractor(
+                    experienceViewModel: experienceViewModel,
+                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
+                ),
+                selectionStateStore: playgroundFlowSelectionStateStore
             )
         }
     }

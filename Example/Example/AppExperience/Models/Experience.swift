@@ -21,6 +21,7 @@ enum Experience: String, ExperienceID {
     case horizontalContainerComponent
     case playground
     case playgroundGoalUnits
+    case playgroundBodyStats
     case fullScreen
     case navigationCapability
 }

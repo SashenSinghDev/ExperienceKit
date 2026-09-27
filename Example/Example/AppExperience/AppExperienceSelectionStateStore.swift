@@ -32,4 +32,10 @@ final class AppExperienceSelectionStateStore: ExperienceSelectionStateStore {
     func selectedValues(for key: String) -> [String] {
         selectedValuesByKey[key, default: []]
     }
+
+    /// Clears every captured value. Used when a multi-screen flow that shares
+    /// this store starts a new run.
+    func removeAllSelectedValues() {
+        selectedValuesByKey.removeAll()
+    }
 }
