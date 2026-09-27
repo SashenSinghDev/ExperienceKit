@@ -31,8 +31,8 @@ public extension Component {
                          id: UUID())
     }
 
-    static func horizontalstackComponent(properties: HorizontalStackProperties) -> Component {
-        return Component(contentType: "horizontalstack",
+    static func horizontalcontainerComponent(properties: HorizontalContainerProperties) -> Component {
+        return Component(contentType: "horizontalcontainer",
                          properties: properties,
                          id: UUID())
     }

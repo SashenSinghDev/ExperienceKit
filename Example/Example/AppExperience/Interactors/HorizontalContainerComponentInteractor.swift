@@ -1,5 +1,5 @@
 //
-//  HorizontalStackComponentInteractor.swift
+//  HorizontalContainerComponentInteractor.swift
 //  Example
 //
 //  Created by Claude on 27/09/2026.
@@ -8,7 +8,7 @@
 import ExperienceKit
 import SwiftUI
 
-final class HorizontalStackComponentInteractor: ExperienceInteractor {
+final class HorizontalContainerComponentInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?) {
@@ -18,7 +18,7 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
     func load(completion: @escaping (ExperienceType) -> Void) {
         completion(.scrollable(components: [
             .sectiontitleComponent(properties: .init(title: "Fill equally")),
-            insetHorizontalStack(
+            insetHorizontalContainer(
                 components: [
                     measurementField(label: "Weight", placeholder: "88", unit: "kg"),
                     measurementField(label: "Height", placeholder: "180", unit: "cm"),
@@ -29,7 +29,7 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
             ),
             .spacerComponent(properties: .init(size: .large)),
             .sectiontitleComponent(properties: .init(title: "Leading")),
-            insetHorizontalStack(
+            insetHorizontalContainer(
                 components: [
                     text("Kcal"),
                     text("Protein"),
@@ -40,7 +40,7 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
             ),
             .spacerComponent(properties: .init(size: .large)),
             .sectiontitleComponent(properties: .init(title: "Centre aligned")),
-            insetHorizontalStack(
+            insetHorizontalContainer(
                 components: [
                     text("Short"),
                     text("A longer label that wraps onto more than one line"),
@@ -54,7 +54,7 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
             .sectiontitleComponent(properties: .init(title: "Scrollable")),
             // Not wrapped in a container: the content inset lines the first card
             // up with the page margin while the row still scrolls edge to edge.
-            .horizontalstackComponent(properties: .init(
+            .horizontalcontainerComponent(properties: .init(
                 components: [
                     card(title: "The 30-Day Cutting Pack",
                          subtitle: "Six high-volume dinners on rotation for a month.",
@@ -78,12 +78,12 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
         completion(nil)
     }
 
-    private func insetHorizontalStack(components: [Component],
-                                      spacing: HorizontalStackProperties.Spacing,
-                                      alignment: HorizontalStackProperties.Alignment = .top,
-                                      distribution: HorizontalStackProperties.Distribution) -> Component {
+    private func insetHorizontalContainer(components: [Component],
+                                      spacing: HorizontalContainerProperties.Spacing,
+                                      alignment: HorizontalContainerProperties.Alignment = .top,
+                                      distribution: HorizontalContainerProperties.Distribution) -> Component {
         .containerComponent(properties: .init(
-            component: .horizontalstackComponent(properties: .init(
+            component: .horizontalcontainerComponent(properties: .init(
                 components: components,
                 spacing: spacing,
                 alignment: alignment,
@@ -111,7 +111,7 @@ final class HorizontalStackComponentInteractor: ExperienceInteractor {
             isSelected: false,
             badgeText: nil,
             selectionId: title,
-            selectionGroupId: "horizontal-stack-demo",
+            selectionGroupId: "horizontal-container-demo",
             navigation: nil
         ))
     }

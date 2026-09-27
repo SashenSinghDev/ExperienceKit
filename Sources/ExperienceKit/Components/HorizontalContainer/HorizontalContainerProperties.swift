@@ -1,7 +1,7 @@
 import Foundation
 
-// sourcery: component = "horizontalstack"
-public struct HorizontalStackProperties {
+// sourcery: component = "horizontalcontainer"
+public struct HorizontalContainerProperties {
     public enum Spacing: Codable {
         case none
         case small
@@ -53,17 +53,17 @@ public struct HorizontalStackProperties {
     }
 }
 
-extension HorizontalStackProperties: Properties, Codable {
-    public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> HorizontalStackProperties {
-        return try properties.decode(HorizontalStackProperties.self, forKey: .properties)
+extension HorizontalContainerProperties: Properties, Codable {
+    public static func fromComponent(properties: KeyedDecodingContainer<Component.CodingKeys>) throws -> HorizontalContainerProperties {
+        return try properties.decode(HorizontalContainerProperties.self, forKey: .properties)
     }
 }
 
 #if DEBUG
-public extension HorizontalStackProperties {
+public extension HorizontalContainerProperties {
     static var mock: Component {
-        Component(contentType: "horizontalstack",
-                  properties: HorizontalStackProperties(
+        Component(contentType: "horizontalcontainer",
+                  properties: HorizontalContainerProperties(
                     components: [
                         .textComponent(properties: .init(title: "One", font: .body, weight: .regular, alignment: .leading, foregroundStyle: .primary)),
                         .textComponent(properties: .init(title: "Two", font: .body, weight: .regular, alignment: .leading, foregroundStyle: .primary)),

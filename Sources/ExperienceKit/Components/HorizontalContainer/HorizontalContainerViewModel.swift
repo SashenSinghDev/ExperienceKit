@@ -1,18 +1,18 @@
 import Foundation
 
-public final class HorizontalStackViewModel: ComponentViewModel, ObservableObject {
+public final class HorizontalContainerViewModel: ComponentViewModel, ObservableObject {
     public typealias Dependencies = ExperienceDependency
 
     public let id: UUID
     let children: [AnyComponentViewModel]
     let viewProvider: ViewProvider
     let spacing: CGFloat
-    let alignment: HorizontalStackProperties.Alignment
-    let distribution: HorizontalStackProperties.Distribution
+    let alignment: HorizontalContainerProperties.Alignment
+    let distribution: HorizontalContainerProperties.Distribution
     let contentInset: CGFloat
     let itemWidth: CGFloat?
 
-    public init(properties: HorizontalStackProperties,
+    public init(properties: HorizontalContainerProperties,
                 dependency: Dependencies,
                 id: UUID) {
         self.id = id
@@ -30,7 +30,7 @@ public final class HorizontalStackViewModel: ComponentViewModel, ObservableObjec
     }
 }
 
-private extension HorizontalStackProperties.Spacing {
+private extension HorizontalContainerProperties.Spacing {
     var value: CGFloat {
         switch self {
         case .none: return .spacing.none

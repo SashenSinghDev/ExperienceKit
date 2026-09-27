@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct HorizontalStackView: ComponentView {
-    @ObservedObject var viewModel: HorizontalStackViewModel
+struct HorizontalContainerView: ComponentView {
+    @ObservedObject var viewModel: HorizontalContainerViewModel
 
-    init(viewModel: HorizontalStackViewModel) {
+    init(viewModel: HorizontalContainerViewModel) {
         self.viewModel = viewModel
     }
 
@@ -54,13 +54,13 @@ struct HorizontalStackView: ComponentView {
     }
 }
 
-extension HorizontalStackView {
-    static func == (lhs: HorizontalStackView, rhs: HorizontalStackView) -> Bool {
+extension HorizontalContainerView {
+    static func == (lhs: HorizontalContainerView, rhs: HorizontalContainerView) -> Bool {
         lhs.viewModel.id == rhs.viewModel.id
     }
 }
 
-private extension HorizontalStackProperties.Alignment {
+private extension HorizontalContainerProperties.Alignment {
     var verticalAlignment: VerticalAlignment {
         switch self {
         case .top:

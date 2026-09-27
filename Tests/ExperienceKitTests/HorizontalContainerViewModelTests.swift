@@ -1,7 +1,7 @@
 import XCTest
 @testable import ExperienceKit
 
-final class HorizontalStackViewModelTests: XCTestCase {
+final class HorizontalContainerViewModelTests: XCTestCase {
     func testCreatesAChildViewModelForEachComponentInOrder() {
         let components = [text("One"), text("Two"), text("Three")]
 
@@ -47,7 +47,7 @@ final class HorizontalStackViewModelTests: XCTestCase {
     }
 
     func testChildrenReceiveTheSessionSelectionStateStore() {
-        let store = HorizontalStackSelectionStateStore()
+        let store = HorizontalContainerSelectionStateStore()
 
         _ = makeViewModel(
             components: [
@@ -65,14 +65,14 @@ final class HorizontalStackViewModelTests: XCTestCase {
     }
 
     private func makeViewModel(components: [Component],
-                               spacing: HorizontalStackProperties.Spacing = .small,
-                               distribution: HorizontalStackProperties.Distribution = .fillEqually,
-                               contentInset: HorizontalStackProperties.Spacing = .none,
+                               spacing: HorizontalContainerProperties.Spacing = .small,
+                               distribution: HorizontalContainerProperties.Distribution = .fillEqually,
+                               contentInset: HorizontalContainerProperties.Spacing = .none,
                                itemWidth: Double? = nil,
-                               store: ExperienceSelectionStateStore? = nil) -> HorizontalStackViewModel {
+                               store: ExperienceSelectionStateStore? = nil) -> HorizontalContainerViewModel {
         let registers: [ComponentRegister] = [TextComponentRegister(), TextFieldComponentRegister()]
 
-        return HorizontalStackViewModel(
+        return HorizontalContainerViewModel(
             properties: .init(
                 components: components,
                 spacing: spacing,
@@ -81,7 +81,7 @@ final class HorizontalStackViewModelTests: XCTestCase {
                 itemWidth: itemWidth
             ),
             dependency: ExperienceDependency(
-                router: DefaultExperienceRouter(expId: HorizontalStackTestExperienceID.root),
+                router: DefaultExperienceRouter(expId: HorizontalContainerTestExperienceID.root),
                 experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
                 viewProvider: ViewProvider(supportedComponentRegisters: registers),
                 viewModelProvider: DefaultViewModelProvider(supportedComponentRegisters: registers),
@@ -102,11 +102,11 @@ final class HorizontalStackViewModelTests: XCTestCase {
     }
 }
 
-private enum HorizontalStackTestExperienceID: String, ExperienceID {
+private enum HorizontalContainerTestExperienceID: String, ExperienceID {
     case root
 }
 
-private final class HorizontalStackSelectionStateStore: ExperienceSelectionStateStore {
+private final class HorizontalContainerSelectionStateStore: ExperienceSelectionStateStore {
     private var selectedValuesByKey: [String: [String]] = [:]
 
     func setSelectedValue(_ value: String, for key: String) {

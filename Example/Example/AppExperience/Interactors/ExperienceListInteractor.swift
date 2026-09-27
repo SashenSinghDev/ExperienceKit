@@ -114,13 +114,13 @@ final class ExperienceListInteractor: ExperienceInteractor {
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
-                title: "Horizontal Stack",
+                title: "Horizontal Container",
                 navigation: .init(
-                    navigationType: .push(Experience.horizontalStackComponent),
+                    navigationType: .push(Experience.horizontalContainerComponent),
                     deferredLoadingWorkId: nil,
                     experienceViewModel: .init(
                         searchBar: nil,
-                        navigationBar: .init(title: "Horizontal Stack", displayMode: .inline))))
+                        navigationBar: .init(title: "Horizontal Container", displayMode: .inline))))
             ),
             // UI Types --------------------------------
             .sectiontitleComponent(properties: .init(
