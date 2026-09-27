@@ -39,29 +39,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                     foregroundStyle: .secondary
                 ),
                 .spacerComponent(properties: .init(size: .large)),
-                measurementField(
-                    label: "Weight",
-                    placeholder: "88",
-                    unit: "kg",
-                    keyboardType: .decimalPad,
-                    selectionKey: SelectionKey.weight
-                ),
-                .spacerComponent(properties: .init(size: .small)),
-                measurementField(
-                    label: "Height",
-                    placeholder: "180",
-                    unit: "cm",
-                    keyboardType: .numberPad,
-                    selectionKey: SelectionKey.height
-                ),
-                .spacerComponent(properties: .init(size: .small)),
-                measurementField(
-                    label: "Age",
-                    placeholder: "32",
-                    unit: "yrs",
-                    keyboardType: .numberPad,
-                    selectionKey: SelectionKey.age
-                ),
+                insetMeasurementsRow(),
                 .spacerComponent(properties: .init(size: .large)),
                 insetText(
                     title: "Sex",
@@ -135,21 +113,53 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
         )
     }
 
+    /// Weight, height and age side by side, each taking an equal share of the width.
+    private func insetMeasurementsRow() -> Component {
+        .containerComponent(properties: .init(
+            component: .horizontalcontainerComponent(properties: .init(
+                components: [
+                    measurementField(
+                        label: "Weight",
+                        placeholder: "88",
+                        unit: "kg",
+                        keyboardType: .decimalPad,
+                        selectionKey: SelectionKey.weight
+                    ),
+                    measurementField(
+                        label: "Height",
+                        placeholder: "180",
+                        unit: "cm",
+                        keyboardType: .numberPad,
+                        selectionKey: SelectionKey.height
+                    ),
+                    measurementField(
+                        label: "Age",
+                        placeholder: "32",
+                        unit: "yrs",
+                        keyboardType: .numberPad,
+                        selectionKey: SelectionKey.age
+                    )
+                ],
+                spacing: .small,
+                alignment: .top,
+                distribution: .fillEqually)
+            ),
+            horizontalSpacing: .medium)
+        )
+    }
+
     private func measurementField(label: String,
                                   placeholder: String,
                                   unit: String,
                                   keyboardType: TextFieldProperties.KeyboardType,
                                   selectionKey: String) -> Component {
-        .containerComponent(properties: .init(
-            component: .textfieldComponent(properties: .init(
-                keyboardType: keyboardType,
-                label: label,
-                placeholder: placeholder,
-                showsClearButton: false,
-                unit: unit,
-                selectionKey: selectionKey)
-            ),
-            horizontalSpacing: .medium)
+        .textfieldComponent(properties: .init(
+            keyboardType: keyboardType,
+            label: label,
+            placeholder: placeholder,
+            showsClearButton: false,
+            unit: unit,
+            selectionKey: selectionKey)
         )
     }
 
