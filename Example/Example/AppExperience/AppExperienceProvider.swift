@@ -40,6 +40,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return .init(interactor: ImageComponentInteractor(experienceViewModel: experienceViewModel))
         case .progressStepperComponent:
             return .init(interactor: ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel))
+        case .horizontalContainerComponent:
+            return .init(interactor: HorizontalContainerComponentInteractor(experienceViewModel: experienceViewModel))
         case .playground:
             return .init(interactor: PlaygroundInteractor(experienceViewModel: experienceViewModel))
         case .playgroundGoalUnits:

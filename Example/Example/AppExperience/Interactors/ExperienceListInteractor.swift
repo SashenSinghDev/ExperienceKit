@@ -112,6 +112,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
                         searchBar: nil,
                         navigationBar: .init(title: "Progress Stepper", displayMode: .inline))))
             ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
+                title: "Horizontal Container",
+                navigation: .init(
+                    navigationType: .push(Experience.horizontalContainerComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Horizontal Container", displayMode: .inline))))
+            ),
             // UI Types --------------------------------
             .sectiontitleComponent(properties: .init(
                 title: "UI Types")
