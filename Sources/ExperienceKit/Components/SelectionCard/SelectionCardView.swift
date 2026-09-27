@@ -56,7 +56,7 @@ struct SelectionCardView: ComponentView {
         .padding(.spacing.medium)
         .background(
             RoundedRectangle(cornerRadius: .radius.lg)
-                .fill(viewModel.isSelected ? Color(.secondarySystemBackground) : Color.clear)
+                .fill(viewModel.isSelected ? Color.grays.gray5 : Color.backgrounds.primary)
         )
         .overlay(
             RoundedRectangle(cornerRadius: .radius.lg)
