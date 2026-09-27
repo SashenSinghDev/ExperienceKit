@@ -13,8 +13,10 @@ public struct ButtonProperties {
         case primary
         case secondary
         case borderless
-        /// Liquid Glass material with a monochrome label. Use over media, maps or imagery.
+        /// Untinted Liquid Glass with a vibrant monochrome label. Use over media, maps or imagery.
         case glass
+        /// Liquid Glass tinted with the accent colour. Reserve for the single primary action in a view.
+        case glassProminent
     }
 
     public let title: String

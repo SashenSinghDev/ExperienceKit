@@ -19,11 +19,6 @@ extension Color {
             static let label = Color("Button/secondaryLabel", bundle: .module)
             static let border = Color("Button/secondaryBorder", bundle: .module)
         }
-
-        enum glass {
-            /// Figma: color/button/glassTint
-            static let tint = Color("Button/glassTint", bundle: .module)
-        }
     }
 
     enum progressStepper {
@@ -45,6 +40,7 @@ extension Color {
 
     enum grays {
         static let gray5 = Color("grays/gray-5", bundle: .module)
+        static let white = Color("grays/white", bundle: .module)
     }
 
     enum text {
@@ -59,6 +55,7 @@ extension Color {
     }
 
     enum labelsVibrant {
+        static let primary = Color("labels-vibrant/primary", bundle: .module)
         static let secondary = Color("labels-vibrant/secondary", bundle: .module)
         static let tertiary = Color("labels-vibrant/tertiary", bundle: .module)
         static let quaternary = Color("labels-vibrant/quaternary", bundle: .module)

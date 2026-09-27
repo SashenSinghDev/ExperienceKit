@@ -10,7 +10,7 @@ final class ButtonViewModelTests: XCTestCase {
     }
 
     func testKeepsEachSupportedStyle() {
-        let styles: [ButtonProperties.Style] = [.primary, .secondary, .borderless, .glass]
+        let styles: [ButtonProperties.Style] = [.primary, .secondary, .borderless, .glass, .glassProminent]
 
         XCTAssertEqual(styles.map { makeViewModel(style: $0).style }, styles)
     }
@@ -27,6 +27,19 @@ final class ButtonViewModelTests: XCTestCase {
 
         XCTAssertEqual(decoded.style, .glass)
         XCTAssertEqual(decoded.title, "Glass")
+    }
+
+    func testGlassProminentStyleRoundTripsThroughCodable() throws {
+        let properties = ButtonProperties(title: "Continue",
+                                          style: .glassProminent,
+                                          navigation: .init(navigationType: .pop,
+                                                            deferredLoadingWorkId: nil,
+                                                            experienceViewModel: nil))
+
+        let data = try JSONEncoder().encode(properties)
+        let decoded = try JSONDecoder().decode(ButtonProperties.self, from: data)
+
+        XCTAssertEqual(decoded.style, .glassProminent)
     }
 
     private func makeViewModel(title: String = "Button Title",
