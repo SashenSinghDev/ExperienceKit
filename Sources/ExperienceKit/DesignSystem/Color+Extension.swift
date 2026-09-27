@@ -40,7 +40,6 @@ extension Color {
 
     enum grays {
         static let gray5 = Color("grays/gray-5", bundle: .module)
-        static let white = Color("grays/white", bundle: .module)
     }
 
     enum text {

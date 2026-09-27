@@ -43,13 +43,12 @@ private extension ButtonProperties.Style {
             return .button.primary.background
         case .secondary:
             return .button.secondary.background
-        case .borderless, .glass, .glassProminent:
+        case .borderless, .glass:
             return .clear
         }
     }
 
-    /// Figma: Glass → color/labels-vibrant/primary (the vibrant label role for content on
-    /// materials); Glass Prominent → color/grays/white on the accent tint.
+    /// Figma: Glass → color/labels-vibrant/primary, the vibrant label role for content on materials.
     var labelColor: Color {
         switch self {
         case .primary:
@@ -58,14 +57,12 @@ private extension ButtonProperties.Style {
             return .button.secondary.label
         case .glass:
             return .labelsVibrant.primary
-        case .glassProminent:
-            return .grays.white
         }
     }
 
     var borderColor: Color {
         switch self {
-        case .primary, .borderless, .glass, .glassProminent:
+        case .primary, .borderless, .glass:
             return .clear
         case .secondary:
             return .button.secondary.border
@@ -78,8 +75,7 @@ private extension View {
     /// Glass uses the native, untinted Liquid Glass material (Figma: Material/Liquid Glass);
     /// the glass edge highlight replaces the border. Per the HIG, Liquid Glass has no colour
     /// of its own and tint is reserved for emphasising a primary action, so the default glass
-    /// button stays untinted. Glass Prominent tints the glass with `color/accents/blue`, mirroring
-    /// the system `.glassProminent` style: colour on the background, not the label.
+    /// button stays untinted.
     @ViewBuilder
     func buttonSurface(for style: ButtonProperties.Style) -> some View {
         switch style {
@@ -87,10 +83,6 @@ private extension View {
             self
                 .contentShape(.capsule)
                 .glassEffect(.regular.interactive(), in: .capsule)
-        case .glassProminent:
-            self
-                .contentShape(.capsule)
-                .glassEffect(.regular.tint(.accents.blue).interactive(), in: .capsule)
         case .primary, .secondary, .borderless:
             self
                 .background(style.backgroundColor)
