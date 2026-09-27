@@ -87,7 +87,7 @@ struct TextFieldView: ComponentView {
             text = newValue
         }
         .onAppear {
-            isFocused = viewModel.state == .focused
+            isFocused = viewModel.focusesOnAppear
         }
     }
 

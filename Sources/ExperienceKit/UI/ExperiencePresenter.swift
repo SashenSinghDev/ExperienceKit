@@ -95,9 +95,18 @@ public final class ExperiencePresenter: ObservableObject {
         if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
             dependency.router.isLoading = true
 
-            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] _ in
-                self?.dependency.router.isLoading = false
-                self?.dependency.router.navigate(to: navigationViewModel)
+            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] experienceType in
+                guard let self else { return }
+                self.dependency.router.isLoading = false
+
+                // A returned experience replaces the current screen and halts the
+                // navigation, e.g. to re-render a form with validation errors.
+                if let experienceType {
+                    self.resolveState(for: experienceType)
+                    return
+                }
+
+                self.dependency.router.navigate(to: navigationViewModel)
             }
         } else {
             dependency.router.navigate(to: navigationViewModel)
