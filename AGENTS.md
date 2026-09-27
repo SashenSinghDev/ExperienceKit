@@ -13,6 +13,8 @@ This repo is the source of truth for AI work. Keep provider-specific files thin;
 
 **Components**: See [docs/architecture/COMPONENTCREATION.md](docs/architecture/COMPONENTCREATION.md) before adding, wiring, or reviewing a component.
 
+**Apple HIG**: See [docs/architecture/APPLEHIG.md](docs/architecture/APPLEHIG.md) before designing or restyling a component. Follow Apple's Human Interface Guidelines for that control and prefer system styles over custom tints, strokes or shadows.
+
 **Generated component scaffolds**: Create new components from the repo root with `./generate_component.sh`. Do not hand-create the initial component file set when the generator can do it.
 
 **Example catalogue**: When adding a component, expose it through the example app and add a list entry in `Example/Example/AppExperience/Interactors/ExperienceListInteractor.swift`.

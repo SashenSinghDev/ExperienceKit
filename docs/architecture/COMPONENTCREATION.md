@@ -62,8 +62,11 @@ Components should consume canonical ExperienceKit design-system tokens instead o
 - Figma is the source of truth for new design-system values, and token additions should map one-to-one to the Figma token path.
 - Keep component views as consumers of semantic tokens, for example `.fill(.surface.primary)`.
 
+- Read [APPLEHIG.md](APPLEHIG.md) and the HIG page for the control before choosing its styling and states. Follow Apple's recommendation for that kind of control, and prefer system styles over custom treatment.
+- Add the new component's row to the component-to-HIG map in [APPLEHIG.md](APPLEHIG.md).
+
 **AI Rule:**
-Reject component styling that bypasses the design-system token guidance in [DESIGNSYSTEM.md](DESIGNSYSTEM.md).
+Reject component styling that bypasses the design-system token guidance in [DESIGNSYSTEM.md](DESIGNSYSTEM.md) or the HIG guidance in [APPLEHIG.md](APPLEHIG.md).
 
 ---
 
