@@ -69,15 +69,17 @@ private extension ButtonProperties.Style {
 
 private extension View {
     /// Applies the pill surface for a button style.
-    /// Glass uses the native Liquid Glass material (Figma: Material/Liquid Glass) tinted with
-    /// `color/button/glassTint`; the glass edge highlight replaces the border.
+    /// Glass uses the native, untinted Liquid Glass material (Figma: Material/Liquid Glass);
+    /// the glass edge highlight replaces the border. Per the HIG, Liquid Glass has no colour
+    /// of its own and tint is reserved for emphasising a primary action, so the default glass
+    /// button stays untinted.
     @ViewBuilder
     func buttonSurface(for style: ButtonProperties.Style) -> some View {
         switch style {
         case .glass:
             self
                 .contentShape(.capsule)
-                .glassEffect(.regular.tint(Color.button.glass.tint).interactive(), in: .capsule)
+                .glassEffect(.regular.interactive(), in: .capsule)
         case .primary, .secondary, .borderless:
             self
                 .background(style.backgroundColor)

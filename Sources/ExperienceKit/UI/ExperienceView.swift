@@ -157,11 +157,6 @@ private struct BottomSearchBar: View {
         .frame(height: 56)
         .padding(.horizontal, 18)
         .liquidGlassSearchBackground()
-        .overlay {
-            Capsule()
-                .strokeBorder(.white.opacity(0.35), lineWidth: 0.5)
-        }
-        .shadow(color: .black.opacity(0.12), radius: 18, x: 0, y: 8)
         .padding(.horizontal, 16)
         .padding(.bottom, 8)
         .onDisappear {
