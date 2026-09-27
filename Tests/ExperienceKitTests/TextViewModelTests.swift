@@ -2,83 +2,98 @@ import Combine
 import XCTest
 @testable import ExperienceKit
 
-final class ValidationMessageViewModelTests: XCTestCase {
-    private let fields: [ValidationMessageProperties.Field] = [
+final class TextViewModelTests: XCTestCase {
+    private let fields: [TextProperties.MissingSelections.Field] = [
         .init(name: "weight", selectionKey: "weight"),
         .init(name: "height", selectionKey: "height"),
         .init(name: "age", selectionKey: "age")
     ]
 
-    func testListsEveryMissingField() {
-        let viewModel = makeViewModel(store: MessageSelectionStateStore())
+    func testPlainTextShowsTitleAsIs() {
+        let viewModel = TextViewModel(
+            properties: .init(title: "Add your {fields}", font: .body, weight: .regular,
+                              alignment: .leading, foregroundStyle: .primary),
+            dependency: TextDependency(store: TextSelectionStateStore()),
+            id: UUID()
+        )
 
-        XCTAssertEqual(viewModel.message, "Add your weight, height and age to continue.")
+        XCTAssertEqual(viewModel.title, "Add your {fields}")
+    }
+
+    func testListsEveryMissingField() {
+        let viewModel = makeViewModel(store: TextSelectionStateStore())
+
+        XCTAssertEqual(viewModel.title, "Add your weight, height and age to continue.")
     }
 
     func testFieldDropsOutOnceItHasAValue() {
-        let store = MessageSelectionStateStore()
+        let store = TextSelectionStateStore()
         let viewModel = makeViewModel(store: store)
 
         store.setSelectedValue("88", for: "weight")
 
-        XCTAssertEqual(viewModel.message, "Add your height and age to continue.")
+        XCTAssertEqual(viewModel.title, "Add your height and age to continue.")
     }
 
-    func testMessageHidesWhenEveryFieldHasAValue() {
-        let store = MessageSelectionStateStore()
+    func testTextHidesWhenEveryFieldHasAValue() {
+        let store = TextSelectionStateStore()
         let viewModel = makeViewModel(store: store)
 
         store.setSelectedValue("88", for: "weight")
         store.setSelectedValue("180", for: "height")
         store.setSelectedValue("32", for: "age")
 
-        XCTAssertNil(viewModel.message)
+        XCTAssertNil(viewModel.title)
     }
 
     func testWhitespaceDoesNotCountAsAValue() {
-        let store = MessageSelectionStateStore()
+        let store = TextSelectionStateStore()
         let viewModel = makeViewModel(store: store)
 
         store.setSelectedValue("  ", for: "weight")
 
-        XCTAssertEqual(viewModel.message, "Add your weight, height and age to continue.")
+        XCTAssertEqual(viewModel.title, "Add your weight, height and age to continue.")
     }
 
     func testEmptyingAFieldAgainDoesNotBringItBack() {
-        let store = MessageSelectionStateStore()
+        let store = TextSelectionStateStore()
         let viewModel = makeViewModel(store: store)
 
         store.setSelectedValue("88", for: "weight")
         store.setSelectedValue("", for: "weight")
 
-        XCTAssertEqual(viewModel.message, "Add your height and age to continue.")
+        XCTAssertEqual(viewModel.title, "Add your height and age to continue.")
     }
 
     func testFieldsWithValuesAtCreationAreLeftOut() {
-        let store = MessageSelectionStateStore()
+        let store = TextSelectionStateStore()
         store.setSelectedValue("88", for: "weight")
 
         let viewModel = makeViewModel(store: store)
 
-        XCTAssertEqual(viewModel.message, "Add your height and age to continue.")
+        XCTAssertEqual(viewModel.title, "Add your height and age to continue.")
     }
 
     func testSingleFieldUsesItsNameAlone() {
         XCTAssertEqual(
-            ValidationMessageViewModel.message(for: [fields[2]], template: "Add your {fields}.", conjunction: "and"),
+            TextViewModel.title(template: "Add your {fields}.",
+                                missingSelections: .init(fields: fields),
+                                remainingFields: [fields[2]]),
             "Add your age."
         )
     }
 
     func testConjunctionIsConfigurable() {
         XCTAssertEqual(
-            ValidationMessageViewModel.message(for: Array(fields.prefix(2)), template: "{fields}", conjunction: "et"),
+            TextViewModel.title(template: "{fields}",
+                                missingSelections: .init(fields: fields, conjunction: "et"),
+                                remainingFields: Array(fields.prefix(2))),
             "weight et height"
         )
     }
 
     func testObservedStoreForwardsAndPublishesWrites() {
-        let base = MessageSelectionStateStore()
+        let base = TextSelectionStateStore()
         let observed = ObservedExperienceSelectionStateStore(base: base)
         var keys: [String] = []
         let cancellable = observed.changes.sink { keys.append($0) }
@@ -92,27 +107,29 @@ final class ValidationMessageViewModelTests: XCTestCase {
         cancellable.cancel()
     }
 
-    private func makeViewModel(store: MessageSelectionStateStore) -> ValidationMessageViewModel {
-        ValidationMessageViewModel(
-            properties: .init(fields: fields, template: "Add your {fields} to continue."),
-            dependency: MessageDependency(store: store),
+    private func makeViewModel(store: TextSelectionStateStore) -> TextViewModel {
+        TextViewModel(
+            properties: .init(title: "Add your {fields} to continue.", font: .footnote,
+                              weight: .regular, alignment: .leading, foregroundStyle: .error,
+                              missingSelections: .init(fields: fields)),
+            dependency: TextDependency(store: store),
             id: UUID()
         )
     }
 }
 
-private struct MessageDependency: HasExperienceSelectionStateStore, HasExperienceSelectionChanges {
+private struct TextDependency: HasExperienceSelectionStateStore, HasExperienceSelectionChanges {
     let experienceSelectionStateStore: ExperienceSelectionStateStore?
     let experienceSelectionChanges: AnyPublisher<String, Never>
 
-    init(store: MessageSelectionStateStore) {
+    init(store: TextSelectionStateStore) {
         self.experienceSelectionStateStore = store
         self.experienceSelectionChanges = store.changes.eraseToAnyPublisher()
     }
 }
 
 /// Publishes writes directly, standing in for the observed wrapper ExperienceDependency adds.
-private final class MessageSelectionStateStore: ExperienceSelectionStateStore {
+private final class TextSelectionStateStore: ExperienceSelectionStateStore {
     let changes = PassthroughSubject<String, Never>()
     private var values: [String: [String]] = [:]
 

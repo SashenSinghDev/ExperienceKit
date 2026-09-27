@@ -37,24 +37,57 @@ public struct TextProperties {
         case secondary
         case tertiary
         case quaternary
+        /// Figma: color/accents/red — validation and error messages.
+        case error
     }
     
+    /// Turns the text into a live list of fields that still need a value, e.g. a
+    /// form error such as "Add your height and age to continue." `title` is the
+    /// template and `{fields}` in it is replaced by the names still missing. A name
+    /// drops out once its selection key has a value, and the text hides when none
+    /// remain. Names never come back; the next submit rebuilds the text.
+    public struct MissingSelections: Codable, Equatable {
+        public struct Field: Codable, Equatable {
+            /// How the field is named inside the text, e.g. "height".
+            public let name: String
+            /// The selection key the field's component writes to.
+            public let selectionKey: String
+
+            public init(name: String, selectionKey: String) {
+                self.name = name
+                self.selectionKey = selectionKey
+            }
+        }
+
+        public let fields: [Field]
+        /// Joins the last two names, e.g. "height and age".
+        public let conjunction: String
+
+        public init(fields: [Field], conjunction: String = "and") {
+            self.fields = fields
+            self.conjunction = conjunction
+        }
+    }
+
     public let title: String
     public let font: Font
     public let weight: Weight
     public let alignment: Alignment
     public let foregroundStyle: ForegroundStyle
+    public let missingSelections: MissingSelections?
 
     public init(title: String,
                 font: Font,
                 weight: Weight,
                 alignment: Alignment,
-                foregroundStyle: ForegroundStyle) {
+                foregroundStyle: ForegroundStyle,
+                missingSelections: MissingSelections? = nil) {
         self.title = title
         self.font = font
         self.weight = weight
         self.alignment = alignment
         self.foregroundStyle = foregroundStyle
+        self.missingSelections = missingSelections
     }
 }
 

@@ -8,12 +8,14 @@ struct TextView: ComponentView {
     }
 
     var body: some View {
-        Text("\(viewModel.title)")
-            .font(viewModel.font.swiftUIFont.weight(viewModel.weight.swiftUIFontWeight))
-            .italic(viewModel.weight.isItalic)
-            .multilineTextAlignment(viewModel.alignment.swiftUITextAlignment)
-            .frame(maxWidth: .infinity, alignment: viewModel.alignment.swiftUIAlignment)
-            .foregroundStyle(viewModel.foregroundStyle.swiftUIForegroundStyle)
+        if let title = viewModel.title {
+            Text("\(title)")
+                .font(viewModel.font.swiftUIFont.weight(viewModel.weight.swiftUIFontWeight))
+                .italic(viewModel.weight.isItalic)
+                .multilineTextAlignment(viewModel.alignment.swiftUITextAlignment)
+                .frame(maxWidth: .infinity, alignment: viewModel.alignment.swiftUIAlignment)
+                .foregroundStyle(viewModel.foregroundStyle.swiftUIForegroundStyle)
+        }
     }
 }
 
@@ -48,16 +50,18 @@ private extension TextViewModel.Alignment {
 }
 
 private extension TextViewModel.ForegroundStyle {
-    var swiftUIForegroundStyle: HierarchicalShapeStyle {
+    var swiftUIForegroundStyle: AnyShapeStyle {
         switch self {
         case .primary:
-            return .primary
+            return AnyShapeStyle(.primary)
         case .secondary:
-            return .secondary
+            return AnyShapeStyle(.secondary)
         case .tertiary:
-            return .tertiary
+            return AnyShapeStyle(.tertiary)
         case .quaternary:
-            return .quaternary
+            return AnyShapeStyle(.quaternary)
+        case .error:
+            return AnyShapeStyle(Color.accents.red)
         }
     }
 }

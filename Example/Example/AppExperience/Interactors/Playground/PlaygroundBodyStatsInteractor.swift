@@ -181,12 +181,17 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
         }
 
         return [
+            .spacerComponent(properties: .init(size: .small)),
             .containerComponent(properties: .init(
-                component: .validationmessageComponent(properties: .init(
-                    fields: missingMeasurements.map {
+                component: .textComponent(properties: .init(
+                    title: "Add your {fields} to continue.",
+                    font: .footnote,
+                    weight: .regular,
+                    alignment: .leading,
+                    foregroundStyle: .error,
+                    missingSelections: .init(fields: missingMeasurements.map {
                         .init(name: $0.label.lowercased(), selectionKey: $0.selectionKey)
-                    },
-                    template: "Add your {fields} to continue.")
+                    }))
                 ),
                 horizontalSpacing: .medium,
                 alignment: .leading)

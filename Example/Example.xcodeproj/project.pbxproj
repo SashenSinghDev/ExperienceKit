@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6B6C979930683FAC00256178 /* TextFieldComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6C979830683FAC00256178 /* TextFieldComponentInteractor.swift */; };
-		BCCA9644E6F0EF544A0481E8 /* ValidationMessageComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B0B03CAC9A31A5A8F65B7D /* ValidationMessageComponentInteractor.swift */; };
 		6BE32A2F30472A7E00C9B430 /* TextComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */; };
 		6BE32A31324798D700C9B430 /* SelectionCardComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A30324798D000C9B430 /* SelectionCardComponentInteractor.swift */; };
 		6BE32A333247BB9200C9B430 /* ImageComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A323247BB8C00C9B430 /* ImageComponentInteractor.swift */; };
@@ -36,7 +35,6 @@
 
 /* Begin PBXFileReference section */
 		6B6C979830683FAC00256178 /* TextFieldComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponentInteractor.swift; sourceTree = "<group>"; };
-		B4B0B03CAC9A31A5A8F65B7D /* ValidationMessageComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationMessageComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A30324798D000C9B430 /* SelectionCardComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCardComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A323247BB8C00C9B430 /* ImageComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageComponentInteractor.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				6B6C979830683FAC00256178 /* TextFieldComponentInteractor.swift */,
-				B4B0B03CAC9A31A5A8F65B7D /* ValidationMessageComponentInteractor.swift */,
 				6B6C97973067DD7E00256178 /* Playground */,
 				6BE32A2E30472A7600C9B430 /* TextComponentInteractor.swift */,
 				6BE32A30324798D000C9B430 /* SelectionCardComponentInteractor.swift */,
@@ -266,7 +263,6 @@
 				96FB9FE72C36DE8D00803A47 /* ExampleApp.swift in Sources */,
 				9640DEA12E0363320076C4B9 /* Experience.swift in Sources */,
 				6B6C979930683FAC00256178 /* TextFieldComponentInteractor.swift in Sources */,
-				BCCA9644E6F0EF544A0481E8 /* ValidationMessageComponentInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -93,9 +93,9 @@ case .continue:
     }
 ```
 
-Reference: `PlaygroundBodyStatsInteractor`, which renders missing fields with `TextFieldProperties.State.error`, moves focus to the first one with `requestsFocus`, and lists them in a shared `ValidationMessage` component.
+Reference: `PlaygroundBodyStatsInteractor`, which renders missing fields with `TextFieldProperties.State.error`, moves focus to the first one with `requestsFocus`, and lists them in a shared `Text` component using `missingSelections` with the `.error` foreground style.
 
-Errors are shown late and cleared early. Nothing is marked invalid until the user submits, but once a field is marked it clears as soon as the user types a value: a `TextField` drops its error border, and `ValidationMessage` drops that field's name and hides when none remain. Neither comes back if the field is emptied again; the next submit re-validates.
+Errors are shown late and cleared early. Nothing is marked invalid until the user submits, but once a field is marked it clears as soon as the user types a value: a `TextField` drops its error border, and the `Text` drops that field's name and hides when none remain. Neither comes back if the field is emptied again; the next submit re-validates.
 
 **AI Rule:**
 Reject `performDeferredWork` implementations that omit `completion`, rely on untyped string comparisons, or put app side effects in component view models instead of the interactor.

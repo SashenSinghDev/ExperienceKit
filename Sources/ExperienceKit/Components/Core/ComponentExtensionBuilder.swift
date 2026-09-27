@@ -91,12 +91,6 @@ public extension Component {
                          id: UUID())
     }
 
-    static func validationmessageComponent(properties: ValidationMessageProperties) -> Component {
-        return Component(contentType: "validationmessage",
-                         properties: properties,
-                         id: UUID())
-    }
-
     static func welcomeComponent(properties: WelcomeProperties) -> Component {
         return Component(contentType: "welcome",
                          properties: properties,
