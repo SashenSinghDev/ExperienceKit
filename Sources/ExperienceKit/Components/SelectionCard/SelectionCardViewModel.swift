@@ -14,8 +14,11 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
     public let id: UUID
     let title: String
     let subtitle: String
-    let value: String
+    /// `nil` when the card has no trailing value, which selects the
+    /// choice-card layout.
+    let value: String?
     let badgeText: String?
+    let badgeStyle: SelectionCardProperties.BadgeStyle
     let selectionId: String
     let selectionGroupId: String?
     let selectionMode: SelectionCardProperties.SelectionMode
@@ -31,8 +34,9 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         self.id = id
         self.title = properties.title
         self.subtitle = properties.subtitle
-        self.value = properties.value
-        self.badgeText = properties.badgeText
+        self.value = properties.value.flatMap { $0.isEmpty ? nil : $0 }
+        self.badgeText = properties.badgeText.flatMap { $0.isEmpty ? nil : $0 }
+        self.badgeStyle = properties.badgeStyle
         self.selectionId = properties.selectionId ?? id.uuidString
         self.selectionGroupId = properties.selectionGroupId
         self.selectionMode = properties.selectionMode

@@ -81,6 +81,7 @@ extension Color {
 
     enum separators {
         static let nonOpaque = Color("separators/non-opaque", bundle: .module)
+        static let opaque = Color("separators/opaque", bundle: .module)
     }
 }
 

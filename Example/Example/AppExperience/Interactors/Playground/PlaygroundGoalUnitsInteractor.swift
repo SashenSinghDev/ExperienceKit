@@ -129,7 +129,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
             component: .selectioncardComponent(properties: .init(
                 title: title,
                 subtitle: subtitle,
-                value: "",
+                value: nil,
                 isSelected: isSelected,
                 badgeText: nil,
                 selectionId: value,
