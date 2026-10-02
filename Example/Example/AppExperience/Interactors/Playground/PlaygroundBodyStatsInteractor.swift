@@ -32,14 +32,14 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "A little about your body",
-                font: .title2,
+                font: .title1,
                 weight: .bold,
                 foregroundStyle: .primary
             ),
             .spacerComponent(properties: .init(size: .small)),
             insetText(
                 title: "These are the numbers the calorie maths needs. Nothing here is shared.",
-                font: .footnote,
+                font: .subheadline,
                 weight: .regular,
                 foregroundStyle: .secondary
             ),

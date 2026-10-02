@@ -30,14 +30,14 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "How much do you move?",
-                font: .title2,
+                font: .title1,
                 weight: .bold,
                 foregroundStyle: .primary
             ),
             .spacerComponent(properties: .init(size: .small)),
             insetText(
                 title: "Count your job as well as the gym. Most people training four or five days a week land on Moderately Active.",
-                font: .footnote,
+                font: .subheadline,
                 weight: .regular,
                 foregroundStyle: .secondary
             ),

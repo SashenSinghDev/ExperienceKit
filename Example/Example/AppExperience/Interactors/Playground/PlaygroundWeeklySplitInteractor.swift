@@ -30,14 +30,14 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "How do you want your week?",
-                font: .title2,
+                font: .title1,
                 weight: .bold,
                 foregroundStyle: .primary
             ),
             .spacerComponent(properties: .init(size: .small)),
             insetText(
                 title: "Both lose the same amount over a week. The difference is whether some days get more food than others.",
-                font: .footnote,
+                font: .subheadline,
                 weight: .regular,
                 foregroundStyle: .secondary
             ),
