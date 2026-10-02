@@ -16,6 +16,7 @@
 		6BE32A39324932B000C9B430 /* SegmentedControlComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A38324932AA00C9B430 /* SegmentedControlComponentInteractor.swift */; };
 		6BE32A3F324932B000C9B430 /* HorizontalContainerComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3E324932AA00C9B430 /* HorizontalContainerComponentInteractor.swift */; };
 		6BE32A3B324AD4D000C9B430 /* PlaygroundGoalUnitsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */; };
+		6BE32A3F324AD4E000C9B430 /* PlaygroundActivityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3E324AD4DA00C9B430 /* PlaygroundActivityInteractor.swift */; };
 		6BE32A3D324AD4D000C9B430 /* PlaygroundBodyStatsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3C324AD4CA00C9B430 /* PlaygroundBodyStatsInteractor.swift */; };
 		6BFA7C0C303A12F800ED3C82 /* ButtonComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */; };
 		6BFA7C0E303A143B00ED3C82 /* FullScreenExperienceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */; };
@@ -43,6 +44,7 @@
 		6BE32A38324932AA00C9B430 /* SegmentedControlComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3E324932AA00C9B430 /* HorizontalContainerComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalContainerComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGoalUnitsInteractor.swift; sourceTree = "<group>"; };
+		6BE32A3E324AD4DA00C9B430 /* PlaygroundActivityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundActivityInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3C324AD4CA00C9B430 /* PlaygroundBodyStatsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBodyStatsInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenExperienceInteractor.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			children = (
 				6BE32A343247CD8400C9B430 /* PlaygroundInteractor.swift */,
 				6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */,
+				6BE32A3E324AD4DA00C9B430 /* PlaygroundActivityInteractor.swift */,
 				6BE32A3C324AD4CA00C9B430 /* PlaygroundBodyStatsInteractor.swift */,
 			);
 			path = Playground;
@@ -252,6 +255,7 @@
 				6BE32A3F324932B000C9B430 /* HorizontalContainerComponentInteractor.swift in Sources */,
 				6BE32A353247CD8A00C9B430 /* PlaygroundInteractor.swift in Sources */,
 				6BE32A3B324AD4D000C9B430 /* PlaygroundGoalUnitsInteractor.swift in Sources */,
+				6BE32A3F324AD4E000C9B430 /* PlaygroundActivityInteractor.swift in Sources */,
 				6BE32A3D324AD4D000C9B430 /* PlaygroundBodyStatsInteractor.swift in Sources */,
 				965912E12E1A67A40064DD3A /* ExperienceListInteractor.swift in Sources */,
 				6BFA7C0E303A143B00ED3C82 /* FullScreenExperienceInteractor.swift in Sources */,

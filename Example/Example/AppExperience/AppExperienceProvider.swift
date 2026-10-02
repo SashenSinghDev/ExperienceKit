@@ -71,6 +71,14 @@ final class AppExperienceProvider: ExperienceProvider {
                 ),
                 selectionStateStore: playgroundFlowSelectionStateStore
             )
+        case .playgroundActivity:
+            return .init(
+                interactor: PlaygroundActivityInteractor(
+                    experienceViewModel: experienceViewModel,
+                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
+                ),
+                selectionStateStore: playgroundFlowSelectionStateStore
+            )
         }
     }
 }
