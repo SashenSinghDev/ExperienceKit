@@ -57,10 +57,26 @@ final class PlaygroundCalculatingInteractor: ExperienceInteractor {
             ],
             bottomComponents: []
         )))
+
+        // The presenter keeps this completion, so calling it again after the screen
+        // has rendered moves the flow on without any user action.
+        calculatePlan {
+            completion(.navigateImmediately(navigationViewModel: .init(
+                navigationType: .push(Experience.playgroundPlanReveal),
+                deferredLoadingWorkId: nil,
+                experienceViewModel: .init(
+                    searchBar: nil,
+                    navigationBar: nil))))
+        }
+    }
+
+    /// Stands in for the real async plan calculation.
+    private func calculatePlan(completion: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Timing.calculationDuration, execute: completion)
     }
 
     func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        // The screen has no actions, so there is no deferred work to perform.
+        // The screen has no actions; it moves on by itself from `load`.
         completion(nil)
     }
 
@@ -96,6 +112,10 @@ private extension PlaygroundCalculatingInteractor {
 
     enum Layout {
         static let spinnerSide: Double = 96
+    }
+
+    enum Timing {
+        static let calculationDuration: TimeInterval = 3
     }
 }
 

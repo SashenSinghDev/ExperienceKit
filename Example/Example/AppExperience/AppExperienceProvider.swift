@@ -105,6 +105,8 @@ final class AppExperienceProvider: ExperienceProvider {
                 selectionStateStore: playgroundFlowSelectionStateStore,
                 animationProvider: animationProvider
             )
+        case .playgroundPlanReveal:
+            return .init(interactor: PlaygroundPlanRevealInteractor(experienceViewModel: experienceViewModel))
         }
     }
 }
