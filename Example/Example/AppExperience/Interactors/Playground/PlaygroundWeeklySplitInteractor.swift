@@ -1,5 +1,5 @@
 //
-//  PlaygroundActivityInteractor.swift
+//  PlaygroundWeeklySplitInteractor.swift
 //  Example
 //
 //  Created by Claude on 02/10/2026.
@@ -8,7 +8,7 @@
 import ExperienceKit
 import SwiftUI
 
-final class PlaygroundActivityInteractor: ExperienceInteractor {
+final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     private let experienceSelectionStateStore: ExperienceSelectionStateStore
 
@@ -18,38 +18,48 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
         self.experienceSelectionStateStore = experienceSelectionStateStore
     }
 
-    /// Figma: 04 Activity.
+    /// Figma: 05 Weekly split.
     func load(completion: @escaping (ExperienceType) -> Void) {
         // Keep an earlier choice if the user has already been through this step.
-        let selectedLevel = experienceSelectionStateStore.selectedValues(for: SelectionKey.activity).first
-            .flatMap(ActivityLevel.init(rawValue:)) ?? .moderatelyActive
+        let selectedSplit = experienceSelectionStateStore.selectedValues(for: SelectionKey.weeklySplit).first
+            .flatMap(WeeklySplit.init(rawValue:)) ?? .carbCycling
 
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
             insetProgressStepper(currentStep: 3, totalSteps: 3),
             .spacerComponent(properties: .init(size: .large)),
             insetText(
-                title: "How much do you move?",
+                title: "How do you want your week?",
                 font: .title2,
                 weight: .bold,
                 foregroundStyle: .primary
             ),
             .spacerComponent(properties: .init(size: .small)),
             insetText(
-                title: "Count your job as well as the gym. Most people training four or five days a week land on Moderately Active.",
+                title: "Both lose the same amount over a week. The difference is whether some days get more food than others.",
                 font: .footnote,
                 weight: .regular,
                 foregroundStyle: .secondary
             ),
-            .spacerComponent(properties: .init(size: .large))
+            .spacerComponent(properties: .init(size: .medium))
         ]
 
-        for (index, level) in ActivityLevel.allCases.enumerated() {
+        for (index, split) in WeeklySplit.allCases.enumerated() {
             if index > 0 {
                 topComponents.append(.spacerComponent(properties: .init(size: .small)))
             }
-            topComponents.append(activityCard(level, isSelected: level == selectedLevel))
+            topComponents.append(weeklySplitCard(split, isSelected: split == selectedSplit))
         }
+
+        topComponents += [
+            .spacerComponent(properties: .init(size: .medium)),
+            insetText(
+                title: "You can switch in Me whenever you like.",
+                font: .caption1,
+                weight: .regular,
+                foregroundStyle: .tertiary
+            )
+        ]
 
         completion(.fullScreen(properties: .init(
             image: nil,
@@ -58,14 +68,12 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
             bottomComponents: [
                 .containerComponent(properties: .init(
                     component: .buttonComponent(properties: .init(
-                        title: "Continue",
+                        title: "See my plan",
                         style: .primary,
                         navigation: .init(
-                            navigationType: .push(Experience.playgroundWeeklySplit),
-                            deferredLoadingWorkId: DeferredWork.continue,
-                            experienceViewModel: .init(
-                                searchBar: nil,
-                                navigationBar: nil)))
+                            navigationType: .dismiss,
+                            deferredLoadingWorkId: DeferredWork.seeMyPlan,
+                            experienceViewModel: nil))
                     ),
                     horizontalSpacing: .medium)
                 ),
@@ -81,7 +89,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
         }
 
         switch deferredWork {
-        case .continue:
+        case .seeMyPlan:
             // The store is shared across the Playground flow, so values captured
             // on earlier screens are readable here too.
             print("Selected goal: \(selectedValue(for: SelectionKey.goal))")
@@ -91,6 +99,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
             print("Entered age: \(selectedValue(for: SelectionKey.age))")
             print("Selected sex: \(selectedValue(for: SelectionKey.sex))")
             print("Selected activity: \(selectedValue(for: SelectionKey.activity))")
+            print("Selected weekly split: \(selectedValue(for: SelectionKey.weeklySplit))")
         }
 
         completion(nil)
@@ -113,16 +122,17 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
         )
     }
 
-    private func activityCard(_ level: ActivityLevel, isSelected: Bool) -> Component {
+    private func weeklySplitCard(_ split: WeeklySplit, isSelected: Bool) -> Component {
         .containerComponent(properties: .init(
             component: .selectioncardComponent(properties: .init(
-                title: level.title,
-                subtitle: level.subtitle,
+                title: split.title,
+                subtitle: split.subtitle,
                 value: nil,
                 isSelected: isSelected,
-                badgeText: nil,
-                selectionId: level.rawValue,
-                selectionGroupId: SelectionKey.activity,
+                badgeText: split.badge,
+                badgeStyle: .neutral,
+                selectionId: split.rawValue,
+                selectionGroupId: SelectionKey.weeklySplit,
                 navigation: nil)
             ),
             horizontalSpacing: .medium)
@@ -140,9 +150,9 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
     }
 }
 
-private extension PlaygroundActivityInteractor {
+private extension PlaygroundWeeklySplitInteractor {
     enum DeferredWork: String, DeferredWorkID {
-        case `continue`
+        case seeMyPlan
     }
 
     enum SelectionKey {
@@ -156,8 +166,11 @@ private extension PlaygroundActivityInteractor {
         static let age = "playground-age"
         static let sex = "Sex"
 
-        // Written on this screen.
+        // Written on the activity screen.
         static let activity = "playground-activity"
+
+        // Written on this screen.
+        static let weeklySplit = "playground-weekly-split"
     }
 
     func selectedValue(for key: String) -> String {
@@ -165,32 +178,30 @@ private extension PlaygroundActivityInteractor {
     }
 }
 
-private extension PlaygroundActivityInteractor {
-    /// The activity levels, in the order they appear on screen.
-    enum ActivityLevel: String, CaseIterable {
-        case sedentary
-        case lightlyActive = "lightly-active"
-        case moderatelyActive = "moderately-active"
-        case veryActive = "very-active"
-        case extremelyActive = "extremely-active"
+private extension PlaygroundWeeklySplitInteractor {
+    /// The weekly split options, in the order they appear on screen.
+    enum WeeklySplit: String, CaseIterable {
+        case carbCycling = "carb-cycling"
+        case sameEveryDay = "same-every-day"
 
         var title: String {
             switch self {
-            case .sedentary: return "Sedentary"
-            case .lightlyActive: return "Lightly active"
-            case .moderatelyActive: return "Moderately active"
-            case .veryActive: return "Very active"
-            case .extremelyActive: return "Extremely active"
+            case .carbCycling: return "Carb cycling"
+            case .sameEveryDay: return "Same every day"
             }
         }
 
         var subtitle: String {
             switch self {
-            case .sedentary: return "Desk job, little or no structured exercise"
-            case .lightlyActive: return "Light daily activity plus exercise 1–3 days a week"
-            case .moderatelyActive: return "Moderate activity plus hard training 4–5 days a week"
-            case .veryActive: return "Demanding lifestyle plus rigorous exercise 6–7 days"
-            case .extremelyActive: return "Endurance athlete, or a very physical job on top"
+            case .carbCycling: return "Five lighter days and two at full maintenance. Put the high days on your hardest training."
+            case .sameEveryDay: return "One target, seven days a week. Simpler to plan and cook for."
+            }
+        }
+
+        var badge: String {
+            switch self {
+            case .carbCycling: return "5 low · 2 high"
+            case .sameEveryDay: return "Flat"
             }
         }
     }
