@@ -27,14 +27,14 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                 .spacerComponent(properties: .init(size: .large)),
                 insetText(
                     title: "What are we aiming at?",
-                    font: .title1,
+                    font: .title2,
                     weight: .bold,
                     foregroundStyle: .primary
                 ),
                 .spacerComponent(properties: .init(size: .small)),
                 insetText(
                     title: "You can change this later without losing your history.",
-                    font: .subheadline,
+                    font: .footnote,
                     weight: .regular,
                     foregroundStyle: .secondary
                 ),
