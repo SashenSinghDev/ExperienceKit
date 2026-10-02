@@ -71,9 +71,11 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
                         title: "See my plan",
                         style: .primary,
                         navigation: .init(
-                            navigationType: .dismiss,
+                            navigationType: .push(Experience.playgroundCalculating),
                             deferredLoadingWorkId: DeferredWork.seeMyPlan,
-                            experienceViewModel: nil))
+                            experienceViewModel: .init(
+                                searchBar: nil,
+                                navigationBar: nil)))
                     ),
                     horizontalSpacing: .medium)
                 ),
