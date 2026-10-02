@@ -76,9 +76,11 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                         title: "Continue",
                         style: .glass,
                         navigation: .init(
-                            navigationType: .dismiss,
+                            navigationType: .push(Experience.playgroundActivity),
                             deferredLoadingWorkId: DeferredWork.continue,
-                            experienceViewModel: nil))
+                            experienceViewModel: .init(
+                                searchBar: nil,
+                                navigationBar: nil)))
                     ),
                     horizontalSpacing: .medium)
                 ),
