@@ -25,6 +25,8 @@ enum Experience: String, ExperienceID {
     case playgroundBodyStats
     case playgroundActivity
     case playgroundWeeklySplit
+    case playgroundCalculating
+    case playgroundPlanReveal
     case fullScreen
     case navigationCapability
 }

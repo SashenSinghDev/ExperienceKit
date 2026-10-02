@@ -92,6 +92,39 @@ Reject provider code that creates an interactor needing session state but does n
 **AI Rule:**
 Flag new app screens that are reachable through navigation but missing provider wiring, or provider cases that point at interactors not included in the app target.
 
+## Navigating Without A User Action
+
+**Principle:**
+A screen that moves on by itself, such as a loading or calculating step, navigates from its interactor. No component is involved.
+
+The presenter keeps the `load(completion:)` closure, so an interactor may call it more than once: first with the screen to render, then with `.navigateImmediately(navigationViewModel:)` when its async work finishes.
+
+```swift
+func load(completion: @escaping (ExperienceType) -> Void) {
+    completion(.fullScreen(properties: calculatingScreen()))
+
+    calculatePlan {
+        completion(.navigateImmediately(navigationViewModel: .init(
+            navigationType: .push(Experience.playgroundPlanReveal),
+            deferredLoadingWorkId: nil,
+            experienceViewModel: .init(searchBar: nil, navigationBar: nil))))
+    }
+}
+```
+
+**Guidelines:**
+
+- Render the screen first, then start the async work.
+- Call the completion on the main thread.
+- Leave `deferredLoadingWorkId` as `nil` on the automatic navigation. A work id makes the presenter show its loading overlay on top of the screen while the work runs.
+- Do not add navigation or work ids to visual components such as `animation` to drive this. The animation only draws; the interactor owns the work and the navigation.
+- The pushed screen keeps the automatic screen beneath it in the stack, so navigating back returns to it without re-running `load`.
+
+Reference: `PlaygroundCalculatingInteractor`.
+
+**AI Rule:**
+Reject automatic navigation that is triggered from a component view or view model instead of the interactor.
+
 ## Related Guidance
 
 - Use [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) when a button or navigation action needs interactor-owned work.
