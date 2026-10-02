@@ -75,6 +75,36 @@ final class SelectionCardComponentInteractor: ExperienceInteractor {
                 )),
                 horizontalSpacing: .medium
             )),
+            .sectiontitleComponent(properties: .init(title: "Weekly split")),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Carb cycling",
+                    subtitle: "Five lighter days and two at full maintenance. Put the high days on your hardest training.",
+                    value: nil,
+                    isSelected: true,
+                    badgeText: "5 low · 2 high",
+                    badgeStyle: .neutral,
+                    selectionId: "carb-cycling",
+                    selectionGroupId: "weekly-split",
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
+            )),
+            .spacerComponent(properties: .init(size: .medium)),
+            .containerComponent(properties: .init(
+                component: .selectioncardComponent(properties: .init(
+                    title: "Same every day",
+                    subtitle: "One target, seven days a week. Simpler to plan and cook for.",
+                    value: nil,
+                    isSelected: false,
+                    badgeText: "Flat",
+                    badgeStyle: .neutral,
+                    selectionId: "same-every-day",
+                    selectionGroupId: "weekly-split",
+                    navigation: nil
+                )),
+                horizontalSpacing: .medium
+            )),
         ]))
     }
 

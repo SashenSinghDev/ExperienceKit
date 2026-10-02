@@ -116,7 +116,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
             component: .selectioncardComponent(properties: .init(
                 title: level.title,
                 subtitle: level.subtitle,
-                value: "",
+                value: nil,
                 isSelected: isSelected,
                 badgeText: nil,
                 selectionId: level.rawValue,
