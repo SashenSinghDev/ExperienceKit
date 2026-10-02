@@ -19,44 +19,56 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
-        completion(.fullScreen(properties: .init(
+        completion(bodyStatsExperience(missingMeasurements: []))
+    }
+
+    /// Builds the screen. When `missingMeasurements` is non-empty, those fields render
+    /// in the error state, the first one takes focus, and a single message below the
+    /// row lists what is still needed (Figma: 03 Body stats · Error · Missing fields).
+    private func bodyStatsExperience(missingMeasurements: [BodyMeasurement]) -> ExperienceType {
+        var topComponents: [Component] = [
+            .spacerComponent(properties: .init(size: .small)),
+            insetProgressStepper(currentStep: 2, totalSteps: 3),
+            .spacerComponent(properties: .init(size: .large)),
+            insetText(
+                title: "A little about your body",
+                font: .title2,
+                weight: .bold,
+                foregroundStyle: .primary
+            ),
+            .spacerComponent(properties: .init(size: .small)),
+            insetText(
+                title: "These are the numbers the calorie maths needs. Nothing here is shared.",
+                font: .footnote,
+                weight: .regular,
+                foregroundStyle: .secondary
+            ),
+            .spacerComponent(properties: .init(size: .large)),
+            insetMeasurementsRow(missingMeasurements: missingMeasurements)
+        ]
+        topComponents += measurementsError(for: missingMeasurements)
+        topComponents += [
+            .spacerComponent(properties: .init(size: .large)),
+            insetText(
+                title: "Sex",
+                font: .footnote,
+                weight: .regular,
+                foregroundStyle: .secondary
+            ),
+            .spacerComponent(properties: .init(size: .small)),
+            insetSexSegmentedControl(),
+            .spacerComponent(properties: .init(size: .small)),
+            insetText(
+                title: "We only use this to pick the right calorie formula. Choose “Rather not say” and we’ll use an average.",
+                font: .footnote,
+                weight: .regular,
+                foregroundStyle: .secondary
+            )
+        ]
+
+        return .fullScreen(properties: .init(
             image: nil,
-            topComponents: [
-                .spacerComponent(properties: .init(size: .small)),
-                insetProgressStepper(currentStep: 2, totalSteps: 3),
-                .spacerComponent(properties: .init(size: .large)),
-                insetText(
-                    title: "A little about your body",
-                    font: .title2,
-                    weight: .bold,
-                    foregroundStyle: .primary
-                ),
-                .spacerComponent(properties: .init(size: .small)),
-                insetText(
-                    title: "These are the numbers the calorie maths needs. Nothing here is shared.",
-                    font: .footnote,
-                    weight: .regular,
-                    foregroundStyle: .secondary
-                ),
-                .spacerComponent(properties: .init(size: .large)),
-                insetMeasurementsRow(),
-                .spacerComponent(properties: .init(size: .large)),
-                insetText(
-                    title: "Sex",
-                    font: .footnote,
-                    weight: .regular,
-                    foregroundStyle: .secondary
-                ),
-                .spacerComponent(properties: .init(size: .small)),
-                insetSexSegmentedControl(),
-                .spacerComponent(properties: .init(size: .small)),
-                insetText(
-                    title: "We only use this to pick the right calorie formula. Choose “Rather not say” and we’ll use an average.",
-                    font: .footnote,
-                    weight: .regular,
-                    foregroundStyle: .secondary
-                )
-            ],
+            topComponents: topComponents,
             middleComponents: [],
             bottomComponents: [
                 .containerComponent(properties: .init(
@@ -72,7 +84,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                 ),
                 .spacerComponent(properties: .init(size: .small))
             ]
-        )))
+        ))
     }
 
     func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
@@ -83,6 +95,15 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
 
         switch deferredWork {
         case .continue:
+            let missingMeasurements = BodyMeasurement.allCases.filter { !hasEnteredValue(for: $0) }
+
+            // Returning an experience keeps the user on this screen, re-rendered
+            // with the missing fields in their error state, instead of navigating.
+            guard missingMeasurements.isEmpty else {
+                completion(bodyStatsExperience(missingMeasurements: missingMeasurements))
+                return
+            }
+
             // The store is shared across the Playground flow, so values captured
             // on earlier screens (goal, units) are readable here too.
             print("Selected goal: \(selectedValue(for: SelectionKey.goal))")
@@ -114,32 +135,16 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
     }
 
     /// Weight, height and age side by side, each taking an equal share of the width.
-    private func insetMeasurementsRow() -> Component {
+    private func insetMeasurementsRow(missingMeasurements: [BodyMeasurement]) -> Component {
         .containerComponent(properties: .init(
             component: .horizontalcontainerComponent(properties: .init(
-                components: [
+                components: BodyMeasurement.allCases.map {
                     measurementField(
-                        label: "Weight",
-                        placeholder: "88",
-                        unit: "kg",
-                        keyboardType: .decimalPad,
-                        selectionKey: SelectionKey.weight
-                    ),
-                    measurementField(
-                        label: "Height",
-                        placeholder: "180",
-                        unit: "cm",
-                        keyboardType: .numberPad,
-                        selectionKey: SelectionKey.height
-                    ),
-                    measurementField(
-                        label: "Age",
-                        placeholder: "32",
-                        unit: "yrs",
-                        keyboardType: .numberPad,
-                        selectionKey: SelectionKey.age
+                        $0,
+                        isMissing: missingMeasurements.contains($0),
+                        requestsFocus: $0 == missingMeasurements.first
                     )
-                ],
+                },
                 spacing: .small,
                 alignment: .top,
                 distribution: .fillEqually)
@@ -148,19 +153,54 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
         )
     }
 
-    private func measurementField(label: String,
-                                  placeholder: String,
-                                  unit: String,
-                                  keyboardType: TextFieldProperties.KeyboardType,
-                                  selectionKey: String) -> Component {
-        .textfieldComponent(properties: .init(
-            keyboardType: keyboardType,
-            label: label,
-            placeholder: placeholder,
+    private func measurementField(_ measurement: BodyMeasurement,
+                                  isMissing: Bool,
+                                  requestsFocus: Bool) -> Component {
+        // Carry entered values across a re-render so a failed Continue keeps them.
+        let enteredValue = experienceSelectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
+        let state: TextFieldProperties.State = isMissing ? .error : (enteredValue.isEmpty ? .empty : .filled)
+
+        return .textfieldComponent(properties: .init(
+            state: state,
+            keyboardType: measurement.keyboardType,
+            label: measurement.label,
+            placeholder: measurement.placeholder,
+            value: enteredValue,
             showsClearButton: false,
-            unit: unit,
-            selectionKey: selectionKey)
+            unit: measurement.unit,
+            selectionKey: measurement.selectionKey,
+            requestsFocus: requestsFocus)
         )
+    }
+
+    /// One shared message under the measurements row rather than one per field.
+    private func measurementsError(for missingMeasurements: [BodyMeasurement]) -> [Component] {
+        guard !missingMeasurements.isEmpty else {
+            return []
+        }
+
+        return [
+            .spacerComponent(properties: .init(size: .small)),
+            insetText(
+                title: Self.missingMeasurementsMessage(for: missingMeasurements),
+                font: .footnote,
+                weight: .regular,
+                foregroundStyle: .error
+            )
+        ]
+    }
+
+    /// "Add your height and age to continue." / "Add your weight, height and age to continue."
+    private static func missingMeasurementsMessage(for missingMeasurements: [BodyMeasurement]) -> String {
+        let names = missingMeasurements.map { $0.label.lowercased() }
+        let list: String
+        if names.count > 1 {
+            list = names.dropLast().joined(separator: ", ") + " and " + names[names.count - 1]
+        } else {
+            list = names.first ?? ""
+        }
+
+        return "Add your \(list) to continue."
     }
 
     private func insetSexSegmentedControl() -> Component {
@@ -171,7 +211,8 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                     .init(label: "Female", value: "female"),
                     .init(label: "Rather not say", value: "rather-not-say")
                 ],
-                selectedValue: "male",
+                // Keep the user's choice when the screen re-renders with errors.
+                selectedValue: experienceSelectionStateStore.selectedValues(for: SelectionKey.sex).first ?? "male",
                 accessibilityLabel: SelectionKey.sex)
             ),
             horizontalSpacing: .medium)
@@ -208,5 +249,58 @@ private extension PlaygroundBodyStatsInteractor {
 
     func selectedValue(for key: String) -> String {
         experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
+    }
+
+    func hasEnteredValue(for measurement: BodyMeasurement) -> Bool {
+        let value = experienceSelectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
+        return !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+}
+
+private extension PlaygroundBodyStatsInteractor {
+    /// The mandatory measurements, in the order they appear on screen.
+    enum BodyMeasurement: CaseIterable {
+        case weight
+        case height
+        case age
+
+        var label: String {
+            switch self {
+            case .weight: return "Weight"
+            case .height: return "Height"
+            case .age: return "Age"
+            }
+        }
+
+        var placeholder: String {
+            switch self {
+            case .weight: return "88"
+            case .height: return "180"
+            case .age: return "32"
+            }
+        }
+
+        var unit: String {
+            switch self {
+            case .weight: return "kg"
+            case .height: return "cm"
+            case .age: return "yrs"
+            }
+        }
+
+        var keyboardType: TextFieldProperties.KeyboardType {
+            switch self {
+            case .weight: return .decimalPad
+            case .height, .age: return .numberPad
+            }
+        }
+
+        var selectionKey: String {
+            switch self {
+            case .weight: return SelectionKey.weight
+            case .height: return SelectionKey.height
+            case .age: return SelectionKey.age
+            }
+        }
     }
 }

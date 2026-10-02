@@ -56,8 +56,8 @@ The navigation still describes where the user goes. The deferred work id describ
 - Return `completion(nil)` for unknown ids.
 - Switch over the enum exhaustively.
 - Call `completion` exactly once on every path.
-- Return `nil` when the work only performs side effects before navigation.
-- Return an `ExperienceType` only when the work should replace or load experience content.
+- Return `nil` when the work only performs side effects before navigation. The navigation then continues.
+- Return an `ExperienceType` only when the work should replace or load experience content. For button navigation this **halts the navigation**: the presenter renders the returned experience on the current screen instead of navigating.
 - Keep dependency reads, validation, analytics, and logging in this method rather than in component views.
 
 Example:
@@ -79,6 +79,22 @@ func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (Expe
 }
 ```
 
+## Validation Before Navigation
+
+To block navigation until a form is valid, validate in deferred work and return the same screen rebuilt with its error states. Rebuild it from the selection state store so entered values and selections survive the re-render.
+
+```swift
+case .continue:
+    let missingMeasurements = BodyMeasurement.allCases.filter { !hasEnteredValue(for: $0) }
+
+    guard missingMeasurements.isEmpty else {
+        completion(bodyStatsExperience(missingMeasurements: missingMeasurements))
+        return
+    }
+```
+
+Reference: `PlaygroundBodyStatsInteractor`, which renders missing fields with `TextFieldProperties.State.error`, moves focus to the first one with `requestsFocus`, and shows a shared message with `TextProperties.ForegroundStyle.error`.
+
 **AI Rule:**
 Reject `performDeferredWork` implementations that omit `completion`, rely on untyped string comparisons, or put app side effects in component view models instead of the interactor.
 
@@ -96,7 +112,11 @@ sequenceDiagram
     Component->>Presenter: Request navigation with deferredLoadingWorkId
     Presenter->>Interactor: performDeferredWork(workId)
     Interactor-->>Presenter: completion(optional ExperienceType)
-    Presenter->>Router: Continue navigation
+    alt ExperienceType returned
+        Presenter->>Presenter: Render returned experience, skip navigation
+    else nil
+        Presenter->>Router: Continue navigation
+    end
 ```
 
 ## When Dependencies Are Needed

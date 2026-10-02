@@ -14,6 +14,7 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
     let unit: String?
     let accessibilityLabel: String
     let selectionKey: String
+    let requestsFocus: Bool
     @Published var text: String
     private let helperText: String?
     private let errorMessage: String?
@@ -35,6 +36,7 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
         self.errorMessage = properties.errorMessage
         self.accessibilityLabel = properties.accessibilityLabel ?? properties.label ?? properties.placeholder
         self.selectionKey = properties.selectionKey ?? properties.label ?? properties.placeholder
+        self.requestsFocus = properties.requestsFocus && properties.state != .disabled
         self.text = properties.state == .empty ? "" : properties.value
         self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
         experienceSelectionStateStore?.setSelectedValue(text, for: selectionKey)
@@ -46,6 +48,10 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
 
     var isDisabled: Bool {
         state == .disabled
+    }
+
+    var focusesOnAppear: Bool {
+        state == .focused || requestsFocus
     }
 
     var showsError: Bool {
