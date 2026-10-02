@@ -104,6 +104,16 @@ final class ExperienceListInteractor: ExperienceInteractor {
             ),
             .separatorComponent(properties: .init(isFullWidth: false)),
             .genericlistitemComponent(properties: .init(
+                title: "Animation",
+                navigation: .init(
+                    navigationType: .push(Experience.animationComponent),
+                    deferredLoadingWorkId: nil,
+                    experienceViewModel: .init(
+                        searchBar: nil,
+                        navigationBar: .init(title: "Animation", displayMode: .inline))))
+            ),
+            .separatorComponent(properties: .init(isFullWidth: false)),
+            .genericlistitemComponent(properties: .init(
                 title: "Progress Stepper",
                 navigation: .init(
                     navigationType: .push(Experience.progressStepperComponent),

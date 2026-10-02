@@ -23,6 +23,7 @@ Start here when:
 - [APPEXPERIENCE.md](APPEXPERIENCE.md) - App experience architecture, interactor responsibilities, `AppExperienceProvider`, and `ExperienceSession` wiring
 - [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) - Deferred work id ownership, button/navigation handoff, and `performDeferredWork` guidance
 - [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) - App-owned selection state stores, component write paths, and interactor read paths
+- [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) - App-owned animation provider, the `animation` component contract, and `ExperienceSession` wiring
 
 Start here when:
 
@@ -31,6 +32,7 @@ Start here when:
 - Wiring an `Experience` case through `AppExperienceProvider`
 - Adding button work that runs through `performDeferredWork`
 - Sharing selected component values with an interactor
+- Showing an animation, or adding an animation library to the app
 
 ### Design System
 

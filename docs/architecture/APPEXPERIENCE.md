@@ -96,4 +96,5 @@ Flag new app screens that are reachable through navigation but missing provider 
 
 - Use [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) when a button or navigation action needs interactor-owned work.
 - Use [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) when component selection state must be read by an interactor.
+- Use [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) when a screen shows an animation supplied by the app.
 - Use [COMPONENTCREATION.md](COMPONENTCREATION.md) when adding new ExperienceKit components or catalogue demos.

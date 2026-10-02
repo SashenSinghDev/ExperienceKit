@@ -7,22 +7,25 @@
 
 public protocol EmptyDependency { }
 
-public class ExperienceDependency: EmptyDependency, HasRouter, HasExperiencePresenterNotifier, HasViewProvider, HasViewModelProvider, HasExperienceSelectionStateStore {
+public class ExperienceDependency: EmptyDependency, HasRouter, HasExperiencePresenterNotifier, HasViewProvider, HasViewModelProvider, HasExperienceSelectionStateStore, HasExperienceAnimationProvider {
     public let router: any ExperienceRouter
     public var experiencePresenterNotifier: ExperiencePresenterNotifier
     public let viewProvider: ViewProvider
     public let viewModelProvider: ViewModelProvider
     public let experienceSelectionStateStore: ExperienceSelectionStateStore?
+    public let experienceAnimationProvider: ExperienceAnimationProvider?
 
     public init(router: any ExperienceRouter,
                 experiencePresenterNotifier: ExperiencePresenterNotifier,
                 viewProvider: ViewProvider,
                 viewModelProvider: ViewModelProvider,
-                experienceSelectionStateStore: ExperienceSelectionStateStore? = nil) {
+                experienceSelectionStateStore: ExperienceSelectionStateStore? = nil,
+                experienceAnimationProvider: ExperienceAnimationProvider? = nil) {
         self.router = router
         self.experiencePresenterNotifier = experiencePresenterNotifier
         self.viewProvider = viewProvider
         self.viewModelProvider = viewModelProvider
         self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.experienceAnimationProvider = experienceAnimationProvider
     }
 }

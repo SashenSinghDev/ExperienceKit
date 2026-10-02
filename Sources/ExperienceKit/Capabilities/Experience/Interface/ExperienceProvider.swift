@@ -10,11 +10,14 @@ import Foundation
 public struct ExperienceSession {
     public let interactor: ExperienceInteractor
     public let selectionStateStore: ExperienceSelectionStateStore?
+    public let animationProvider: ExperienceAnimationProvider?
 
     public init(interactor: ExperienceInteractor,
-                selectionStateStore: ExperienceSelectionStateStore? = nil) {
+                selectionStateStore: ExperienceSelectionStateStore? = nil,
+                animationProvider: ExperienceAnimationProvider? = nil) {
         self.interactor = interactor
         self.selectionStateStore = selectionStateStore
+        self.animationProvider = animationProvider
     }
 }
 
