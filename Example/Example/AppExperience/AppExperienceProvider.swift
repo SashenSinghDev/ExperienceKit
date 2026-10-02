@@ -79,6 +79,14 @@ final class AppExperienceProvider: ExperienceProvider {
                 ),
                 selectionStateStore: playgroundFlowSelectionStateStore
             )
+        case .playgroundWeeklySplit:
+            return .init(
+                interactor: PlaygroundWeeklySplitInteractor(
+                    experienceViewModel: experienceViewModel,
+                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
+                ),
+                selectionStateStore: playgroundFlowSelectionStateStore
+            )
         }
     }
 }

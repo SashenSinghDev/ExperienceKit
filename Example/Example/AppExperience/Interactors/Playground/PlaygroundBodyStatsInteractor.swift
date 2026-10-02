@@ -28,7 +28,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
     private func bodyStatsExperience(missingMeasurements: [BodyMeasurement]) -> ExperienceType {
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
-            insetProgressStepper(currentStep: 2, totalSteps: 3),
+            insetProgressStepper(currentStep: 2, totalSteps: 4),
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "A little about your body",
