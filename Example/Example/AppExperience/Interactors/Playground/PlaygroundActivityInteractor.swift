@@ -26,7 +26,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
 
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
-            insetProgressStepper(currentStep: 3, totalSteps: 3),
+            insetProgressStepper(currentStep: 3, totalSteps: 4),
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "How much do you move?",

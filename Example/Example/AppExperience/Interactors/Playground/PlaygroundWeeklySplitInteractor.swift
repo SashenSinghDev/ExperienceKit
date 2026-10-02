@@ -26,7 +26,7 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
 
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
-            insetProgressStepper(currentStep: 3, totalSteps: 3),
+            insetProgressStepper(currentStep: 4, totalSteps: 4),
             .spacerComponent(properties: .init(size: .large)),
             insetText(
                 title: "How do you want your week?",

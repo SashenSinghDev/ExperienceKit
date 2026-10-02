@@ -23,7 +23,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
             image: nil,
             topComponents: [
                 .spacerComponent(properties: .init(size: .small)),
-                insetProgressStepper(currentStep: 1, totalSteps: 3),
+                insetProgressStepper(currentStep: 1, totalSteps: 4),
                 .spacerComponent(properties: .init(size: .large)),
                 insetText(
                     title: "What are we aiming at?",
