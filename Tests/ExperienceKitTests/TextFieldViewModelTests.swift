@@ -96,6 +96,64 @@ final class TextFieldViewModelTests: XCTestCase {
 
         XCTAssertFalse(viewModel.showsClearButton)
     }
+
+    func testErrorStateCanRequestFocus() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(
+                state: .error,
+                placeholder: "180",
+                requestsFocus: true
+            ),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        XCTAssertTrue(viewModel.showsError)
+        XCTAssertTrue(viewModel.focusesOnAppear)
+    }
+
+    func testFocusIsNotRequestedByDefault() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .error, placeholder: "180"),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        XCTAssertFalse(viewModel.focusesOnAppear)
+    }
+
+    func testDisabledFieldIgnoresFocusRequest() {
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .disabled, placeholder: "180", requestsFocus: true),
+            dependency: EmptyTextFieldDependency(),
+            id: UUID()
+        )
+
+        XCTAssertFalse(viewModel.focusesOnAppear)
+    }
+
+    func testErrorStateKeepsEnteredValue() {
+        let store = TextFieldSelectionStateStore()
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .error, placeholder: "88", value: "88", selectionKey: "weight"),
+            dependency: TextFieldDependency(store: store),
+            id: UUID()
+        )
+
+        XCTAssertEqual(viewModel.text, "88")
+        XCTAssertEqual(store.selectedValues(for: "weight"), ["88"])
+    }
+
+    func testDecodingDefaultsOmittedProperties() throws {
+        let json = Data(#"{"placeholder": "Email"}"#.utf8)
+
+        let properties = try JSONDecoder().decode(TextFieldProperties.self, from: json)
+
+        XCTAssertEqual(properties.placeholder, "Email")
+        XCTAssertEqual(properties.state, .empty)
+        XCTAssertTrue(properties.showsClearButton)
+        XCTAssertFalse(properties.requestsFocus)
+    }
 }
 
 private struct EmptyTextFieldDependency: HasExperienceSelectionStateStore {

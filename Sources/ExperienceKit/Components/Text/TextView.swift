@@ -48,16 +48,18 @@ private extension TextViewModel.Alignment {
 }
 
 private extension TextViewModel.ForegroundStyle {
-    var swiftUIForegroundStyle: HierarchicalShapeStyle {
+    var swiftUIForegroundStyle: AnyShapeStyle {
         switch self {
         case .primary:
-            return .primary
+            return AnyShapeStyle(.primary)
         case .secondary:
-            return .secondary
+            return AnyShapeStyle(.secondary)
         case .tertiary:
-            return .tertiary
+            return AnyShapeStyle(.tertiary)
         case .quaternary:
-            return .quaternary
+            return AnyShapeStyle(.quaternary)
+        case .error:
+            return AnyShapeStyle(Color.accents.red)
         }
     }
 }

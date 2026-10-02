@@ -37,6 +37,8 @@ public struct TextProperties {
         case secondary
         case tertiary
         case quaternary
+        /// Figma: color/accents/red — validation and error messages.
+        case error
     }
     
     public let title: String
