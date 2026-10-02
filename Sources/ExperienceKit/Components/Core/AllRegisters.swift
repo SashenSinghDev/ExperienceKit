@@ -2,6 +2,7 @@ public let allRegisters: [ComponentRegister] = [
   AnimationComponentRegister(),
   ButtonComponentRegister(),
   ContainerComponentRegister(),
+  DataTableComponentRegister(),
   DescriptionComponentRegister(),
   ExampleComponentRegister(),
   GenericListItemComponentRegister(),
