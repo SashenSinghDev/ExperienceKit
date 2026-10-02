@@ -45,6 +45,7 @@ Colour token assets and Swift accessors should preserve the Figma token hierarch
 | `color/labels/primary` | `Colors/labels/primary.colorset` | `Color.labels.primary` |
 | `color/separators/non-opaque` | `Colors/separators/non-opaque.colorset` | `Color.separators.nonOpaque` |
 | `color/separators/opaque` | `Colors/separators/opaque.colorset` | `Color.separators.opaque` |
+| `color/dataTable/secondaryLabel` | `Colors/dataTable/secondaryLabel.colorset` | `Color.dataTable.secondaryLabel` |
 
 **AI Rule:**
 Reject new component styling that introduces raw colours, UIKit colour substitutions, or component-local colour aliases when a Figma semantic token exists or can be added to the design-system asset catalog.

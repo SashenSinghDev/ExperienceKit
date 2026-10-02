@@ -19,6 +19,12 @@ public extension Component {
                          id: UUID())
     }
 
+    static func datatableComponent(properties: DataTableProperties) -> Component {
+        return Component(contentType: "datatable",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func descriptionComponent(properties: DescriptionProperties) -> Component {
         return Component(contentType: "description",
                          properties: properties,

@@ -26,6 +26,10 @@ extension Color {
         static let inactiveSegment = Color("ProgressStepper/inactiveSegment", bundle: .module)
     }
 
+    enum dataTable {
+        static let secondaryLabel = Color("dataTable/secondaryLabel", bundle: .module)
+    }
+
     enum surface {
         static let primary = Color("surface/primary", bundle: .module)
     }
@@ -88,6 +92,7 @@ extension Color {
 extension ShapeStyle where Self == Color {
     static var button: Color.button.Type { Color.button.self }
     static var progressStepper: Color.progressStepper.Type { Color.progressStepper.self }
+    static var dataTable: Color.dataTable.Type { Color.dataTable.self }
     static var surface: Color.surface.Type { Color.surface.self }
     static var backgrounds: Color.backgrounds.Type { Color.backgrounds.self }
     static var backgroundsGrouped: Color.backgroundsGrouped.Type { Color.backgroundsGrouped.self }
