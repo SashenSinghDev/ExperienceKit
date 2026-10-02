@@ -55,34 +55,12 @@ final class PlaygroundCalculatingInteractor: ExperienceInteractor {
                     insets: [.large, .large, .medium]
                 )
             ],
-            bottomComponents: [
-                .containerComponent(properties: .init(
-                    component: .buttonComponent(properties: .init(
-                        title: "Skip the wait",
-                        style: .secondary,
-                        navigation: .init(
-                            navigationType: .dismiss,
-                            deferredLoadingWorkId: DeferredWork.skipTheWait,
-                            experienceViewModel: nil))
-                    ),
-                    horizontalSpacing: .medium)
-                ),
-                .spacerComponent(properties: .init(size: .small))
-            ]
+            bottomComponents: []
         )))
     }
 
     func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
-            completion(nil)
-            return
-        }
-
-        switch deferredWork {
-        case .skipTheWait:
-            print("Skipped the wait for weekly split: \(selectedValue(for: SelectionKey.weeklySplit))")
-        }
-
+        // The screen has no actions, so there is no deferred work to perform.
         completion(nil)
     }
 
@@ -111,10 +89,6 @@ final class PlaygroundCalculatingInteractor: ExperienceInteractor {
 }
 
 private extension PlaygroundCalculatingInteractor {
-    enum DeferredWork: String, DeferredWorkID {
-        case skipTheWait
-    }
-
     enum SelectionKey {
         // Written on the weekly split screen.
         static let weeklySplit = "playground-weekly-split"
@@ -122,10 +96,6 @@ private extension PlaygroundCalculatingInteractor {
 
     enum Layout {
         static let spinnerSide: Double = 96
-    }
-
-    func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 }
 
