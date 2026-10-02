@@ -18,6 +18,10 @@ final class AppExperienceProvider: ExperienceProvider {
     /// flow starts, so each screen can capture values and a final screen can act on them.
     private let playgroundFlowSelectionStateStore = AppExperienceSelectionStateStore()
 
+    /// Renders the animations ExperienceKit's `animation` component asks for.
+    /// Stateless, so one instance serves every session that shows an animation.
+    private let animationProvider = AppExperienceAnimationProvider()
+
     func experienceSession(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSession {
         guard let experience = Experience(rawValue: id.rawValue) else {
             fatalError("Experience id \(id.rawValue) not found")
@@ -46,6 +50,11 @@ final class AppExperienceProvider: ExperienceProvider {
             return .init(interactor: SegmentedControlComponentInteractor(experienceViewModel: experienceViewModel))
         case .imageComponent:
             return .init(interactor: ImageComponentInteractor(experienceViewModel: experienceViewModel))
+        case .animationComponent:
+            return .init(
+                interactor: AnimationComponentInteractor(experienceViewModel: experienceViewModel),
+                animationProvider: animationProvider
+            )
         case .progressStepperComponent:
             return .init(interactor: ProgressStepperComponentInteractor(experienceViewModel: experienceViewModel))
         case .horizontalContainerComponent:

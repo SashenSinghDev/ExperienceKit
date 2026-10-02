@@ -17,6 +17,7 @@ enum Experience: String, ExperienceID {
     case selectionCardComponent
     case segmentedControlComponent
     case imageComponent
+    case animationComponent
     case progressStepperComponent
     case horizontalContainerComponent
     case playground

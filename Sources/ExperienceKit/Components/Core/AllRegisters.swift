@@ -1,4 +1,5 @@
 public let allRegisters: [ComponentRegister] = [
+  AnimationComponentRegister(),
   ButtonComponentRegister(),
   ContainerComponentRegister(),
   DescriptionComponentRegister(),

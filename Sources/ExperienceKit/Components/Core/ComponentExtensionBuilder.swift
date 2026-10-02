@@ -1,6 +1,12 @@
 import Foundation
 
 public extension Component {
+    static func animationComponent(properties: AnimationProperties) -> Component {
+        return Component(contentType: "animation",
+                         properties: properties,
+                         id: UUID())
+    }
+
     static func buttonComponent(properties: ButtonProperties) -> Component {
         return Component(contentType: "button",
                          properties: properties,

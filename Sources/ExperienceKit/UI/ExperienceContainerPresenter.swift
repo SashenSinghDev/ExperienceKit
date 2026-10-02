@@ -28,7 +28,8 @@ public final class ExperienceContainerPresenter {
                                                         experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
                                                         viewProvider: viewProvider,
                                                         viewModelProvider: viewModelProvider,
-                                                        experienceSelectionStateStore: experienceSession.selectionStateStore)
+                                                        experienceSelectionStateStore: experienceSession.selectionStateStore,
+                                                        experienceAnimationProvider: experienceSession.animationProvider)
 
         let experiencePresenter: ExperiencePresenter = {
             guard let presenter: ExperiencePresenter = router.presenter(for: viewModelID) else {
