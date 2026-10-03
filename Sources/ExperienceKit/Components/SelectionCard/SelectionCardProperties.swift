@@ -33,6 +33,10 @@ public struct SelectionCardProperties {
     public let selectionId: String?
     public let selectionGroupId: String?
     public let selectionMode: SelectionMode
+    /// Deferred work the interactor receives when the selection changes. Its
+    /// `values` hold every selected `selectionId` in the card's group, or just
+    /// this card's when it has no group. Give each card in a group the same id.
+    public let onChangeWorkId: AnyDeferredWorkID?
     public let navigation: NavigationProperties?
 
     public init(title: String,
@@ -44,6 +48,7 @@ public struct SelectionCardProperties {
                 selectionId: String? = nil,
                 selectionGroupId: String? = nil,
                 selectionMode: SelectionMode = .single,
+                onChangeWorkId: (any DeferredWorkID)? = nil,
                 navigation: NavigationProperties?) {
         self.title = title
         self.subtitle = subtitle
@@ -54,6 +59,7 @@ public struct SelectionCardProperties {
         self.selectionId = selectionId
         self.selectionGroupId = selectionGroupId
         self.selectionMode = selectionMode
+        self.onChangeWorkId = onChangeWorkId.map { AnyDeferredWorkID(rawValue: $0.rawValue) }
         self.navigation = navigation
     }
 }
@@ -69,6 +75,7 @@ extension SelectionCardProperties: Properties, Codable {
         case selectionId
         case selectionGroupId
         case selectionMode
+        case onChangeWorkId
         case navigation
     }
 
@@ -85,6 +92,7 @@ extension SelectionCardProperties: Properties, Codable {
         selectionId = try container.decodeIfPresent(String.self, forKey: .selectionId)
         selectionGroupId = try container.decodeIfPresent(String.self, forKey: .selectionGroupId)
         selectionMode = try container.decode(SelectionMode.self, forKey: .selectionMode)
+        onChangeWorkId = try container.decodeIfPresent(AnyDeferredWorkID.self, forKey: .onChangeWorkId)
         navigation = try container.decodeIfPresent(NavigationProperties.self, forKey: .navigation)
     }
 

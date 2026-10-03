@@ -72,7 +72,7 @@ final class NavigationCapabilityInteractor: ExperienceInteractor {
         completion(buttonExperience)
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
         guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
             completion(nil)
             return

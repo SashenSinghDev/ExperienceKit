@@ -93,7 +93,7 @@ final class TextFieldComponentInteractor: ExperienceInteractor {
         ]))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
         completion(nil)
     }
 
@@ -122,8 +122,7 @@ final class TextFieldComponentInteractor: ExperienceInteractor {
                 unit: unit,
                 helperText: helperText,
                 errorMessage: errorMessage,
-                accessibilityLabel: accessibilityLabel ?? label,
-                selectionKey: "\(state)-\(isSecure)-\(placeholder)-\(label ?? "unlabelled")"
+                accessibilityLabel: accessibilityLabel ?? label
             )),
             horizontalSpacing: .medium)
         )

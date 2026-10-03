@@ -10,12 +10,12 @@ import SwiftUI
 
 final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore) {
+         selectionStateStore: SelectionStateStore) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
@@ -77,7 +77,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                         style: .glass,
                         navigation: .init(
                             navigationType: .push(Experience.playgroundActivity),
-                            deferredLoadingWorkId: DeferredWork.continue,
+                            deferredLoadingWorkId: WorkID.continue,
                             experienceViewModel: .init(
                                 searchBar: nil,
                                 navigationBar: nil)))
@@ -89,13 +89,19 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
         ))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(workId: workId, values: values) else {
             completion(nil)
             return
         }
 
         switch deferredWork {
+        case .measurementChanged(let measurement, let value):
+            // Completing with `nil` leaves the screen as it is, so the field
+            // keeps focus while the user types.
+            selectionStateStore.setSelectedValues([value], for: measurement.selectionKey)
+        case .sexChanged(let sex):
+            selectionStateStore.setSelectedValues([sex], for: SelectionKey.sex)
         case .continue:
             let missingMeasurements = BodyMeasurement.allCases.filter { !hasEnteredValue(for: $0) }
 
@@ -159,7 +165,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                                   isMissing: Bool,
                                   requestsFocus: Bool) -> Component {
         // Carry entered values across a re-render so a failed Continue keeps them.
-        let enteredValue = experienceSelectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
+        let enteredValue = selectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
         let state: TextFieldProperties.State = isMissing ? .error : (enteredValue.isEmpty ? .empty : .filled)
 
         return .textfieldComponent(properties: .init(
@@ -170,7 +176,7 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
             value: enteredValue,
             showsClearButton: false,
             unit: measurement.unit,
-            selectionKey: measurement.selectionKey,
+            onChangeWorkId: measurement.workId,
             requestsFocus: requestsFocus)
         )
     }
@@ -213,9 +219,11 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
                     .init(label: "Female", value: "female"),
                     .init(label: "Rather not say", value: "rather-not-say")
                 ],
-                // Keep the user's choice when the screen re-renders with errors.
-                selectedValue: experienceSelectionStateStore.selectedValues(for: SelectionKey.sex).first ?? "male",
-                accessibilityLabel: SelectionKey.sex)
+                // Seeds the preselected option, and keeps the user's choice when
+                // the screen re-renders with errors.
+                selectedValue: selectionStateStore.seedSelectedValue("male", for: SelectionKey.sex),
+                accessibilityLabel: "Sex",
+                onChangeWorkId: WorkID.sexChanged)
             ),
             horizontalSpacing: .medium)
         )
@@ -233,10 +241,41 @@ final class PlaygroundBodyStatsInteractor: ExperienceInteractor {
 }
 
 private extension PlaygroundBodyStatsInteractor {
-    enum DeferredWork: String, DeferredWorkID {
+    /// The ids components send back. Any value travels separately, in `values`.
+    enum WorkID: String, DeferredWorkID {
         case `continue`
+        case weightChanged
+        case heightChanged
+        case ageChanged
+        case sexChanged
     }
 
+    /// The work this screen performs. A change carries its new value.
+    enum DeferredWork {
+        case `continue`
+        case measurementChanged(BodyMeasurement, String)
+        case sexChanged(String)
+
+        init?(workId: any DeferredWorkID, values: [String]) {
+            switch WorkID(rawValue: workId.rawValue) {
+            case .continue:
+                self = .continue
+            case .weightChanged:
+                self = .measurementChanged(.weight, values.first ?? "")
+            case .heightChanged:
+                self = .measurementChanged(.height, values.first ?? "")
+            case .ageChanged:
+                self = .measurementChanged(.age, values.first ?? "")
+            case .sexChanged:
+                guard let sex = values.first else { return nil }
+                self = .sexChanged(sex)
+            case nil:
+                return nil
+            }
+        }
+    }
+
+    /// Keys in the flow's selection state store.
     enum SelectionKey {
         // Written on the goal & units screen.
         static let goal = "playground-goal"
@@ -250,11 +289,11 @@ private extension PlaygroundBodyStatsInteractor {
     }
 
     func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
+        selectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 
     func hasEnteredValue(for measurement: BodyMeasurement) -> Bool {
-        let value = experienceSelectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
+        let value = selectionStateStore.selectedValues(for: measurement.selectionKey).first ?? ""
         return !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
@@ -297,11 +336,21 @@ private extension PlaygroundBodyStatsInteractor {
             }
         }
 
+        /// Where the entered value is kept in the selection state store.
         var selectionKey: String {
             switch self {
             case .weight: return SelectionKey.weight
             case .height: return SelectionKey.height
             case .age: return SelectionKey.age
+            }
+        }
+
+        /// The work the field sends when its text changes.
+        var workId: WorkID {
+            switch self {
+            case .weight: return .weightChanged
+            case .height: return .heightChanged
+            case .age: return .ageChanged
             }
         }
     }

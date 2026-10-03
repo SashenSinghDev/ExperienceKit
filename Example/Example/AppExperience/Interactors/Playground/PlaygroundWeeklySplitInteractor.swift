@@ -10,19 +10,21 @@ import SwiftUI
 
 final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore) {
+         selectionStateStore: SelectionStateStore) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
     }
 
     /// Figma: 05 Weekly split.
     func load(completion: @escaping (ExperienceType) -> Void) {
-        // Keep an earlier choice if the user has already been through this step.
-        let selectedSplit = experienceSelectionStateStore.selectedValues(for: SelectionKey.weeklySplit).first
-            .flatMap(WeeklySplit.init(rawValue:)) ?? .carbCycling
+        // Components only report changes, so seed the preselected split. A value
+        // already in the store is an earlier choice and is kept.
+        let selectedSplit = WeeklySplit(rawValue: selectionStateStore.seedSelectedValue(
+            WeeklySplit.carbCycling.rawValue,
+            for: SelectionKey.weeklySplit)) ?? .carbCycling
 
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
@@ -72,7 +74,7 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
                         style: .primary,
                         navigation: .init(
                             navigationType: .push(Experience.playgroundCalculating),
-                            deferredLoadingWorkId: DeferredWork.seeMyPlan,
+                            deferredLoadingWorkId: WorkID.seeMyPlan,
                             experienceViewModel: .init(
                                 searchBar: nil,
                                 navigationBar: nil)))
@@ -84,13 +86,15 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
         )))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(workId: workId, values: values) else {
             completion(nil)
             return
         }
 
         switch deferredWork {
+        case .weeklySplitChanged(let weeklySplit):
+            selectionStateStore.setSelectedValues([weeklySplit], for: SelectionKey.weeklySplit)
         case .seeMyPlan:
             // The store is shared across the Playground flow, so values captured
             // on earlier screens are readable here too.
@@ -135,6 +139,7 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
                 badgeStyle: .neutral,
                 selectionId: split.rawValue,
                 selectionGroupId: SelectionKey.weeklySplit,
+                onChangeWorkId: WorkID.weeklySplitChanged,
                 navigation: nil)
             ),
             horizontalSpacing: .medium)
@@ -153,10 +158,31 @@ final class PlaygroundWeeklySplitInteractor: ExperienceInteractor {
 }
 
 private extension PlaygroundWeeklySplitInteractor {
-    enum DeferredWork: String, DeferredWorkID {
+    /// The ids components send back. Any value travels separately, in `values`.
+    enum WorkID: String, DeferredWorkID {
         case seeMyPlan
+        case weeklySplitChanged
     }
 
+    /// The work this screen performs. A change carries its new value.
+    enum DeferredWork {
+        case seeMyPlan
+        case weeklySplitChanged(String)
+
+        init?(workId: any DeferredWorkID, values: [String]) {
+            switch WorkID(rawValue: workId.rawValue) {
+            case .seeMyPlan:
+                self = .seeMyPlan
+            case .weeklySplitChanged:
+                guard let weeklySplit = values.first else { return nil }
+                self = .weeklySplitChanged(weeklySplit)
+            case nil:
+                return nil
+            }
+        }
+    }
+
+    /// Keys in the flow's selection state store.
     enum SelectionKey {
         // Written on the goal & units screen.
         static let goal = "playground-goal"
@@ -176,7 +202,7 @@ private extension PlaygroundWeeklySplitInteractor {
     }
 
     func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
+        selectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 }
 

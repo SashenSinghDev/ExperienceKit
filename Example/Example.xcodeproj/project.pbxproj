@@ -115,6 +115,7 @@
 		6BA1C0093290A00100AA0001 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				96F33279324B7D0500E6B149 /* AppExperienceSelectionStateStore.swift */,
 				6BA1C0073290A00100AA0001 /* PlanCalculationService.swift */,
 			);
 			path = Services;
@@ -124,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				96FB9FF72C36DEB500803A47 /* AppExperienceProvider.swift */,
-				96F33279324B7D0500E6B149 /* AppExperienceSelectionStateStore.swift */,
 				6BA1C0033290A00100AA0001 /* AppExperienceAnimationProvider.swift */,
 				96FB9FFA2C36FBDC00803A47 /* Interactors */,
 				9640DEA32E0365500076C4B9 /* Models */,

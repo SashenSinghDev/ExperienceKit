@@ -14,10 +14,10 @@ Defines stable app-level experience ids. Add a case when a screen should be addr
 Acts as the app composition root. It translates an `ExperienceID` into an `ExperienceSession`, creates the interactor, and creates any app-owned per-session dependencies the interactor needs.
 
 **`ExperienceSession`**
-Carries the concrete interactor plus optional session dependencies that ExperienceKit should pass into component view models for that rendered session.
+Carries the concrete interactor plus the optional dependencies ExperienceKit passes into component view models for that rendered session, such as the animation provider. App services and data stores are not part of it.
 
 **`ExperienceInteractor`**
-Builds the screen model in `load(completion:)` and handles app work in `performDeferredWork(workId:completion:)`.
+Builds the screen model in `load(completion:)` and handles app work in `performDeferredWork(workId:values:completion:)`.
 
 **Services And Data Stores**
 App-owned protocols, such as `PlanCalculationService`, that perform the work an interactor triggers. The provider creates them and injects them into interactors. See [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md).
@@ -61,8 +61,7 @@ Reject app interactors that perform async work, delays, networking, persistence,
 
 - Add a switch case for every `Experience` case.
 - Return `ExperienceSession(interactor:)` when the screen has no extra session dependencies.
-- Create app-owned dependencies in the provider when the screen needs shared state across component view models and the interactor.
-- Pass the same dependency instance to the interactor and to `ExperienceSession`.
+- Pass a dependency to `ExperienceSession` only when component view models need it, such as `animationProvider`.
 - For state shared across a multi-screen flow, hold the dependency on the provider instead of creating it per session; see [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md#flow-scoped-stores).
 - Keep concrete app dependency implementations in the app target, not in `Sources/ExperienceKit/`.
 - Hold services and data stores on the provider, typed as their protocol, and inject them through the interactor initializer. They are not passed to `ExperienceSession`; see [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md#provider-wiring).
@@ -70,19 +69,17 @@ Reject app interactors that perform async work, delays, networking, persistence,
 Example:
 
 ```swift
-case .selectionScreen:
-    let selectionStateStore = AppExperienceSelectionStateStore()
-    return .init(
-        interactor: SelectionScreenInteractor(
-            experienceViewModel: experienceViewModel,
-            experienceSelectionStateStore: selectionStateStore
-        ),
-        selectionStateStore: selectionStateStore
-    )
+private let playgroundFlowSelectionStateStore: SelectionStateStore = AppExperienceSelectionStateStore()
+
+case .playgroundGoalUnits:
+    return .init(interactor: PlaygroundGoalUnitsInteractor(
+        experienceViewModel: experienceViewModel,
+        selectionStateStore: playgroundFlowSelectionStateStore
+    ))
 ```
 
 **AI Rule:**
-Reject provider code that creates an interactor needing session state but does not pass the same state object through `ExperienceSession`.
+Reject provider code that passes an app service or data store through `ExperienceSession`. Only dependencies that component view models consume belong there.
 
 ## Creating A New App Screen
 
@@ -138,8 +135,8 @@ Reject automatic navigation that is triggered from a component view or view mode
 
 ## Related Guidance
 
-- Use [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) when a button or navigation action needs interactor-owned work.
-- Use [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) when component selection state must be read by an interactor.
+- Use [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) when a button, navigation action, or value change needs interactor-owned work.
+- Use [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) when an interactor needs the values a user selects or types.
 - Use [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) when a screen shows an animation supplied by the app.
 - Use [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md) when an interactor needs a service or data store to perform work.
 - Use [COMPONENTCREATION.md](COMPONENTCREATION.md) when adding new ExperienceKit components or catalogue demos.

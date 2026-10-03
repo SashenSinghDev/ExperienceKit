@@ -28,7 +28,6 @@ public final class ExperienceContainerPresenter {
                                                         experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
                                                         viewProvider: viewProvider,
                                                         viewModelProvider: viewModelProvider,
-                                                        experienceSelectionStateStore: experienceSession.selectionStateStore,
                                                         experienceAnimationProvider: experienceSession.animationProvider)
 
         let experiencePresenter: ExperiencePresenter = {

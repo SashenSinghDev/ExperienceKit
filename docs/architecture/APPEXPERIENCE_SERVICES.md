@@ -31,7 +31,7 @@ sequenceDiagram
 | --- | --- | --- |
 | Interactor | Screen composition, flow decisions, mapping results to `ExperienceType` | `PlaygroundCalculatingInteractor` |
 | Service | Work and business logic the interactor triggers | `PlanCalculationService`, an API client, analytics |
-| Data store | State that is read and written over time | A persisted profile store, a cache |
+| Data store | State that is read and written over time | `SelectionStateStore`, a persisted profile store, a cache |
 
 A service or data store never returns ExperienceKit types such as `Component` or `ExperienceType`, and never navigates. It returns app data; the interactor decides what to do with it.
 
@@ -41,7 +41,7 @@ A service or data store never returns ExperienceKit types such as `Component` or
 
 - Declare a protocol named for what the dependency does, such as `PlanCalculationService`.
 - Keep the protocol and its concrete implementations in the app target, under `Example/Example/AppExperience/Services/`. Do not add them to `Sources/ExperienceKit/`.
-- Prefix the app's concrete implementation with `App`, matching `AppExperienceSelectionStateStore` and `AppExperienceAnimationProvider`.
+- Prefix the app's concrete implementation with `App`, such as `AppPlanCalculationService` and `AppExperienceSelectionStateStore`.
 - Keep timing, endpoints, and other implementation constants inside the concrete type, not in the interactor.
 - Call completions on the main thread, and state this on the protocol. The interactor forwards the result straight to the presenter.
 - Call the completion exactly once on every path.
@@ -86,14 +86,14 @@ Example:
 ```swift
 final class PlaygroundCalculatingInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
     private let planCalculationService: PlanCalculationService
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore,
+         selectionStateStore: SelectionStateStore,
          planCalculationService: PlanCalculationService) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
         self.planCalculationService = planCalculationService
     }
 }
@@ -110,16 +110,16 @@ Reject interactors that instantiate their own services, read them from a singlet
 `AppExperienceProvider` is the composition root. It creates the concrete dependency and passes it to every interactor that needs it.
 
 ```swift
+private let playgroundFlowSelectionStateStore: SelectionStateStore = AppExperienceSelectionStateStore()
 private let planCalculationService: PlanCalculationService = AppPlanCalculationService()
 
 case .playgroundCalculating:
     return .init(
         interactor: PlaygroundCalculatingInteractor(
             experienceViewModel: experienceViewModel,
-            experienceSelectionStateStore: playgroundFlowSelectionStateStore,
+            selectionStateStore: playgroundFlowSelectionStateStore,
             planCalculationService: planCalculationService
         ),
-        selectionStateStore: playgroundFlowSelectionStateStore,
         animationProvider: animationProvider
     )
 ```
@@ -129,14 +129,14 @@ case .playgroundCalculating:
 - Hold services and data stores as private properties on `AppExperienceProvider`, typed as their protocol.
 - Do not create a stateful dependency inside `experienceSession(for:)`. ExperienceKit calls it again whenever SwiftUI re-evaluates the navigation stack, so state created there is lost or split.
 - Share one instance between interactors that must see the same data.
-- Services and data stores are injected into the interactor only. `ExperienceSession` carries the dependencies ExperienceKit hands to component view models (`selectionStateStore`, `animationProvider`); app services do not go through it.
+- Services and data stores are injected into the interactor only. `ExperienceSession` carries the dependencies ExperienceKit hands to component view models, such as `animationProvider`; app services and data stores do not go through it.
 
 **AI Rule:**
 Flag concrete service types that are named anywhere outside `AppExperienceProvider` and the service's own file.
 
 ## Calling A Dependency
 
-Call the dependency from `load(completion:)` or `performDeferredWork(workId:completion:)`, then map its result to the completion.
+Call the dependency from `load(completion:)` or `performDeferredWork(workId:values:completion:)`, then map its result to the completion.
 
 ```swift
 func load(completion: @escaping (ExperienceType) -> Void) {
@@ -159,6 +159,6 @@ func load(completion: @escaping (ExperienceType) -> Void) {
 
 ## Selection State Stores
 
-`ExperienceSelectionStateStore` is the one data store whose protocol lives in ExperienceKit, because component view models write to it. It follows its own rules in [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md). Every other service and data store is declared and implemented in the app target as described here.
+`SelectionStateStore` is an app data store like any other: declared in the app target, held by the provider, and injected into interactors. Components never write to it. They report changes to the interactor through deferred work, and the interactor writes. See [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md).
 
-Reference: `PlanCalculationService`, `AppPlanCalculationService`, and `PlaygroundCalculatingInteractor`.
+Reference: `PlanCalculationService`, `AppPlanCalculationService`, `SelectionStateStore`, and `PlaygroundCalculatingInteractor`.

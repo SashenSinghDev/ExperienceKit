@@ -10,19 +10,21 @@ import SwiftUI
 
 final class PlaygroundActivityInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore) {
+         selectionStateStore: SelectionStateStore) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
     }
 
     /// Figma: 04 Activity.
     func load(completion: @escaping (ExperienceType) -> Void) {
-        // Keep an earlier choice if the user has already been through this step.
-        let selectedLevel = experienceSelectionStateStore.selectedValues(for: SelectionKey.activity).first
-            .flatMap(ActivityLevel.init(rawValue:)) ?? .moderatelyActive
+        // Components only report changes, so seed the preselected level. A value
+        // already in the store is an earlier choice and is kept.
+        let selectedLevel = ActivityLevel(rawValue: selectionStateStore.seedSelectedValue(
+            ActivityLevel.moderatelyActive.rawValue,
+            for: SelectionKey.activity)) ?? .moderatelyActive
 
         var topComponents: [Component] = [
             .spacerComponent(properties: .init(size: .small)),
@@ -62,7 +64,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
                         style: .primary,
                         navigation: .init(
                             navigationType: .push(Experience.playgroundWeeklySplit),
-                            deferredLoadingWorkId: DeferredWork.continue,
+                            deferredLoadingWorkId: WorkID.continue,
                             experienceViewModel: .init(
                                 searchBar: nil,
                                 navigationBar: nil)))
@@ -74,13 +76,15 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
         )))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(workId: workId, values: values) else {
             completion(nil)
             return
         }
 
         switch deferredWork {
+        case .activityChanged(let activity):
+            selectionStateStore.setSelectedValues([activity], for: SelectionKey.activity)
         case .continue:
             // The store is shared across the Playground flow, so values captured
             // on earlier screens are readable here too.
@@ -123,6 +127,7 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
                 badgeText: nil,
                 selectionId: level.rawValue,
                 selectionGroupId: SelectionKey.activity,
+                onChangeWorkId: WorkID.activityChanged,
                 navigation: nil)
             ),
             horizontalSpacing: .medium)
@@ -141,10 +146,31 @@ final class PlaygroundActivityInteractor: ExperienceInteractor {
 }
 
 private extension PlaygroundActivityInteractor {
-    enum DeferredWork: String, DeferredWorkID {
+    /// The ids components send back. Any value travels separately, in `values`.
+    enum WorkID: String, DeferredWorkID {
         case `continue`
+        case activityChanged
     }
 
+    /// The work this screen performs. A change carries its new value.
+    enum DeferredWork {
+        case `continue`
+        case activityChanged(String)
+
+        init?(workId: any DeferredWorkID, values: [String]) {
+            switch WorkID(rawValue: workId.rawValue) {
+            case .continue:
+                self = .continue
+            case .activityChanged:
+                guard let activity = values.first else { return nil }
+                self = .activityChanged(activity)
+            case nil:
+                return nil
+            }
+        }
+    }
+
+    /// Keys in the flow's selection state store.
     enum SelectionKey {
         // Written on the goal & units screen.
         static let goal = "playground-goal"
@@ -161,7 +187,7 @@ private extension PlaygroundActivityInteractor {
     }
 
     func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
+        selectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 }
 

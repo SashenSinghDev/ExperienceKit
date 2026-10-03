@@ -27,7 +27,7 @@ final class ImageComponentInteractor: ExperienceInteractor {
         ]))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
         completion(nil)
     }
 }

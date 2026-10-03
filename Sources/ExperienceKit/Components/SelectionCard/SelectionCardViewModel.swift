@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public final class SelectionCardViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = HasExperiencePresenterNotifier & HasExperienceSelectionStateStore
+    public typealias Dependencies = HasExperiencePresenterNotifier
 
     public let id: UUID
     let title: String
@@ -23,8 +23,8 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
     let selectionGroupId: String?
     let selectionMode: SelectionCardProperties.SelectionMode
     let navigationViewModel: NavigationViewModel?
+    private let onChangeWorkId: AnyDeferredWorkID?
     private let experiencePresenterNotifier: ExperiencePresenterNotifier
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore?
     @Published public var isSelected: Bool
     private static var selectionGroups: [String: [WeakSelectionCardViewModelReference]] = [:]
 
@@ -41,6 +41,7 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         self.selectionGroupId = properties.selectionGroupId
         self.selectionMode = properties.selectionMode
         self.isSelected = properties.isSelected
+        self.onChangeWorkId = properties.onChangeWorkId
 
         if let navigationProperties = properties.navigation {
             self.navigationViewModel = .init(navigationType: navigationProperties.navigationType,
@@ -51,15 +52,16 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         }
 
         self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
-        self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
         registerSelectionGroupIfNeeded()
-        registerInitialSelectionIfNeeded()
     }
 
     // The initial selection state comes from properties. Tapping updates the
-    // local published state immediately, then forwards navigation if provided.
+    // local published state immediately, reports the change to the interactor,
+    // then forwards navigation if provided.
     func select() {
+        let previousSelectedValues = selectedValues()
         updateSelectionState()
+        notifySelectionChanged(from: previousSelectedValues)
 
         guard let navigationViewModel else {
             return
@@ -75,19 +77,29 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         Self.selectionGroups[selectionGroupId] = existingGroup + [WeakSelectionCardViewModelReference(value: self)]
     }
 
-    private func registerInitialSelectionIfNeeded() {
-        guard isSelected else { return }
-
-        if let selectionGroupId {
-            switch selectionMode {
-            case .single:
-                experienceSelectionStateStore?.setSelectedValue(selectionId, for: selectionGroupId)
-            case .multiple:
-                experienceSelectionStateStore?.addSelectedValue(selectionId, for: selectionGroupId)
-            }
-        } else {
-            experienceSelectionStateStore?.setSelectedValue(selectionId, for: id.uuidString)
+    /// The selected `selectionId`s in this card's group, in the order the cards
+    /// were created. A card without a group reports only itself.
+    private func selectedValues() -> [String] {
+        guard let selectionGroupId else {
+            return isSelected ? [selectionId] : []
         }
+
+        var seenSelectionIds = Set<String>()
+        return Self.selectionGroups[selectionGroupId, default: []]
+            .compactMap { $0.value }
+            .filter { $0.isSelected }
+            .map { $0.selectionId }
+            .filter { seenSelectionIds.insert($0).inserted }
+    }
+
+    /// The interactor owns what happens with the selection; the card only reports it.
+    private func notifySelectionChanged(from previousSelectedValues: [String]) {
+        let currentSelectedValues = selectedValues()
+
+        guard let onChangeWorkId, currentSelectedValues != previousSelectedValues else {
+            return
+        }
+        experiencePresenterNotifier.delegate?.performDeferredWork(workId: onChangeWorkId, values: currentSelectedValues)
     }
 
     private func updateSelectionState() {
@@ -102,14 +114,8 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             selectSingleCard(in: selectionGroupId)
-            experienceSelectionStateStore?.setSelectedValue(selectionId, for: selectionGroupId)
         case .multiple:
             toggleMultipleSelection()
-            if isSelected {
-                experienceSelectionStateStore?.addSelectedValue(selectionId, for: selectionGroupId)
-            } else {
-                experienceSelectionStateStore?.removeSelectedValue(selectionId, for: selectionGroupId)
-            }
         }
     }
 
@@ -117,14 +123,8 @@ public final class SelectionCardViewModel: ComponentViewModel, ObservableObject 
         switch selectionMode {
         case .single:
             isSelected = true
-            experienceSelectionStateStore?.setSelectedValue(selectionId, for: id.uuidString)
         case .multiple:
             isSelected.toggle()
-            if isSelected {
-                experienceSelectionStateStore?.addSelectedValue(selectionId, for: id.uuidString)
-            } else {
-                experienceSelectionStateStore?.removeSelectedValue(selectionId, for: id.uuidString)
-            }
         }
     }
 

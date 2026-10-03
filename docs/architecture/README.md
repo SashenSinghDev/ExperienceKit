@@ -21,8 +21,8 @@ Start here when:
 ### App Experience Interactors
 
 - [APPEXPERIENCE.md](APPEXPERIENCE.md) - App experience architecture, interactor responsibilities, `AppExperienceProvider`, and `ExperienceSession` wiring
-- [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) - Deferred work id ownership, button/navigation handoff, and `performDeferredWork` guidance
-- [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) - App-owned selection state stores, component write paths, and interactor read paths
+- [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) - Deferred work id ownership, button/navigation handoff, value change handoff, work that carries values, and `performDeferredWork` guidance
+- [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) - How components report selections through `onChangeWorkId`, and how interactors seed, write, and read the app-owned selection state store
 - [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) - App-owned animation provider, the `animation` component contract, and `ExperienceSession` wiring
 - [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md) - App-owned services and data stores, interactor injection, and provider ownership
 
@@ -32,7 +32,8 @@ Start here when:
 - Creating a new app flow screen
 - Wiring an `Experience` case through `AppExperienceProvider`
 - Adding button work that runs through `performDeferredWork`
-- Sharing selected component values with an interactor
+- Capturing the values a user selects or types, or sharing them between screens
+- Adding `onChangeWorkId` to a component
 - Showing an animation, or adding an animation library to the app
 - Adding a service or data store, or moving calculations, async work, networking, or persistence out of an interactor
 
@@ -79,7 +80,7 @@ During code review:
 - **Small views**: SwiftUI views should render state and keep behavior out of layout code.
 - **Catalogue visibility**: New components should appear in an app catalogue when they are part of the public component set.
 - **Token fidelity**: Design-system tokens should preserve Figma naming and hierarchy in asset paths and Swift accessors.
-- **App-owned experience state**: App flow state should be owned by the host app and injected into ExperienceKit through `ExperienceSession`.
+- **App-owned experience state**: App flow state should be owned by the host app and injected into interactors. ExperienceKit reports user input to the interactor and holds none of it.
 - **Injected app logic**: Interactors should call services and data stores injected by `AppExperienceProvider` instead of performing the work inline.
 - **ExperienceKit-only composition**: App screens should be composed from existing ExperienceKit components and design-system tokens, not host-app-only UI or styling.
 - **Figma-sourced extension**: New design-system values may be added only when extending ExperienceKit itself, and should map one-to-one from Figma as the source of truth.

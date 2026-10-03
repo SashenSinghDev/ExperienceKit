@@ -59,7 +59,7 @@ public final class ExperiencePresenter: ObservableObject {
     private func filterResults(for query: String) {
         guard case .loadedScrollable(_) = state, experienceViewModel?.searchBar != nil else { return }
 
-        experienceInteractor.performDeferredWork(workId: AnyDeferredWorkID(rawValue: query)) {  [weak self] experienceType in
+        experienceInteractor.performDeferredWork(workId: AnyDeferredWorkID(rawValue: query), values: []) {  [weak self] experienceType in
             guard let self, let experienceType else { return }
             self.resolveState(for: experienceType)
         }
@@ -95,7 +95,7 @@ public final class ExperiencePresenter: ObservableObject {
         if let deferredLoadingWorkId = navigationViewModel.deferredLoadingWorkId {
             dependency.router.isLoading = true
 
-            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId) { [weak self] experienceType in
+            experienceInteractor.performDeferredWork(workId: deferredLoadingWorkId, values: []) { [weak self] experienceType in
                 guard let self else { return }
                 self.dependency.router.isLoading = false
 
@@ -117,5 +117,14 @@ public final class ExperiencePresenter: ObservableObject {
 extension ExperiencePresenter: ExperiencePresenterNotifierDelegate {
     public func navigate(navigationViewModel: NavigationViewModel) {
         navigate(with: navigationViewModel)
+    }
+
+    public func performDeferredWork(workId: any DeferredWorkID, values: [String]) {
+        experienceInteractor.performDeferredWork(workId: workId, values: values) { [weak self] experienceType in
+            // `nil` leaves the screen untouched, which keeps focus and local
+            // component state while the user is still editing.
+            guard let self, let experienceType else { return }
+            self.resolveState(for: experienceType)
+        }
     }
 }

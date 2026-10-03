@@ -1,7 +1,7 @@
 import Foundation
 
 public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = HasExperienceSelectionStateStore
+    public typealias Dependencies = HasExperiencePresenterNotifier
 
     public let id: UUID
     let state: TextFieldProperties.State
@@ -13,12 +13,12 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
     let showsClearButton: Bool
     let unit: String?
     let accessibilityLabel: String
-    let selectionKey: String
     let requestsFocus: Bool
     @Published var text: String
     private let helperText: String?
     private let errorMessage: String?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore?
+    private let onChangeWorkId: AnyDeferredWorkID?
+    private let experiencePresenterNotifier: ExperiencePresenterNotifier
 
     public init(properties: TextFieldProperties,
                 dependency: Dependencies,
@@ -35,11 +35,10 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
         self.helperText = properties.helperText
         self.errorMessage = properties.errorMessage
         self.accessibilityLabel = properties.accessibilityLabel ?? properties.label ?? properties.placeholder
-        self.selectionKey = properties.selectionKey ?? properties.label ?? properties.placeholder
         self.requestsFocus = properties.requestsFocus && properties.state != .disabled
         self.text = properties.state == .empty ? "" : properties.value
-        self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
-        experienceSelectionStateStore?.setSelectedValue(text, for: selectionKey)
+        self.onChangeWorkId = properties.onChangeWorkId
+        self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
     }
 
     var message: String? {
@@ -64,6 +63,11 @@ public final class TextFieldViewModel: ComponentViewModel, ObservableObject {
         }
 
         self.text = text
-        experienceSelectionStateStore?.setSelectedValue(text, for: selectionKey)
+
+        // The interactor owns what happens with the text; the component only reports it.
+        guard let onChangeWorkId else {
+            return
+        }
+        experiencePresenterNotifier.delegate?.performDeferredWork(workId: onChangeWorkId, values: [text])
     }
 }

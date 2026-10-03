@@ -16,7 +16,8 @@ final class AppExperienceProvider: ExperienceProvider {
     /// stack, so the store must outlive individual `experienceSession(for:)` calls.
     /// It is owned here and cleared by `PlaygroundInteractor` when a new run of the
     /// flow starts, so each screen can capture values and a final screen can act on them.
-    private let playgroundFlowSelectionStateStore = AppExperienceSelectionStateStore()
+    /// Only interactors touch it: components report changes through deferred work.
+    private let playgroundFlowSelectionStateStore: SelectionStateStore = AppExperienceSelectionStateStore()
 
     /// Renders the animations ExperienceKit's `animation` component asks for.
     /// Stateless, so one instance serves every session that shows an animation.
@@ -71,45 +72,32 @@ final class AppExperienceProvider: ExperienceProvider {
                 playgroundFlowSelectionStateStore: playgroundFlowSelectionStateStore
             ))
         case .playgroundGoalUnits:
-            return .init(
-                interactor: PlaygroundGoalUnitsInteractor(
-                    experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
-                ),
+            return .init(interactor: PlaygroundGoalUnitsInteractor(
+                experienceViewModel: experienceViewModel,
                 selectionStateStore: playgroundFlowSelectionStateStore
-            )
+            ))
         case .playgroundBodyStats:
-            return .init(
-                interactor: PlaygroundBodyStatsInteractor(
-                    experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
-                ),
+            return .init(interactor: PlaygroundBodyStatsInteractor(
+                experienceViewModel: experienceViewModel,
                 selectionStateStore: playgroundFlowSelectionStateStore
-            )
+            ))
         case .playgroundActivity:
-            return .init(
-                interactor: PlaygroundActivityInteractor(
-                    experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
-                ),
+            return .init(interactor: PlaygroundActivityInteractor(
+                experienceViewModel: experienceViewModel,
                 selectionStateStore: playgroundFlowSelectionStateStore
-            )
+            ))
         case .playgroundWeeklySplit:
-            return .init(
-                interactor: PlaygroundWeeklySplitInteractor(
-                    experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
-                ),
+            return .init(interactor: PlaygroundWeeklySplitInteractor(
+                experienceViewModel: experienceViewModel,
                 selectionStateStore: playgroundFlowSelectionStateStore
-            )
+            ))
         case .playgroundCalculating:
             return .init(
                 interactor: PlaygroundCalculatingInteractor(
                     experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore,
+                    selectionStateStore: playgroundFlowSelectionStateStore,
                     planCalculationService: planCalculationService
                 ),
-                selectionStateStore: playgroundFlowSelectionStateStore,
                 animationProvider: animationProvider
             )
         case .playgroundPlanReveal:

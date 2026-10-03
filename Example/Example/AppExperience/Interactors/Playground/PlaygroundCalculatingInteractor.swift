@@ -10,21 +10,21 @@ import SwiftUI
 
 final class PlaygroundCalculatingInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
     private let planCalculationService: PlanCalculationService
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore,
+         selectionStateStore: SelectionStateStore,
          planCalculationService: PlanCalculationService) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
         self.planCalculationService = planCalculationService
     }
 
     /// Figma: 06 Calculating.
     func load(completion: @escaping (ExperienceType) -> Void) {
         // The message describes the split chosen on the previous screen.
-        let selectedSplit = experienceSelectionStateStore.selectedValues(for: SelectionKey.weeklySplit).first
+        let selectedSplit = selectionStateStore.selectedValues(for: SelectionKey.weeklySplit).first
             .flatMap(WeeklySplit.init(rawValue:)) ?? .carbCycling
 
         completion(.fullScreen(properties: .init(
@@ -73,7 +73,7 @@ final class PlaygroundCalculatingInteractor: ExperienceInteractor {
         }
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
         // The screen has no actions; it moves on by itself from `load`.
         completion(nil)
     }
