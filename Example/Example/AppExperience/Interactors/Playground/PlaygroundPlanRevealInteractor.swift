@@ -20,7 +20,6 @@ final class PlaygroundPlanRevealInteractor: ExperienceInteractor {
         completion(.fullScreen(properties: .init(
             image: nil,
             topComponents: [
-                .spacerComponent(properties: .init(size: .large)),
                 insetText(
                     title: "Your starting plan",
                     font: .title1,
@@ -34,6 +33,7 @@ final class PlaygroundPlanRevealInteractor: ExperienceInteractor {
                     weight: .semibold,
                     foregroundStyle: .primary
                 ),
+                .spacerComponent(properties: .init(size: .small)),
                 insetText(
                     title: Plan.summary,
                     font: .subheadline,
