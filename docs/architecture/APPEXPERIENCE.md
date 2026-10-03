@@ -19,6 +19,9 @@ Carries the concrete interactor plus optional session dependencies that Experien
 **`ExperienceInteractor`**
 Builds the screen model in `load(completion:)` and handles app work in `performDeferredWork(workId:completion:)`.
 
+**Services And Data Stores**
+App-owned protocols, such as `PlanCalculationService`, that perform the work an interactor triggers. The provider creates them and injects them into interactors. See [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md).
+
 **Catalogue Interactors**
 Catalogue or list interactors own discoverable entry points. Add public component demos to a catalogue only when a component should be browsable from the app.
 
@@ -38,12 +41,16 @@ Each interactor owns one experience screen or one clear flow step.
 - Keep layout helpers private to the interactor when they only serve that screen.
 - Keep screen-specific constants, deferred work ids, and selection keys inside the interactor.
 - Accept app dependencies through the interactor initializer.
+- Move calculations, async work, networking, and persistence into injected services and data stores, and call them from the interactor. See [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md).
 - Keep SwiftUI layout and component implementation details out of app interactors.
 - Return an `ExperienceType` from `load`; do not mutate component view models directly from the interactor.
 - Use `experienceViewModel` only when the existing navigation or container APIs need it.
 
 **AI Rule:**
 Reject app interactors that reach into component views, own framework internals, use global mutable state for screen-local behavior, or create screens from UI/styling outside the existing ExperienceKit component and design-system surface.
+
+**AI Rule:**
+Reject app interactors that perform async work, delays, networking, persistence, or business calculations inline instead of calling an injected service or data store.
 
 ## Provider Wiring
 
@@ -58,6 +65,7 @@ Reject app interactors that reach into component views, own framework internals,
 - Pass the same dependency instance to the interactor and to `ExperienceSession`.
 - For state shared across a multi-screen flow, hold the dependency on the provider instead of creating it per session; see [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md#flow-scoped-stores).
 - Keep concrete app dependency implementations in the app target, not in `Sources/ExperienceKit/`.
+- Hold services and data stores on the provider, typed as their protocol, and inject them through the interactor initializer. They are not passed to `ExperienceSession`; see [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md#provider-wiring).
 
 Example:
 
@@ -99,11 +107,13 @@ A screen that moves on by itself, such as a loading or calculating step, navigat
 
 The presenter keeps the `load(completion:)` closure, so an interactor may call it more than once: first with the screen to render, then with `.navigateImmediately(navigationViewModel:)` when its async work finishes.
 
+The async work itself belongs to an injected service. The interactor only starts it and navigates when it completes.
+
 ```swift
 func load(completion: @escaping (ExperienceType) -> Void) {
     completion(.fullScreen(properties: calculatingScreen()))
 
-    calculatePlan {
+    planCalculationService.calculatePlan {
         completion(.navigateImmediately(navigationViewModel: .init(
             navigationType: .push(Experience.playgroundPlanReveal),
             deferredLoadingWorkId: nil,
@@ -115,12 +125,13 @@ func load(completion: @escaping (ExperienceType) -> Void) {
 **Guidelines:**
 
 - Render the screen first, then start the async work.
-- Call the completion on the main thread.
+- Run the async work in an injected service, not in a private method on the interactor.
+- Call the completion on the main thread. Services complete on the main thread so the interactor can forward the result directly.
 - Leave `deferredLoadingWorkId` as `nil` on the automatic navigation. A work id makes the presenter show its loading overlay on top of the screen while the work runs.
 - Do not add navigation or work ids to visual components such as `animation` to drive this. The animation only draws; the interactor owns the work and the navigation.
 - The pushed screen keeps the automatic screen beneath it in the stack, so navigating back returns to it without re-running `load`.
 
-Reference: `PlaygroundCalculatingInteractor`.
+Reference: `PlaygroundCalculatingInteractor`, which waits on the injected `PlanCalculationService`.
 
 **AI Rule:**
 Reject automatic navigation that is triggered from a component view or view model instead of the interactor.
@@ -130,4 +141,5 @@ Reject automatic navigation that is triggered from a component view or view mode
 - Use [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) when a button or navigation action needs interactor-owned work.
 - Use [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) when component selection state must be read by an interactor.
 - Use [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) when a screen shows an animation supplied by the app.
+- Use [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md) when an interactor needs a service or data store to perform work.
 - Use [COMPONENTCREATION.md](COMPONENTCREATION.md) when adding new ExperienceKit components or catalogue demos.

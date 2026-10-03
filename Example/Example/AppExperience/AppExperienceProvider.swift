@@ -22,6 +22,10 @@ final class AppExperienceProvider: ExperienceProvider {
     /// Stateless, so one instance serves every session that shows an animation.
     private let animationProvider = AppExperienceAnimationProvider()
 
+    /// Works out the plan for the Playground onboarding flow.
+    /// Typed as the protocol so interactors never depend on the concrete service.
+    private let planCalculationService: PlanCalculationService = AppPlanCalculationService()
+
     func experienceSession(for id: any ExperienceID, experienceViewModel: ExperienceViewModel?) -> ExperienceSession {
         guard let experience = Experience(rawValue: id.rawValue) else {
             fatalError("Experience id \(id.rawValue) not found")
@@ -102,7 +106,8 @@ final class AppExperienceProvider: ExperienceProvider {
             return .init(
                 interactor: PlaygroundCalculatingInteractor(
                     experienceViewModel: experienceViewModel,
-                    experienceSelectionStateStore: playgroundFlowSelectionStateStore
+                    experienceSelectionStateStore: playgroundFlowSelectionStateStore,
+                    planCalculationService: planCalculationService
                 ),
                 selectionStateStore: playgroundFlowSelectionStateStore,
                 animationProvider: animationProvider

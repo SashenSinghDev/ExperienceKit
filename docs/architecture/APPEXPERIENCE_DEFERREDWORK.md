@@ -59,6 +59,7 @@ The navigation still describes where the user goes. The deferred work id describ
 - Return `nil` when the work only performs side effects before navigation. The navigation then continues.
 - Return an `ExperienceType` only when the work should replace or load experience content. For button navigation this **halts the navigation**: the presenter renders the returned experience on the current screen instead of navigating.
 - Keep dependency reads, validation, analytics, and logging in this method rather than in component views.
+- Delegate work beyond the flow decision itself, such as network calls, persistence, or calculations, to an injected service or data store.
 
 Example:
 
@@ -122,5 +123,7 @@ sequenceDiagram
 ## When Dependencies Are Needed
 
 If deferred work needs app state, inject that state into the interactor when `AppExperienceProvider` creates the session. Do not make ExperienceKit instantiate app state.
+
+For services and data stores that perform the work, use the injection pattern in [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md).
 
 For selected component values, use the app-owned selection state pattern in [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md).
