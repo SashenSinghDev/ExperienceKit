@@ -24,7 +24,7 @@ Start here when:
 - [APPEXPERIENCE_DEFERREDWORK.md](APPEXPERIENCE_DEFERREDWORK.md) - Deferred work id ownership, button/navigation handoff, value change handoff, work that carries values, and `performDeferredWork` guidance
 - [APPEXPERIENCE_SELECTIONSTATE.md](APPEXPERIENCE_SELECTIONSTATE.md) - How components report selections through `onChangeWorkId`, and how interactors seed, write, and read the app-owned selection state store
 - [APPEXPERIENCE_ANIMATION.md](APPEXPERIENCE_ANIMATION.md) - App-owned animation provider, the `animation` component contract, and `ExperienceSession` wiring
-- [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md) - App-owned services and data stores, interactor injection, and provider ownership
+- [APPEXPERIENCE_SERVICES.md](APPEXPERIENCE_SERVICES.md) - App-owned services and data stores, the `Dependencies/` folder structure, interactor injection, and provider ownership
 
 Start here when:
 

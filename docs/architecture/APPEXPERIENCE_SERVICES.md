@@ -35,12 +35,45 @@ sequenceDiagram
 
 A service or data store never returns ExperienceKit types such as `Component` or `ExperienceType`, and never navigates. It returns app data; the interactor decides what to do with it.
 
+## Folder Structure
+
+App-owned dependencies that are injected into interactors live under `Example/Example/AppExperience/Dependencies/`, split by kind:
+
+```text
+Example/Example/AppExperience/
+├── AppExperienceProvider.swift
+├── AppExperienceAnimationProvider.swift
+├── Dependencies/
+│   ├── Services/
+│   │   └── PlanCalculationService.swift
+│   └── Strores/
+│       └── AppExperienceSelectionStateStore.swift
+├── Interactors/
+├── Models/
+└── Views/
+```
+
+| Folder | Holds | Example |
+| --- | --- | --- |
+| `Dependencies/Services/` | Services: work and business logic an interactor triggers | `PlanCalculationService.swift` |
+| `Dependencies/Strores/` | Data stores: state that is read and written over time | `AppExperienceSelectionStateStore.swift` |
+
+**Guidelines:**
+
+- Put a new service in `Dependencies/Services/` and a new data store in `Dependencies/Strores/`.
+- Keep a protocol and its app implementation in the same file, named for the protocol or the concrete type.
+- Add a new kind of injected dependency as its own folder under `Dependencies/`, not beside the interactors.
+- `AppExperienceProvider.swift` and `AppExperienceAnimationProvider.swift` stay at the `AppExperience/` root. They are wired into ExperienceKit, not injected into interactors.
+
+**AI Rule:**
+Flag services or data stores that are added outside `Example/Example/AppExperience/Dependencies/`, or placed in the wrong subfolder for their kind.
+
 ## Defining A Service Or Data Store
 
 **Guidelines:**
 
 - Declare a protocol named for what the dependency does, such as `PlanCalculationService`.
-- Keep the protocol and its concrete implementations in the app target, under `Example/Example/AppExperience/Services/`. Do not add them to `Sources/ExperienceKit/`.
+- Keep the protocol and its concrete implementations in the app target, under `Example/Example/AppExperience/Dependencies/` as described in [Folder Structure](#folder-structure). Do not add them to `Sources/ExperienceKit/`.
 - Prefix the app's concrete implementation with `App`, such as `AppPlanCalculationService` and `AppExperienceSelectionStateStore`.
 - Keep timing, endpoints, and other implementation constants inside the concrete type, not in the interactor.
 - Call completions on the main thread, and state this on the protocol. The interactor forwards the result straight to the presenter.

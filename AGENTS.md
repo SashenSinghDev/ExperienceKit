@@ -17,7 +17,7 @@ This repo is the source of truth for AI work. Keep provider-specific files thin;
 
 **Example catalogue**: When adding a component, expose it through the example app and add a list entry in `Example/Example/AppExperience/Interactors/ExperienceListInteractor.swift`.
 
-**Services and data stores**: Interactors call injected services and data stores for calculations, async work, networking, and persistence. See [docs/architecture/APPEXPERIENCE_SERVICES.md](docs/architecture/APPEXPERIENCE_SERVICES.md) before adding one or putting such work in an interactor.
+**Services and data stores**: Interactors call injected services and data stores for calculations, async work, networking, and persistence. They live under `Example/Example/AppExperience/Dependencies/`. See [docs/architecture/APPEXPERIENCE_SERVICES.md](docs/architecture/APPEXPERIENCE_SERVICES.md) before adding one or putting such work in an interactor.
 
 **Verification**: Prefer focused package and example-app checks for the touched surface. Document any skipped build or verification step, including the reason.
 

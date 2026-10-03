@@ -117,7 +117,7 @@ The store is an app data store and follows [APPEXPERIENCE_SERVICES.md](APPEXPERI
 
 **Guidelines:**
 
-- Declare the `SelectionStateStore` protocol and its concrete `AppExperienceSelectionStateStore` in the app target, under `Example/Example/AppExperience/Services/`.
+- Declare the `SelectionStateStore` protocol and its concrete `AppExperienceSelectionStateStore` in the app target, under `Example/Example/AppExperience/Dependencies/Strores/`.
 - Inject the store into interactors through the initializer, typed as the protocol.
 - Do not pass the store to `ExperienceSession`. ExperienceKit has no use for it.
 - Do not use a static or process-wide store for screen-local flow state.
