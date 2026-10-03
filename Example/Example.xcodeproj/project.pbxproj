@@ -21,11 +21,11 @@
 		6BE32A3B324AD4D000C9B430 /* PlaygroundGoalUnitsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */; };
 		6BE32A3D324AD4D000C9B430 /* PlaygroundBodyStatsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3C324AD4CA00C9B430 /* PlaygroundBodyStatsInteractor.swift */; };
 		6BE32A3F324932B000C9B430 /* HorizontalContainerComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3E324932AA00C9B430 /* HorizontalContainerComponentInteractor.swift */; };
-		6BE32A47324F1A1800C9B430 /* DataTableComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A46324F1A1000C9B430 /* DataTableComponentInteractor.swift */; };
 		6BE32A3F324AD4E000C9B430 /* PlaygroundActivityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A3E324AD4DA00C9B430 /* PlaygroundActivityInteractor.swift */; };
 		6BE32A41324AD4F000C9B430 /* PlaygroundWeeklySplitInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A40324AD4EA00C9B430 /* PlaygroundWeeklySplitInteractor.swift */; };
 		6BE32A43324AD50600C9B430 /* PlaygroundCalculatingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A42324AD50000C9B430 /* PlaygroundCalculatingInteractor.swift */; };
 		6BE32A45324AD51600C9B430 /* PlaygroundPlanRevealInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A44324AD51000C9B430 /* PlaygroundPlanRevealInteractor.swift */; };
+		6BE32A47324F1A1800C9B430 /* DataTableComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE32A46324F1A1000C9B430 /* DataTableComponentInteractor.swift */; };
 		6BFA7C0C303A12F800ED3C82 /* ButtonComponentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */; };
 		6BFA7C0E303A143B00ED3C82 /* FullScreenExperienceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */; };
 		6BFA7C10303A279700ED3C82 /* NavigationCapabilityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */; };
@@ -57,11 +57,11 @@
 		6BE32A3A324AD4CA00C9B430 /* PlaygroundGoalUnitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundGoalUnitsInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3C324AD4CA00C9B430 /* PlaygroundBodyStatsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBodyStatsInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3E324932AA00C9B430 /* HorizontalContainerComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalContainerComponentInteractor.swift; sourceTree = "<group>"; };
-		6BE32A46324F1A1000C9B430 /* DataTableComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableComponentInteractor.swift; sourceTree = "<group>"; };
 		6BE32A3E324AD4DA00C9B430 /* PlaygroundActivityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundActivityInteractor.swift; sourceTree = "<group>"; };
 		6BE32A40324AD4EA00C9B430 /* PlaygroundWeeklySplitInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundWeeklySplitInteractor.swift; sourceTree = "<group>"; };
 		6BE32A42324AD50000C9B430 /* PlaygroundCalculatingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundCalculatingInteractor.swift; sourceTree = "<group>"; };
 		6BE32A44324AD51000C9B430 /* PlaygroundPlanRevealInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundPlanRevealInteractor.swift; sourceTree = "<group>"; };
+		6BE32A46324F1A1000C9B430 /* DataTableComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0B303A12F000ED3C82 /* ButtonComponentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponentInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0D303A143200ED3C82 /* FullScreenExperienceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenExperienceInteractor.swift; sourceTree = "<group>"; };
 		6BFA7C0F303A278900ED3C82 /* NavigationCapabilityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCapabilityInteractor.swift; sourceTree = "<group>"; };
@@ -98,6 +98,22 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		6B208B50307144FC00DB3FFE /* Strores */ = {
+			isa = PBXGroup;
+			children = (
+				96F33279324B7D0500E6B149 /* AppExperienceSelectionStateStore.swift */,
+			);
+			path = Strores;
+			sourceTree = "<group>";
+		};
+		6B208B513071450700DB3FFE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6BA1C0073290A00100AA0001 /* PlanCalculationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		6B6C97973067DD7E00256178 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,13 +128,13 @@
 			path = Playground;
 			sourceTree = "<group>";
 		};
-		6BA1C0093290A00100AA0001 /* Services */ = {
+		6BA1C0093290A00100AA0001 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				96F33279324B7D0500E6B149 /* AppExperienceSelectionStateStore.swift */,
-				6BA1C0073290A00100AA0001 /* PlanCalculationService.swift */,
+				6B208B513071450700DB3FFE /* Services */,
+				6B208B50307144FC00DB3FFE /* Strores */,
 			);
-			path = Services;
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		9640DEA22E03653A0076C4B9 /* AppExperience */ = {
@@ -128,7 +144,7 @@
 				6BA1C0033290A00100AA0001 /* AppExperienceAnimationProvider.swift */,
 				96FB9FFA2C36FBDC00803A47 /* Interactors */,
 				9640DEA32E0365500076C4B9 /* Models */,
-				6BA1C0093290A00100AA0001 /* Services */,
+				6BA1C0093290A00100AA0001 /* Dependencies */,
 				9640DEA62E10083E0076C4B9 /* Views */,
 			);
 			path = AppExperience;
