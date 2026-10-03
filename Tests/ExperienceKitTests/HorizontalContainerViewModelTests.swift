@@ -46,22 +46,25 @@ final class HorizontalContainerViewModelTests: XCTestCase {
         XCTAssertNil(makeViewModel(components: [text("One")]).itemWidth)
     }
 
-    func testChildrenReceiveTheSessionSelectionStateStore() {
-        let store = HorizontalContainerSelectionStateStore()
+    func testChildrenReportChangesThroughTheSessionPresenterNotifier() throws {
+        let delegate = PresenterNotifierDelegateSpy()
 
-        _ = makeViewModel(
+        let viewModel = makeViewModel(
             components: [
                 .textfieldComponent(properties: .init(
                     state: .filled,
                     placeholder: "Weight",
                     value: "88",
-                    selectionKey: "weight"
+                    onChangeWorkId: HorizontalContainerTestWorkID.weightChanged
                 ))
             ],
-            store: store
+            delegate: delegate
         )
 
-        XCTAssertEqual(store.selectedValues(for: "weight"), ["88"])
+        let textField = try XCTUnwrap(viewModel.children.first?.value as? TextFieldViewModel)
+        textField.updateText("90")
+
+        XCTAssertEqual(delegate.deferredWork, [.init(workId: "weightChanged", values: ["90"])])
     }
 
     private func makeViewModel(components: [Component],
@@ -69,8 +72,10 @@ final class HorizontalContainerViewModelTests: XCTestCase {
                                distribution: HorizontalContainerProperties.Distribution = .fillEqually,
                                contentInset: HorizontalContainerProperties.Spacing = .none,
                                itemWidth: Double? = nil,
-                               store: ExperienceSelectionStateStore? = nil) -> HorizontalContainerViewModel {
+                               delegate: ExperiencePresenterNotifierDelegate? = nil) -> HorizontalContainerViewModel {
         let registers: [ComponentRegister] = [TextComponentRegister(), TextFieldComponentRegister()]
+        let notifier = DefaultExperiencePresenterNotifier()
+        notifier.delegate = delegate
 
         return HorizontalContainerViewModel(
             properties: .init(
@@ -82,10 +87,9 @@ final class HorizontalContainerViewModelTests: XCTestCase {
             ),
             dependency: ExperienceDependency(
                 router: DefaultExperienceRouter(expId: HorizontalContainerTestExperienceID.root),
-                experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
+                experiencePresenterNotifier: notifier,
                 viewProvider: ViewProvider(supportedComponentRegisters: registers),
-                viewModelProvider: DefaultViewModelProvider(supportedComponentRegisters: registers),
-                experienceSelectionStateStore: store
+                viewModelProvider: DefaultViewModelProvider(supportedComponentRegisters: registers)
             ),
             id: UUID()
         )
@@ -106,22 +110,6 @@ private enum HorizontalContainerTestExperienceID: String, ExperienceID {
     case root
 }
 
-private final class HorizontalContainerSelectionStateStore: ExperienceSelectionStateStore {
-    private var selectedValuesByKey: [String: [String]] = [:]
-
-    func setSelectedValue(_ value: String, for key: String) {
-        selectedValuesByKey[key] = [value]
-    }
-
-    func addSelectedValue(_ value: String, for key: String) {
-        selectedValuesByKey[key, default: []].append(value)
-    }
-
-    func removeSelectedValue(_ value: String, for key: String) {
-        selectedValuesByKey[key] = selectedValuesByKey[key, default: []].filter { $0 != value }
-    }
-
-    func selectedValues(for key: String) -> [String] {
-        selectedValuesByKey[key, default: []]
-    }
+private enum HorizontalContainerTestWorkID: String, DeferredWorkID {
+    case weightChanged
 }

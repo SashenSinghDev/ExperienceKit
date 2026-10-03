@@ -175,7 +175,7 @@ final class ExperienceListInteractor: ExperienceInteractor {
         completion(.scrollable(components: componetList))
     }
     
-    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, values: [String], completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
         guard experienceViewModel != nil else { return }
         
         let searchText = workId.rawValue

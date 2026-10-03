@@ -1,13 +1,14 @@
 import Foundation
 
 public final class SegmentedControlViewModel: ComponentViewModel, ObservableObject {
-    public typealias Dependencies = HasExperienceSelectionStateStore
+    public typealias Dependencies = HasExperiencePresenterNotifier
 
     public let id: UUID
     let options: [SegmentedControlProperties.Option]
     let accessibilityLabel: String
     @Published public private(set) var selectedValue: String
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore?
+    private let onChangeWorkId: AnyDeferredWorkID?
+    private let experiencePresenterNotifier: ExperiencePresenterNotifier
 
     public init(properties: SegmentedControlProperties,
                 dependency: Dependencies,
@@ -19,8 +20,8 @@ public final class SegmentedControlViewModel: ComponentViewModel, ObservableObje
             properties.selectedValue,
             options: self.options
         )
-        self.experienceSelectionStateStore = dependency.experienceSelectionStateStore
-        experienceSelectionStateStore?.setSelectedValue(self.selectedValue, for: self.accessibilityLabel)
+        self.onChangeWorkId = properties.onChangeWorkId
+        self.experiencePresenterNotifier = dependency.experiencePresenterNotifier
     }
 
     func select(_ option: SegmentedControlProperties.Option) {
@@ -33,7 +34,12 @@ public final class SegmentedControlViewModel: ComponentViewModel, ObservableObje
         }
 
         selectedValue = value
-        experienceSelectionStateStore?.setSelectedValue(value, for: accessibilityLabel)
+
+        // The interactor owns what happens with the value; the component only reports it.
+        guard let onChangeWorkId else {
+            return
+        }
+        experiencePresenterNotifier.delegate?.performDeferredWork(workId: onChangeWorkId, values: [value])
     }
 
     func isSelected(_ option: SegmentedControlProperties.Option) -> Bool {
