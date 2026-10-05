@@ -9,7 +9,7 @@ import ExperienceKit
 import SwiftUI
 
 final class ScrollableInteractor: ExperienceInteractor {
-    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any ExperienceKit.DeferredWorkID, values: [String], completion: @escaping (ExperienceKit.ExperienceType?) -> Void) {
         completion(nil)
     }
     

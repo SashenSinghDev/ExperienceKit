@@ -30,7 +30,9 @@ public struct TextFieldProperties {
     public let helperText: String?
     public let errorMessage: String?
     public let accessibilityLabel: String?
-    public let selectionKey: String?
+    /// Deferred work the interactor receives when the text changes. Its `values`
+    /// hold the current text.
+    public let onChangeWorkId: AnyDeferredWorkID?
     /// Focuses the field when it appears, independent of `state`. Use it to move
     /// the caret into a field that is also in the `.error` state.
     public let requestsFocus: Bool
@@ -47,7 +49,7 @@ public struct TextFieldProperties {
                 helperText: String? = nil,
                 errorMessage: String? = nil,
                 accessibilityLabel: String? = nil,
-                selectionKey: String? = nil,
+                onChangeWorkId: (any DeferredWorkID)? = nil,
                 requestsFocus: Bool = false) {
         self.state = state
         self.isSecure = isSecure
@@ -61,7 +63,7 @@ public struct TextFieldProperties {
         self.helperText = helperText
         self.errorMessage = errorMessage
         self.accessibilityLabel = accessibilityLabel
-        self.selectionKey = selectionKey
+        self.onChangeWorkId = onChangeWorkId.map { AnyDeferredWorkID(rawValue: $0.rawValue) }
         self.requestsFocus = requestsFocus
     }
 }
@@ -69,7 +71,7 @@ public struct TextFieldProperties {
 extension TextFieldProperties: Properties, Codable {
     private enum CodingKeys: String, CodingKey {
         case state, isSecure, keyboardType, label, placeholder, value, leadingSystemImage,
-             showsClearButton, unit, helperText, errorMessage, accessibilityLabel, selectionKey,
+             showsClearButton, unit, helperText, errorMessage, accessibilityLabel, onChangeWorkId,
              requestsFocus
     }
 
@@ -88,7 +90,7 @@ extension TextFieldProperties: Properties, Codable {
             helperText: try container.decodeIfPresent(String.self, forKey: .helperText),
             errorMessage: try container.decodeIfPresent(String.self, forKey: .errorMessage),
             accessibilityLabel: try container.decodeIfPresent(String.self, forKey: .accessibilityLabel),
-            selectionKey: try container.decodeIfPresent(String.self, forKey: .selectionKey),
+            onChangeWorkId: try container.decodeIfPresent(AnyDeferredWorkID.self, forKey: .onChangeWorkId),
             requestsFocus: try container.decodeIfPresent(Bool.self, forKey: .requestsFocus) ?? false
         )
     }

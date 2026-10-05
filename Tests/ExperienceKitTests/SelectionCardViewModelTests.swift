@@ -73,20 +73,132 @@ final class SelectionCardViewModelTests: XCTestCase {
         XCTAssertEqual(properties.badgeStyle, .neutral)
     }
 
+    func testDecodesOnChangeWorkId() throws {
+        let json = """
+        {
+            "title": "Carb cycling",
+            "subtitle": "Five lighter days and two at full maintenance.",
+            "isSelected": true,
+            "selectionMode": "single",
+            "onChangeWorkId": "weeklySplitChanged"
+        }
+        """
+
+        let properties = try JSONDecoder().decode(SelectionCardProperties.self, from: Data(json.utf8))
+
+        XCTAssertEqual(properties.onChangeWorkId?.rawValue, "weeklySplitChanged")
+    }
+
+    func testSingleSelectionSendsOnChangeWorkWithTheSelectedCard() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let groupId = UUID().uuidString
+        let monthly = makeSelectableViewModel(selectionId: "monthly", isSelected: true, groupId: groupId, delegate: delegate)
+        let yearly = makeSelectableViewModel(selectionId: "yearly", groupId: groupId, delegate: delegate)
+
+        yearly.select()
+
+        XCTAssertFalse(monthly.isSelected)
+        XCTAssertTrue(yearly.isSelected)
+        XCTAssertEqual(delegate.deferredWork, [.init(workId: "selectionChanged", values: ["yearly"])])
+    }
+
+    func testReselectingTheSelectedCardSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let groupId = UUID().uuidString
+        let monthly = makeSelectableViewModel(selectionId: "monthly", isSelected: true, groupId: groupId, delegate: delegate)
+
+        monthly.select()
+
+        XCTAssertTrue(monthly.isSelected)
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
+    }
+
+    func testMultipleSelectionSendsEverySelectedCardInTheGroup() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let groupId = UUID().uuidString
+        let backups = makeSelectableViewModel(selectionId: "backups", groupId: groupId, mode: .multiple, delegate: delegate)
+        let support = makeSelectableViewModel(selectionId: "support", groupId: groupId, mode: .multiple, delegate: delegate)
+
+        backups.select()
+        support.select()
+        backups.select()
+
+        XCTAssertEqual(delegate.deferredWork.map(\.values), [["backups"], ["backups", "support"], ["support"]])
+    }
+
+    func testStandaloneMultipleSelectionSendsAnEmptyListWhenDeselected() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let newsletter = makeSelectableViewModel(selectionId: "newsletter", groupId: nil, mode: .multiple, delegate: delegate)
+
+        newsletter.select()
+        newsletter.select()
+
+        XCTAssertEqual(delegate.deferredWork.map(\.values), [["newsletter"], []])
+    }
+
+    func testCreatingASelectedCardSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+
+        _ = makeSelectableViewModel(selectionId: "monthly", isSelected: true, groupId: UUID().uuidString, delegate: delegate)
+
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
+    }
+
+    func testSelectionWithoutOnChangeWorkIdSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let yearly = makeSelectableViewModel(selectionId: "yearly",
+                                             groupId: nil,
+                                             onChangeWorkId: nil,
+                                             delegate: delegate)
+
+        yearly.select()
+
+        XCTAssertTrue(yearly.isSelected)
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
+    }
+
+    private func makeSelectableViewModel(selectionId: String,
+                                         isSelected: Bool = false,
+                                         groupId: String?,
+                                         mode: SelectionCardProperties.SelectionMode = .single,
+                                         onChangeWorkId: (any DeferredWorkID)? = SelectionCardTestWorkID.selectionChanged,
+                                         delegate: ExperiencePresenterNotifierDelegate) -> SelectionCardViewModel {
+        makeViewModel(value: nil,
+                      isSelected: isSelected,
+                      selectionId: selectionId,
+                      selectionGroupId: groupId,
+                      selectionMode: mode,
+                      onChangeWorkId: onChangeWorkId,
+                      delegate: delegate)
+    }
+
     private func makeViewModel(value: String?,
                                badgeText: String? = nil,
-                               badgeStyle: SelectionCardProperties.BadgeStyle = .prominent) -> SelectionCardViewModel {
-        SelectionCardViewModel(
+                               badgeStyle: SelectionCardProperties.BadgeStyle = .prominent,
+                               isSelected: Bool = false,
+                               selectionId: String? = nil,
+                               selectionGroupId: String? = nil,
+                               selectionMode: SelectionCardProperties.SelectionMode = .single,
+                               onChangeWorkId: (any DeferredWorkID)? = nil,
+                               delegate: ExperiencePresenterNotifierDelegate? = nil) -> SelectionCardViewModel {
+        let notifier = DefaultExperiencePresenterNotifier()
+        notifier.delegate = delegate
+
+        return SelectionCardViewModel(
             properties: .init(title: "Yearly",
                               subtitle: "£3.33 a month, billed once",
                               value: value,
-                              isSelected: false,
+                              isSelected: isSelected,
                               badgeText: badgeText,
                               badgeStyle: badgeStyle,
+                              selectionId: selectionId,
+                              selectionGroupId: selectionGroupId,
+                              selectionMode: selectionMode,
+                              onChangeWorkId: onChangeWorkId,
                               navigation: nil),
             dependency: ExperienceDependency(
                 router: DefaultExperienceRouter(expId: SelectionCardTestExperienceID.root),
-                experiencePresenterNotifier: DefaultExperiencePresenterNotifier(),
+                experiencePresenterNotifier: notifier,
                 viewProvider: ViewProvider(supportedComponentRegisters: []),
                 viewModelProvider: DefaultViewModelProvider(supportedComponentRegisters: [])
             ),
@@ -97,4 +209,8 @@ final class SelectionCardViewModelTests: XCTestCase {
 
 private enum SelectionCardTestExperienceID: String, ExperienceID {
     case root
+}
+
+private enum SelectionCardTestWorkID: String, DeferredWorkID {
+    case selectionChanged
 }

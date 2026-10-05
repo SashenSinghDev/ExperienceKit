@@ -10,15 +10,20 @@ import SwiftUI
 
 final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
-    private let experienceSelectionStateStore: ExperienceSelectionStateStore
+    private let selectionStateStore: SelectionStateStore
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         experienceSelectionStateStore: ExperienceSelectionStateStore) {
+         selectionStateStore: SelectionStateStore) {
         self.experienceViewModel = experienceViewModel
-        self.experienceSelectionStateStore = experienceSelectionStateStore
+        self.selectionStateStore = selectionStateStore
     }
 
     func load(completion: @escaping (ExperienceType) -> Void) {
+        // Components only report changes, so seed the preselected options. A
+        // value already in the store is an earlier choice and is kept.
+        let selectedGoal = selectionStateStore.seedSelectedValue(Goal.fatLoss, for: SelectionKey.goal)
+        let selectedUnits = selectionStateStore.seedSelectedValue(Units.metric, for: SelectionKey.units)
+
         completion(.fullScreen(properties: .init(
             image: nil,
             topComponents: [
@@ -42,22 +47,22 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                 goalCard(
                     title: "Fat loss",
                     subtitle: "A steady weekly deficit. Next you choose carb cycling or the same every day.",
-                    value: "fat-loss",
-                    isSelected: true
+                    value: Goal.fatLoss,
+                    isSelected: selectedGoal == Goal.fatLoss
                 ),
                 .spacerComponent(properties: .init(size: .small)),
                 goalCard(
                     title: "Maintenance",
                     subtitle: "Hold your weight and eat at maintenance every day.",
-                    value: "maintenance",
-                    isSelected: false
+                    value: Goal.maintenance,
+                    isSelected: selectedGoal == Goal.maintenance
                 ),
                 .spacerComponent(properties: .init(size: .small)),
                 goalCard(
                     title: "Build mass",
                     subtitle: "A 10% surplus, the same every day.",
-                    value: "build-mass",
-                    isSelected: false
+                    value: Goal.buildMass,
+                    isSelected: selectedGoal == Goal.buildMass
                 ),
                 .spacerComponent(properties: .init(size: .large)),
                 insetText(
@@ -67,7 +72,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                     foregroundStyle: .secondary
                 ),
                 .spacerComponent(properties: .init(size: .small)),
-                insetSegmentedControl()
+                insetSegmentedControl(selectedUnits: selectedUnits)
             ],
             middleComponents: [],
             bottomComponents: [
@@ -77,7 +82,7 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                         style: .glass,
                         navigation: .init(
                             navigationType: .push(Experience.playgroundBodyStats),
-                            deferredLoadingWorkId: DeferredWork.continue,
+                            deferredLoadingWorkId: WorkID.continue,
                             experienceViewModel: .init(
                                 searchBar: nil,
                                 navigationBar: nil)))
@@ -89,13 +94,17 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
         )))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
-        guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
+        guard let deferredWork = DeferredWork(workId: workId, values: values) else {
             completion(nil)
             return
         }
 
         switch deferredWork {
+        case .goalChanged(let goal):
+            selectionStateStore.setSelectedValues([goal], for: SelectionKey.goal)
+        case .unitsChanged(let units):
+            selectionStateStore.setSelectedValues([units], for: SelectionKey.units)
         case .continue:
             print("Selected goal: \(selectedValue(for: SelectionKey.goal))")
             print("Selected units: \(selectedValue(for: SelectionKey.units))")
@@ -133,22 +142,24 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
                 isSelected: isSelected,
                 badgeText: nil,
                 selectionId: value,
-                selectionGroupId: "playground-goal",
+                selectionGroupId: SelectionKey.goal,
+                onChangeWorkId: WorkID.goalChanged,
                 navigation: nil)
             ),
             horizontalSpacing: .medium)
         )
     }
 
-    private func insetSegmentedControl() -> Component {
+    private func insetSegmentedControl(selectedUnits: String) -> Component {
         .containerComponent(properties: .init(
             component: .segmentedcontrolComponent(properties: .init(
                 options: [
-                    .init(label: "kg - cm", value: "metric"),
-                    .init(label: "lb - ft/in", value: "imperial")
+                    .init(label: "kg - cm", value: Units.metric),
+                    .init(label: "lb - ft/in", value: Units.imperial)
                 ],
-                selectedValue: "metric",
-                accessibilityLabel: "Units")
+                selectedValue: selectedUnits,
+                accessibilityLabel: "Units",
+                onChangeWorkId: WorkID.unitsChanged)
             ),
             horizontalSpacing: .medium)
         )
@@ -166,16 +177,53 @@ final class PlaygroundGoalUnitsInteractor: ExperienceInteractor {
 }
 
 private extension PlaygroundGoalUnitsInteractor {
-    enum DeferredWork: String, DeferredWorkID {
+    /// The ids components send back. Any value travels separately, in `values`.
+    enum WorkID: String, DeferredWorkID {
         case `continue`
+        case goalChanged
+        case unitsChanged
     }
 
+    /// The work this screen performs. A change carries its new value.
+    enum DeferredWork {
+        case `continue`
+        case goalChanged(String)
+        case unitsChanged(String)
+
+        init?(workId: any DeferredWorkID, values: [String]) {
+            switch WorkID(rawValue: workId.rawValue) {
+            case .continue:
+                self = .continue
+            case .goalChanged:
+                guard let goal = values.first else { return nil }
+                self = .goalChanged(goal)
+            case .unitsChanged:
+                guard let units = values.first else { return nil }
+                self = .unitsChanged(units)
+            case nil:
+                return nil
+            }
+        }
+    }
+
+    /// Keys in the flow's selection state store.
     enum SelectionKey {
         static let goal = "playground-goal"
         static let units = "Units"
     }
 
+    enum Goal {
+        static let fatLoss = "fat-loss"
+        static let maintenance = "maintenance"
+        static let buildMass = "build-mass"
+    }
+
+    enum Units {
+        static let metric = "metric"
+        static let imperial = "imperial"
+    }
+
     func selectedValue(for key: String) -> String {
-        experienceSelectionStateStore.selectedValues(for: key).first ?? "nil"
+        selectionStateStore.selectedValues(for: key).first ?? "nil"
     }
 }

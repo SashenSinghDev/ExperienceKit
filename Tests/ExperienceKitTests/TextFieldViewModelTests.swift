@@ -9,7 +9,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 placeholder: "Email",
                 value: "jordan@example.com"
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -26,7 +26,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 helperText: "Helper",
                 errorMessage: "Enter a valid email address."
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -34,22 +34,72 @@ final class TextFieldViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.showsError)
     }
 
-    func testTextUpdatesSelectionStateStore() {
-        let store = TextFieldSelectionStateStore()
+    func testTextUpdateSendsOnChangeWorkWithTheNewText() {
+        let delegate = PresenterNotifierDelegateSpy()
         let viewModel = TextFieldViewModel(
             properties: .init(
                 state: .filled,
                 placeholder: "Email",
                 value: "jordan@example.com",
-                selectionKey: "email"
+                onChangeWorkId: TextFieldTestWorkID.emailChanged
             ),
-            dependency: TextFieldDependency(store: store),
+            dependency: TextFieldDependency(delegate: delegate),
             id: UUID()
         )
 
         viewModel.updateText("casey@example.com")
 
-        XCTAssertEqual(store.selectedValues(for: "email"), ["casey@example.com"])
+        XCTAssertEqual(viewModel.text, "casey@example.com")
+        XCTAssertEqual(delegate.deferredWork, [.init(workId: "emailChanged", values: ["casey@example.com"])])
+    }
+
+    func testCreatingTheViewModelSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+
+        _ = TextFieldViewModel(
+            properties: .init(
+                state: .filled,
+                placeholder: "Email",
+                value: "jordan@example.com",
+                onChangeWorkId: TextFieldTestWorkID.emailChanged
+            ),
+            dependency: TextFieldDependency(delegate: delegate),
+            id: UUID()
+        )
+
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
+    }
+
+    func testUnchangedTextSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let viewModel = TextFieldViewModel(
+            properties: .init(
+                state: .filled,
+                placeholder: "Email",
+                value: "jordan@example.com",
+                onChangeWorkId: TextFieldTestWorkID.emailChanged
+            ),
+            dependency: TextFieldDependency(delegate: delegate),
+            id: UUID()
+        )
+
+        viewModel.updateText("jordan@example.com")
+
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
+    }
+
+    func testTextUpdateWithoutOnChangeWorkIdSendsNoWork() {
+        let delegate = PresenterNotifierDelegateSpy()
+        let viewModel = TextFieldViewModel(
+            properties: .init(state: .filled, placeholder: "Email", value: "jordan@example.com"),
+            dependency: TextFieldDependency(delegate: delegate),
+            id: UUID()
+        )
+
+        viewModel.updateText("casey@example.com")
+
+        XCTAssertEqual(viewModel.text, "casey@example.com")
+        XCTAssertTrue(delegate.deferredWork.isEmpty)
     }
 
     func testKeyboardTypeIsCarriedFromProperties() {
@@ -61,7 +111,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 value: "93",
                 unit: "kg"
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -75,7 +125,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 placeholder: "Search",
                 value: "Coffee near me"
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -90,7 +140,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 value: "Coffee near me",
                 showsClearButton: false
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -104,7 +154,7 @@ final class TextFieldViewModelTests: XCTestCase {
                 placeholder: "180",
                 requestsFocus: true
             ),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -115,7 +165,7 @@ final class TextFieldViewModelTests: XCTestCase {
     func testFocusIsNotRequestedByDefault() {
         let viewModel = TextFieldViewModel(
             properties: .init(state: .error, placeholder: "180"),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -125,7 +175,7 @@ final class TextFieldViewModelTests: XCTestCase {
     func testDisabledFieldIgnoresFocusRequest() {
         let viewModel = TextFieldViewModel(
             properties: .init(state: .disabled, placeholder: "180", requestsFocus: true),
-            dependency: EmptyTextFieldDependency(),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
@@ -133,15 +183,13 @@ final class TextFieldViewModelTests: XCTestCase {
     }
 
     func testErrorStateKeepsEnteredValue() {
-        let store = TextFieldSelectionStateStore()
         let viewModel = TextFieldViewModel(
-            properties: .init(state: .error, placeholder: "88", value: "88", selectionKey: "weight"),
-            dependency: TextFieldDependency(store: store),
+            properties: .init(state: .error, placeholder: "88", value: "88"),
+            dependency: TextFieldDependency(),
             id: UUID()
         )
 
         XCTAssertEqual(viewModel.text, "88")
-        XCTAssertEqual(store.selectedValues(for: "weight"), ["88"])
     }
 
     func testDecodingDefaultsOmittedProperties() throws {
@@ -153,37 +201,28 @@ final class TextFieldViewModelTests: XCTestCase {
         XCTAssertEqual(properties.state, .empty)
         XCTAssertTrue(properties.showsClearButton)
         XCTAssertFalse(properties.requestsFocus)
+        XCTAssertNil(properties.onChangeWorkId)
+    }
+
+    func testDecodesOnChangeWorkId() throws {
+        let json = Data(#"{"placeholder": "Email", "onChangeWorkId": "emailChanged"}"#.utf8)
+
+        let properties = try JSONDecoder().decode(TextFieldProperties.self, from: json)
+
+        XCTAssertEqual(properties.onChangeWorkId?.rawValue, "emailChanged")
     }
 }
 
-private struct EmptyTextFieldDependency: HasExperienceSelectionStateStore {
-    let experienceSelectionStateStore: ExperienceSelectionStateStore? = nil
-}
+private struct TextFieldDependency: HasExperiencePresenterNotifier {
+    let experiencePresenterNotifier: ExperiencePresenterNotifier
 
-private struct TextFieldDependency: HasExperienceSelectionStateStore {
-    let experienceSelectionStateStore: ExperienceSelectionStateStore?
-
-    init(store: ExperienceSelectionStateStore) {
-        self.experienceSelectionStateStore = store
+    init(delegate: ExperiencePresenterNotifierDelegate? = nil) {
+        let notifier = DefaultExperiencePresenterNotifier()
+        notifier.delegate = delegate
+        self.experiencePresenterNotifier = notifier
     }
 }
 
-private final class TextFieldSelectionStateStore: ExperienceSelectionStateStore {
-    private var values: [String: [String]] = [:]
-
-    func setSelectedValue(_ value: String, for key: String) {
-        values[key] = [value]
-    }
-
-    func addSelectedValue(_ value: String, for key: String) {
-        values[key, default: []].append(value)
-    }
-
-    func removeSelectedValue(_ value: String, for key: String) {
-        values[key]?.removeAll { $0 == value }
-    }
-
-    func selectedValues(for key: String) -> [String] {
-        values[key] ?? []
-    }
+private enum TextFieldTestWorkID: String, DeferredWorkID {
+    case emailChanged
 }

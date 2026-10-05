@@ -11,10 +11,10 @@ import Foundation
 final class PlaygroundInteractor: ExperienceInteractor {
     internal let experienceViewModel: ExperienceKit.ExperienceViewModel?
     private let mainBundleIdentifier = Bundle.main.bundleIdentifier ?? ""
-    private let playgroundFlowSelectionStateStore: AppExperienceSelectionStateStore
+    private let playgroundFlowSelectionStateStore: SelectionStateStore
 
     init(experienceViewModel: ExperienceKit.ExperienceViewModel?,
-         playgroundFlowSelectionStateStore: AppExperienceSelectionStateStore) {
+         playgroundFlowSelectionStateStore: SelectionStateStore) {
         self.experienceViewModel = experienceViewModel
         self.playgroundFlowSelectionStateStore = playgroundFlowSelectionStateStore
     }
@@ -88,7 +88,7 @@ final class PlaygroundInteractor: ExperienceInteractor {
         )))
     }
 
-    func performDeferredWork(workId: any DeferredWorkID, completion: @escaping (ExperienceType?) -> Void) {
+    func performDeferredWork(workId: any DeferredWorkID, values: [String], completion: @escaping (ExperienceType?) -> Void) {
         guard let deferredWork = DeferredWork(rawValue: workId.rawValue) else {
             completion(nil)
             return
