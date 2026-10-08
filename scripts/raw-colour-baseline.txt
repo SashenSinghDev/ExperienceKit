@@ -1,0 +1,7 @@
+# Files that used raw or UIKit colours before scripts/check.sh enforced tokens.
+# Shrink only: move a file to design-system tokens, then delete its line.
+Sources/ExperienceKit/Components/Example/ExampleComponentView.swift
+Sources/ExperienceKit/Components/GenericListItem/GenericListItemView.swift
+Sources/ExperienceKit/Components/Separator/SeparatorView.swift
+Sources/ExperienceKit/Components/Welcome/WelcomeView.swift
+Sources/ExperienceKit/UI/ExperienceView.swift

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check.sh
+
+  build-and-test:
+    name: Package tests and Example build
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package tests
+        run: ./scripts/build_and_test.sh package
+      - name: Example app build
+        run: ./scripts/build_and_test.sh example
+
+  generator:
+    name: Component generator
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Sourcery
+        run: brew install sourcery
+      - name: Core registries match the generator output
+        run: |
+          ./generate_component.sh --core
+          git diff --exit-code -- Sources/ExperienceKit/Components/Core
+      - name: Scaffold a probe component
+        run: |
+          ./generate_component.sh CiProbe
+          ./scripts/check.sh
+      - name: Scaffold compiles and tests still pass
+        run: ./scripts/build_and_test.sh package

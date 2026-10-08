@@ -47,8 +47,11 @@ Colour token assets and Swift accessors should preserve the Figma token hierarch
 | `color/separators/opaque` | `Colors/separators/opaque.colorset` | `Color.separators.opaque` |
 | `color/dataTable/secondaryLabel` | `Colors/dataTable/secondaryLabel.colorset` | `Color.dataTable.secondaryLabel` |
 
+**Enforced by checks:**
+`./scripts/check.sh` fails on raw colours (`Color(red:…)`, `Color.gray`, `.foregroundStyle(.black)`) and UIKit colour substitutions (`Color(.label)`, `UIColor`) anywhere in `Sources/ExperienceKit/`. Files that predate the check are listed in `scripts/raw-colour-baseline.txt`, which only shrinks.
+
 **AI Rule:**
-Reject new component styling that introduces raw colours, UIKit colour substitutions, or component-local colour aliases when a Figma semantic token exists or can be added to the design-system asset catalog.
+Reject new component styling that introduces component-local colour aliases when a Figma semantic token exists or can be added to the design-system asset catalog.
 
 ---
 
@@ -81,7 +84,7 @@ Adding a token should update the asset catalog and Swift API together so runtime
 - Add the token `.colorset` under the matching Figma token path.
 - Add the corresponding Swift accessor to `Color+Extension.swift`.
 - Use camelCase only where Swift cannot represent the Figma token literally, for example `non-opaque` becomes `nonOpaque`.
-- Build the package or host app after adding asset catalog tokens so asset compilation catches path or JSON mistakes.
+- Build the package or host app after adding asset catalog tokens so asset compilation catches path or JSON mistakes. `./scripts/build_and_test.sh` and CI both do this.
 
 **AI Rule:**
 Reject colour-token changes where `Assets.xcassets` and `Color+Extension.swift` do not expose the same token.
