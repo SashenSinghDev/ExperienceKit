@@ -11,7 +11,7 @@ import SwiftUI
 // sourcery: register
 final class ExampleComponentRegister: ComponentRegister {
     var contentType: String {
-        "exampleComponent"
+        "example"
     }
 
     var propertiesType: Properties.Type {

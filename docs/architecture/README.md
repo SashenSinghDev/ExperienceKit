@@ -48,42 +48,9 @@ Start here when:
 - Reviewing raw colours, UIKit colour substitutions, or component-local colour aliases
 - Updating `Sources/ExperienceKit/DesignSystem/`
 
-## AI Rules Overview
+## Review Rules
 
-Each architecture document includes AI rules for agents:
-
-- **Reject** patterns that violate the principles
-- **Flag** existing code that diverges from the rules
-- **Steer** refactors toward the target architecture
-- **Prefer** generated scaffolds and explicit wiring over ad hoc component setup
-
-## When To Consult These Docs
-
-Before implementing:
-
-1. Identify the ExperienceKit surface your change touches.
-2. Read the corresponding document.
-3. Scan for AI rules that apply to your change.
-4. Verify your approach against the guidelines before coding.
-
-During code review:
-
-1. Check that the implementation follows the corresponding document's patterns.
-2. Flag deviations and suggest alignment.
-3. Prefer these docs over personal preference.
-
-## Principles
-
-- **Generated first**: Use repo tooling to create repeatable component scaffolds.
-- **Explicit examples**: Components intended for humans to inspect should be reachable from an app catalogue.
-- **Typed properties**: Components should expose clear property and view model types.
-- **Small views**: SwiftUI views should render state and keep behavior out of layout code.
-- **Catalogue visibility**: New components should appear in an app catalogue when they are part of the public component set.
-- **Token fidelity**: Design-system tokens should preserve Figma naming and hierarchy in asset paths and Swift accessors.
-- **App-owned experience state**: App flow state should be owned by the host app and injected into interactors. ExperienceKit reports user input to the interactor and holds none of it.
-- **Injected app logic**: Interactors should call services and data stores injected by `AppExperienceProvider` instead of performing the work inline.
-- **ExperienceKit-only composition**: App screens should be composed from existing ExperienceKit components and design-system tokens, not host-app-only UI or styling.
-- **Figma-sourced extension**: New design-system values may be added only when extending ExperienceKit itself, and should map one-to-one from Figma as the source of truth.
+Each document marks its review rules as **AI Rule**. Reviewing a diff starts at [CODING_STANDARDS.md](../../CODING_STANDARDS.md), which routes changed paths to these documents.
 
 ## Contributing To These Docs
 
@@ -91,6 +58,6 @@ Keep docs focused and actionable:
 
 - Lead with the principle, then guidelines.
 - Include concrete paths and reference implementations.
-- Add AI rules for agents to enforce compliance.
+- Turn a rule a script can decide into a check in `scripts/check.sh`. Write an **AI Rule** only for a judgement call.
 - Prefer examples from this codebase over abstract descriptions.
 - Update docs when architecture decisions change.

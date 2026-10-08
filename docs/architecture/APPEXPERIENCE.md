@@ -91,11 +91,8 @@ Reject provider code that passes an app service or data store through `Experienc
 4. Add an `AppExperienceProvider` switch case returning an `ExperienceSession`.
 5. Add navigation from the source screen to the new `Experience` case.
 6. Add a catalogue entry only when the screen should be a discoverable catalogue item.
-7. Add any new Swift file to the app target.
-8. Build the app after changing app wiring.
-
-**AI Rule:**
-Flag new app screens that are reachable through navigation but missing provider wiring, or provider cases that point at interactors not included in the app target.
+7. Add any new Swift file to the app target in `Example/Example.xcodeproj/project.pbxproj`. `./scripts/check.sh` fails when a Swift file under `Example/Example/` is missing from it.
+8. Build the app after changing app wiring: `./scripts/build_and_test.sh example`, or CI on the pull request. The build fails on an `Experience` case with no provider wiring.
 
 ## Navigating Without A User Action
 

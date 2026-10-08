@@ -29,7 +29,7 @@ extension ExampleProperties: Properties, Codable {
 #if DEBUG
 public extension ExampleProperties {
     static var mock: Component {
-        Component(contentType: "exampleComponent",
+        Component(contentType: "example",
                   properties: ExampleProperties(title: "mockTitle", 
                                                 profilePlaceholder: "Enter your bio",
                                                 initialAmount: 1),
@@ -37,7 +37,7 @@ public extension ExampleProperties {
     }
 
     static var radomisedMock: Component {
-        Component(contentType: "exampleComponent",
+        Component(contentType: "example",
                   properties: ExampleProperties(title: "mockTitle \(Int.random(in: 0...10))",
                                                 profilePlaceholder: "Enter your bio",
                                                 initialAmount: 3),

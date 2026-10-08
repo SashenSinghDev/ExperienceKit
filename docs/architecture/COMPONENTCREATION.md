@@ -7,8 +7,7 @@ A new component should begin from the repo generator so registration, properties
 
 **Guidelines:**
 
-- Run `./generate_component.sh` from the repo root to create a new component.
-- Enter the component name in PascalCase when prompted, matching the folder and type prefix you want under `Sources/ExperienceKit/Components/`.
+- Run `./generate_component.sh <Name>` to create a new component. `<Name>` is PascalCase and becomes the folder and type prefix under `Sources/ExperienceKit/Components/`.
 - Let the script create the component folder and files:
   - `<Name>ComponentRegister.swift`
   - `<Name>Properties.swift`
@@ -18,9 +17,19 @@ A new component should begin from the repo generator so registration, properties
 - Let the script refresh `Sources/ExperienceKit/Components/Core/ComponentExtensionBuilder.swift`.
 - Inspect the generated diff before editing component behavior.
 - Keep generated naming aligned with existing components such as `Button`, `Image`, `SelectionCard`, and `Welcome`.
+- Run `./generate_component.sh --core` to refresh only the two core files, for example after renaming or deleting a component.
+
+**Without Sourcery:**
+
+The generator needs Sourcery, which runs on macOS. On a machine without it:
+
+1. Render the four files from `Templates/Component/*.stencil`, replacing `{{ argument.component }}` with the name and `{{ argument.component | lowercase }}` with its lowercase form.
+2. Add the register to `AllRegisters.swift` and the builder to `ComponentExtensionBuilder.swift`, each in alphabetical order by type name, in the shape `Templates/Core/*.stencil` produces.
+3. Run `./scripts/check.sh` until it passes.
+4. Say in the pull request that the scaffold was rendered by hand. CI's `Component generator` job then proves the two core files are byte-identical to the generator's output.
 
 **AI Rule:**
-Reject new components that hand-create the initial scaffold instead of using `./generate_component.sh`, unless the generator is broken and the reason is documented.
+Reject new components that hand-create the initial scaffold when Sourcery is available.
 
 ---
 
@@ -80,8 +89,8 @@ The core component registry should be updated by generation so every component c
 - Do not leave a generated component folder without a matching registry entry.
 - Do not leave a registry entry pointing at a component that cannot compile.
 
-**AI Rule:**
-Reject component changes where the component files, `AllRegisters.swift`, and `ComponentExtensionBuilder.swift` disagree.
+**Enforced by checks:**
+`./scripts/check.sh` fails when the component files, `AllRegisters.swift`, and `ComponentExtensionBuilder.swift` disagree, or when a register's `contentType` differs from the type its builder creates. CI's `Component generator` job fails when the two core files differ from the generator's output.
 
 ---
 
@@ -114,8 +123,8 @@ Component changes should prove both the package and the example wiring still com
 
 **Guidelines:**
 
-- Run the narrowest meaningful package check after component source changes.
-- Build or test the host app when changing app experience wiring.
+- Run `./scripts/check.sh` after every component or app wiring change. It needs no Swift toolchain.
+- Run `./scripts/build_and_test.sh` on macOS with Xcode: `package` runs the package tests, `example` builds the host app. Without Xcode, CI runs both on the pull request.
 - Confirm generated files do not contain stale placeholders from the templates.
 - Confirm the new component appears in the example component list when launched.
 - Document any skipped verification with the reason.
